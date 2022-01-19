@@ -3,17 +3,27 @@
 // Al iniciar o registrase, hace falta refrescar para ver el cambio de las opciones del menú de arriba.
 // Login y registro usando la clase de validación.
 
+require 'vendor/autoload.php';
 
-class Action
-{
-    public function index()
-    {
-        /* Si la acción es index, lo incluyo */
-        include("view/index.php");
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
+class Action {
+    public $loader;
+    public $twig;
+
+    public function __construct() {
+        $this->loader = new FilesystemLoader('view/');
+        $this->twig = new Environment($this->loader);
     }
 
-    public function login()
-    {
+    public function index() {
+        /* Si la acción es index, lo incluyo */
+        echo $this->twig->render('index.html', array('the' => 'variables', 'go' => 'here'));
+        //include("view/index.php");
+    }
+
+    public function login() {
         $errores = array();
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -58,8 +68,7 @@ class Action
         $usersession->addSessionValue("userid", $user->getUserId($valores['usuario'])); */
     }
 
-    public function register()
-    {
+    public function register() {
         /* Mas o menos lo mismo que el login, pero registrando al usuario. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("utils/validation.php");
@@ -137,8 +146,7 @@ class Action
         }
     }
 
-    function logout()
-    {
+    function logout() {
         /* Salir de la sesión. Borro $_SESSION y la destruyo. */
         $_SESSION = array();
         session_destroy();
