@@ -62,7 +62,7 @@ class Action {
             }
         } else {
             /* Muestro el formulario de registro */
-            include("view/login.php");
+            echo $this->twig->render('Form_LogIn.php');
         }
         /* $usersession = UserSession::getUserSession();
         $usersession->addSessionValue("username", $valores['usuario']);
