@@ -15,7 +15,7 @@
     crossorigin="anonymous"></script>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid px-0">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid ">
                 <div class="navbar-brand">
@@ -45,84 +45,82 @@
                 </div>
             </div>
         </nav>
-        <div class="row col-9 offset-1">
-            <h2>Nuevo usuario</h2>
-            <div class="container">
-                <hr>
-            </div>
-            <div class="container">
-                <form class="row g-3 needs-validation" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
-                    <div class="col-md-5">
-                        <label for="validationCustom01" class="form-label">Nombre Completo</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="ej:Juan" required>
-                        <div class="invalid-feedback">
-                            Porfavor intruzca su nombre.
-                        </div>
+        <div class="container py-4">
+            <div class="row ">
+                <h2>Nuevo usuario</h2>
+                <div class="container">
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-6 me-3">
+                        <img class="img-fluid d-none d-md-block" src="../static/vector-people.png">
+            
                     </div>
-                    <div class="col-md-5">
-                        <label for="validationCustomUsername" class="form-label">Username</label>
-                        <div class="input-group has-validation">
-                            <span class="input-group-text" id="usuario">@</span>
-                            <input type="text" class="form-control" id="validationCustomUsername" name="usuario" aria-describedby="inputGroupPrepend" placeholder="ej:Juanito123" required>
+                    <form class="row g-3 col-12 col-md-6 needs-validation" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
+                        <div class="col-12 col-md-6">
+                            <label for="validationCustom01" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="ej:Juan" required>
                             <div class="invalid-feedback">
-                                Porfavor intruzca un nombre de usuario.
+                                Porfavor intruzca su nombre.
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <label for="validationCustom05" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" name="contra" required>
-                        <div class="invalid-feedback">
-                            Las contraseñas no coinciden.
-                        </div>
-                    </div>
-                    <div class="col-md-5 mr-1">
-                        <label for="validationCustom03" class="form-label">E-mail</label>
-                        <input type="text" class="form-control" id="validationCustom03" name="mail" placeholder="ej:Juan@algo.es" required>
-                        <div class="invalid-feedback">
-                            Introduzca un email valido.
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="col-md-5">
-                        <label for="validationCustom05" class="form-label">Repetir Contraseña</label>
-                        <input type="password" class="form-control" name="rcontra" required>
-                        <div class="invalid-feedback">
-                            Las contraseñas no coinciden.
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" name="condiciones" required>
-                            <label class="form-check-label" for="invalidCheck">
-                          Aceptar las condiciones de uso.
-                        </label>
-                            <div class="invalid-feedback">
-                                No has aceptado las condiciones.
+                        <div class="col-12 col-md-6">
+                            <label for="validationCustomUsername" class="form-label">Username</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text" id="usuario">@</span>
+                                <input type="text" class="form-control" id="validationCustomUsername" name="usuario" aria-describedby="inputGroupPrepend" placeholder="ej:Juanito123" required>
+                                <div class="invalid-feedback">
+                                    Porfavor intruzca un nombre de usuario.
+                                </div>
                             </div>
                         </div>
+                        <div class="col-12 col-md-6">
+                            <label for="validationCustom05" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" name="contra" required>
+                            <div class="invalid-feedback">
+                                Las contraseñas no coinciden.
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mr-1">
+                            <label for="validationCustom03" class="form-label">E-mail</label>
+                            <input type="text" class="form-control" id="validationCustom03" name="mail" placeholder="ej:Juan@algo.es" required>
+                            <div class="invalid-feedback">
+                                Introduzca un email valido.
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="validationCustom05" class="form-label">Repetir Contraseña</label>
+                            <input type="password" class="form-control" name="rcontra" required>
+                            <div class="invalid-feedback">
+                                Las contraseñas no coinciden.
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" name="condiciones" required>
+                                <label class="form-check-label" for="invalidCheck">
+                              Aceptar las condiciones de uso.
+                            </label>
+                                <div class="invalid-feedback">
+                                    No has aceptado las condiciones.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary" NAME="insertar" type="submit">Registrar</button>
+                        </div>
+                    </form>
+                    <div>
+                        <!--                     <?php
+            //CODIGO PHP ****************************************************************************************
+                            foreach($errores as $error){
+                                echo "<p class='text-danger'>".$error."</p>";
+                            }
+            //CODIGO PHP ****************************************************************************************
+                        ?> -->
                     </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary" NAME="insertar" type="submit">Registrar</button>
-                    </div>
-                </form>
-
-                <div>
-
-                    <!--                     <?php
-//CODIGO PHP ****************************************************************************************
-                        foreach($errores as $error){
-                            echo "<p class='text-danger'>".$error."</p>";
-                        }
-//CODIGO PHP ****************************************************************************************
-                    ?> -->
                 </div>
             </div>
-
         </div>
         <div class="row">
             <footer class="row bg-light">
@@ -150,7 +148,7 @@
                         <p class="col-6">XD</p>
                     </div>
                 </div>
-                <div class=" col-12 ms-5 mt-3 mb-4">Instagram·Facebook·Twitter·Tinder·Linkedin·Pinterest·Youtube</div>
+                <div class=" col-12 ps-5 mt-3 mb-4">Instagram·Facebook·Twitter·Tinder·Linkedin·Pinterest·Youtube</div>
             </footer>
         </div>
     </div>
