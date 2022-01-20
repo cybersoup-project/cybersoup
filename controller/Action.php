@@ -15,6 +15,7 @@ class Action {
     public function __construct() {
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
+        
     }
 
     public function index() {
