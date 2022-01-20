@@ -143,7 +143,7 @@ class Action {
                 include("view/register.php");
             }
         } else {
-            include("view/register.php");
+            echo $this->twig->render('Form_Registro.html', array('nombre' => 'george'));
         }
     }
 
