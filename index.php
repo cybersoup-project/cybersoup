@@ -11,7 +11,7 @@ $map = array(
     'challengerList' => array('controller' => 'Action', 'action' => 'challengerList','rol' => 1),
     'newChallenger' => array('controller' => 'Action', 'action' => 'newChallenger','rol' => 1),
     'play' => array('controller' => 'Action', 'action' => 'play','rol' => 1),
-    'adminView' => array('controller' => 'Action', 'action' => 'adminView','rol' => 1),
+    'adminView' => array('controller' => 'Action', 'action' => 'adminView','rol' => 2),
     'editChallenger' => array('controller' => 'Action', 'action' => 'editChallenger','rol' => 2)
 );
 // Parseo de la ruta
