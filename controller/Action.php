@@ -156,4 +156,7 @@ class Action {
     function profile(){
         echo $this->twig->render('profile.html');
     }
+    function listChallengers(){
+        echo $this->twig->render('ChallengesList.html');
+    }
 }
