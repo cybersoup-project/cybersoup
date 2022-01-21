@@ -18,10 +18,10 @@
     <div class="container">
 
         <!-- VALIDAR formulario para CHALLENGE BASICO - (PALABRA)-->
-        <h1 class="text-center mt-3">Challenge validation</h1>
+        <h1 class="text-center mt-3 border-bottom border-2 border-dark p-3">Challenge Validation</h1>
 
-        <div class="d-flex justify-content-center mt-5 mb-5">
-            <form class="row g-3 need-validation w-50" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
+        <div class="d-flex justify-content-center mt-5 mb-5 fs-5">
+            <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
 
                 <!-- INPUT TITLE -->
                 <div>
@@ -60,18 +60,18 @@
                 <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
                 <div>
                     <label for="image" class="form-label">Image</label>
-                    <div class="d-flex fle-nowrap">
-                        <input id="image" type="file" class="form-control" name="title"
+                    <div class="d-md-flex d-block text-center">
+                        <input id="image" type="file" class="form-control mt-2" name="title"
                         placeholder="insert here the challenge title">
                         <div class="btn-group ms-2">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle mt-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 current image
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
                                 </svg>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <img src="../../Elrayo/mate1.jpg" width="300px">
+                              <img src="../../Elrayo/mate1.jpg" width="180px">
                             </ul>
                         </div>
                     </div>
@@ -92,6 +92,7 @@
 
                 
                 <!--BOTONES DE SELECCION DE DIFICULTAD-->
+                    <!--estos deberan ser omitidos en las paginas editar/crear Challenge-->
                 <p>Place dificulty</p>
                 <div id="levels" class="btn-group mt-0" role="group" aria-label="Basic mixed styles example">
                     <!-- EASY -->
@@ -128,6 +129,14 @@
                                 d="M9.146 5.146a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zm-5 0a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 1 1 .708.708l-.647.646.647.646a.5.5 0 1 1-.708.708L5.5 7.207l-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zM10 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
                         </svg>
                     </label>
+                </div>
+
+                <div class="d-flex justify-content-between mt-5 fs-6"> 
+                    <p class=""><b>Creador</b>  $usuario</p>
+                    <span>-</span>
+                    <p class=""><b>Fecha</b>  $fecha</p>
+                    <span>-</span>
+                    <p class=""><b>AtributoUsuario</b>  $atrUsuario</p>
                 </div>
 
                 <div class="d-flex justify-content-center mt-5">
