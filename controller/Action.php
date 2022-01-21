@@ -162,4 +162,7 @@ class Action {
     function createEdit(){
         echo $this->twig->render('Form_crear-editarChallenge.html');
     }
+    function validateChallenge(){
+        echo $this->twig->render('Form_validarChallenge.html');
+    }
 }
