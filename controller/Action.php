@@ -153,4 +153,7 @@ class Action {
         session_destroy();
         header("Location: index.php");
     }
+    function profile(){
+        echo $this->twig->render('profile.html');
+    }
 }
