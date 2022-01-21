@@ -159,4 +159,7 @@ class Action {
     function listChallengers(){
         echo $this->twig->render('ChallengesList.html');
     }
+    function createEdit(){
+        echo $this->twig->render('Form_crear-editarChallenge.html');
+    }
 }
