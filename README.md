@@ -21,7 +21,7 @@ Install dependencies
 Start the server
 
 ```bash
-  XAMPP or any other web
+  XAMPP or any other web server
 ```
 
 
