@@ -24,7 +24,7 @@ class Usuario extends Connection
         return $this->db->query("SELECT * FROM `user` WHERE `email` = '$e'", PDO::FETCH_ASSOC)->fetch();
     }
 
-    public function setUsuario($usuario, $pw, $full_name, $email, $active, $role, $nombre)
+    public function setUsuario($usuario, $pw, $full_name, $email, $active, $role)
     {
         $creation_date = date("Y-m-d");
         $sql = "INSERT INTO user (username, password, full_name, email, active, role, creation_date) VALUES (?,?,?,?,?,?,?)";
