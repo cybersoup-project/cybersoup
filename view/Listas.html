@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <!-- ///////////////////////////COPIAR ESTO DE AKI ABAJO////////////////////////////////////// -->
+    <div class="container">
+
+
+        <div class="row col-6 offset-3">
+            <h2>Lista de Retos</h2>
+            <div class="container">
+                <hr>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Campo1</th>
+                            <th scope="col">Campo2</th>
+                            <th scope="col">Campo3</th>
+                            <th scope="col">Campo4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>valor1Campo1</td>
+                            <td>valor1Campo2</td>
+                            <td>valor1Campo3</td>
+                            <td>valor1Campo4</td>
+                        </tr>
+                        <tr>
+                            <td>valor2Campo1</td>
+                            <td>valor2Campo2</td>
+                            <td>valor2Campo3</td>
+                            <td>valor2Campo4</td>
+                        </tr>
+                        <tr>
+                            <td>valor3Campo1</td>
+                            <td>valor3Campo2</td>
+                            <td>valor3Campo3</td>
+                            <td>valor3Campo4</td>
+                        </tr>
+
+                        <!-- <pre>  <?php   //print_r ($_SESSION); ?></pre>
+              
+              <?php
+//CODIGO PHP ****************************************************************************************
+                  foreach($_SESSION['articulos'] as $art){
+                    echo "<tr> 
+                            <th scope='row'>".$art['usuario']."</th>
+                            <td>".$art['fecha']."</td>
+                            <td> <a href='?action=ver&idArticulo=".$art['ID']."'>".$art['titulo']."</a></td>
+                            <td>@".$art['imagen']."</td>
+                          </tr>";
+                  }
+//CODIGO PHP ****************************************************************************************
+                ?> -->
+                    </tbody>
+                </table>
+                <!-- **********************COPIAR HASTA AKI*************************************************** -->
+
+            </div>
+        </div>
+</body>
+
+</html>

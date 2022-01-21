@@ -1,0 +1,57 @@
+<div class="container">
+
+
+    <div class="row col-6 offset-3">
+        <h2>Challengers</h2>
+        <div class="container">
+            <hr>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Challenger</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Difficulty</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>valor1Campo1</td>
+                        <td>valor1Campo2</td>
+                        <td>valor1Campo3</td>
+                        <td>valor1Campo4</td>
+                    </tr>
+                    <tr>
+                        <td>valor2Campo1</td>
+                        <td>valor2Campo2</td>
+                        <td>valor2Campo3</td>
+                        <td>valor2Campo4</td>
+                    </tr>
+                    <tr>
+                        <td>valor3Campo1</td>
+                        <td>valor3Campo2</td>
+                        <td>valor3Campo3</td>
+                        <td>valor3Campo4</td>
+                    </tr>
+
+                    <!-- <pre>  <?php   //print_r ($_SESSION); ?></pre>
+          
+          <?php
+//CODIGO PHP ****************************************************************************************
+              foreach($_SESSION['articulos'] as $art){
+                echo "<tr> 
+                        <th scope='row'>".$art['usuario']."</th>
+                        <td>".$art['fecha']."</td>
+                        <td> <a href='?action=ver&idArticulo=".$art['ID']."'>".$art['titulo']."</a></td>
+                        <td>@".$art['imagen']."</td>
+                      </tr>";
+              }
+//CODIGO PHP ****************************************************************************************
+            ?> -->
+                </tbody>
+            </table>
+            <!-- **********************COPIAR HASTA AKI*************************************************** -->
+
+        </div>
+    </div>
