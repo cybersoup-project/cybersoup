@@ -157,7 +157,10 @@ class Action {
         echo $this->twig->render('profile.html');
     }
     function listChallengers(){
-        echo $this->twig->render('ChallengesList.html');
+        require("model/Challenge.php");
+        $challenge = new Challenge();
+        $challenges = $challenge->getAllChallenges();
+        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
     function createEdit(){
         echo $this->twig->render('Form_crear-editarChallenge.html');

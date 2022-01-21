@@ -1,93 +1,87 @@
-{% extends "base.html" %} {% block main %}
-<div class="row col-6 offset-3">
-    <div class="d-flex justify-content-center ">
-        <!--COLUMNAS-->
-        <div class="me-3 ">
-            <p class="fs-3 square border border-3 border-dark">C</p>
-        </div>
-        <div class="me-3 ">
-            <p class="fs-3 square border border-3 border-dark">H</p>
-        </div>
-        <div class="me-3 ">
-            <p class="fs-3 square border border-3 border-dark">A</p>
-        </div>
-        <div class="me-3">
-            <p class="fs-3 square border border-3 border-dark">L</p>
-        </div>
-        <div class="me-3">
-            <p class="fs-3 square border border-3 border-dark">L</p>
-        </div>
-        <div class="me-3">
-            <p class="fs-3 square border border-3 border-dark">L</p>
-        </div>
-        <div class="me-3">
-            <p class="fs-3 square border border-3 border-dark">E</p>
-        </div>
-        <div class="me-sm-3 me-1">
-            <p class="fs-3 square border border-3 border-dark">N</p>
-        </div>
-        <div class="me-sm-3 me-1">
-            <p class="fs-3 square border border-3 border-dark">G</p>
-        </div>
-        <div class="me-sm-3 me-1">
-            <p class="fs-3 square border border-3 border-dark">E</p>
-        </div>
-        <div class="me-sm-3 me-1">
-            <p class="fs-3 square border border-3 border-dark">S</p>
-        </div>
-    </div>
-</div>
-    <div class="container">
+{% extends "base.html" %}
+
+{% block main %}
+
+
+<div class="row justify-content-center">
+    <div class="col-8">
+        <h2>Challengers</h2>
         <hr>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Challenger</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Difficulty</th>
-                    <th scope="col">Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>valor1Campo1</td>
-                    <td>valor1Campo2</td>
-                    <td>valor1Campo3</td>
-                    <td>valor1Campo4</td>
-                </tr>
-                <tr>
-                    <td>valor2Campo1</td>
-                    <td>valor2Campo2</td>
-                    <td>valor2Campo3</td>
-                    <td>valor2Campo4</td>
-                </tr>
-                <tr>
-                    <td>valor3Campo1</td>
-                    <td>valor3Campo2</td>
-                    <td>valor3Campo3</td>
-                    <td>valor3Campo4</td>
-                </tr>
-
-                <!-- <pre>  <?php   //print_r ($_SESSION); ?></pre>
-          
-          <?php
-//CODIGO PHP ****************************************************************************************
-              foreach($_SESSION['articulos'] as $art){
-                echo "<tr> 
-                        <th scope='row'>".$art['usuario']."</th>
-                        <td>".$art['fecha']."</td>
-                        <td> <a href='?action=ver&idArticulo=".$art['ID']."'>".$art['titulo']."</a></td>
-                        <td>@".$art['imagen']."</td>
-                      </tr>";
-              }
-//CODIGO PHP ****************************************************************************************
-            ?> -->
-            </tbody>
-        </table>
-        <!-- **********************COPIAR HASTA AKI*************************************************** -->
-
+        <div class="row">
+            <div class="row col-12 fw-bold border-bottom border-4">
+                <div class="col-3">
+                    <span>Challenger</span>
+                </div>
+                <div class="col-3">
+                    <span>Category</span>
+                </div>
+                <div class="col-3">
+                    <span>Difficulty</span>
+                </div>
+                <div class="col-3">
+                    <span>Date</span>
+                </div>
+            </div>
+            {% for item in objectlist %}
+            <a href="#" class="text-decoration-none p-3">
+                <div class="row col-12 text-dark">
+                    <div class="col">
+                        <span>{{ item.title }}</span>
+                    </div>
+                    <div class="col">
+                        <span>{{ item.name }}</span>
+                    </div>
+                    <div class="col">
+                        <span>
+                            {% for numero in 1..item.difficulty %}
+                            <i class="bi bi-star-fill"></i>
+                            {% endfor %}
+                            {% for numero in item.difficulty..4 %}
+                            <i class="bi bi-star"></i>
+                            {% endfor %}
+                        </span>
+                    </div>
+                    <div class="col">
+                        <span>{{ item.date }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            <hr>
+        </div>
     </div>
 </div>
-</div>
+<!-- <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Challenger</th>
+                <th scope="col">Category</th>
+                <th scope="col">Difficulty</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in objectlist %}
+            <a href="index.php">
+                <tr>
+
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+
+                        {% for numero in 1..item.difficulty %}
+                        <i class="bi bi-star-fill"></i>
+                        {% endfor %}
+                        {% for numero in item.difficulty..4 %}
+                        <i class="bi bi-star"></i>
+                        {% endfor %}
+                    </td>
+                    <td>{{ item.date }}</td>
+
+                </tr>
+            </a>
+            {% endfor %}
+        </tbody>
+    </table> -->
+
 {% endblock %}
