@@ -1,7 +1,6 @@
+An amazing project by Borja, Rafael, George and Alejandro.
 
 ## Run Locally
-
-An amazing project by Borja, Rafael, George and Alejandro.
 
 ```bash
   git clone https://github.com/giftimie/cybersoup/
