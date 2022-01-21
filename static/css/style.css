@@ -6,6 +6,10 @@
     display: table-cell;
 }
 
+.hover-gray:hover {
+    background-color: rgb(235, 235, 235);
+}
+
 @media (max-width: 600px) {
     .square {
         width: 40px;
