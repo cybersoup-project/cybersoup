@@ -156,6 +156,11 @@ class Action {
     function profile(){
         echo $this->twig->render('profile.html');
     }
+
+    function adminView(){
+        echo $this->twig->render('admin_view.html');
+    }
+
     function listChallengers(){
         require("model/Challenge.php");
         $challenge = new Challenge();
