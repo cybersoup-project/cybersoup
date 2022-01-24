@@ -154,7 +154,11 @@ class Action {
         header("Location: index.php");
     }
     function profile(){
-        echo $this->twig->render('profile.html');
+        /* echo $this->twig->render('profile.html'); */
+        require("model/Challenge.php");
+        $challenge = new Challenge();
+        $challenges = $challenge->getAllChallenges();
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges));
     }
 
     function adminView(){
