@@ -8,23 +8,26 @@ require 'vendor/autoload.php';
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class Action {
+class Action
+{
     public $loader;
     public $twig;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
-        
     }
 
-    public function index() {
+    public function index()
+    {
         /* Si la acción es index, lo incluyo */
         echo $this->twig->render('index.html', array('nombre' => 'george'));
         //include("view/index.php");
     }
 
-    public function login() {
+    public function login()
+    {
         $errores = array();
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -69,7 +72,8 @@ class Action {
         $usersession->addSessionValue("userid", $user->getUserId($valores['usuario'])); */
     }
 
-    public function register() {
+    public function register()
+    {
         /* Mas o menos lo mismo que el login, pero registrando al usuario. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("utils/validation.php");
@@ -147,30 +151,36 @@ class Action {
         }
     }
 
-    function logout() {
+    function logout()
+    {
         /* Salir de la sesión. Borro $_SESSION y la destruyo. */
         $_SESSION = array();
         session_destroy();
         header("Location: index.php");
     }
-    function profile(){
+    function profile()
+    {
         echo $this->twig->render('profile.html');
     }
 
-    function adminView(){
+    function adminView()
+    {
         echo $this->twig->render('admin_view.html');
     }
 
-    function listChallengers(){
+    function listChallengers()
+    {
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
-    function createEdit(){
+    function createEdit()
+    {
         echo $this->twig->render('Form_crear-editarChallenge.html');
     }
-    function validateChallenge(){
+    function validateChallenge()
+    {
         echo $this->twig->render('Form_validarChallenge.html');
     }
 }
