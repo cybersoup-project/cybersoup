@@ -25,6 +25,7 @@ class Action {
     }
 
     public function login() {
+        
         $errores = array();
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
