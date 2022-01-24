@@ -139,6 +139,39 @@ class Validacion {
         return false;
     }
 
+    protected function _tit($campo, $valor) {
+        if (preg_match("/^[a-zA-Z0-9 ]{4,64}$/", $valor)) {
+            return true;
+        }
+        $this->mensaje[$campo][] = "El campo $campo debe tener entre 4 y 64 carácteres.";
+        return false;
+    }
+
+    protected function _solutionCh($campo, $valor) {
+        if (preg_match("/^[a-zA-Z0-9 ]{1,32}$/", $valor)) {
+            return true;
+        }
+        $this->mensaje[$campo][] = "El campo $campo debe tener entre 1 y 32 carácteres.";
+        return false;
+    }
+
+    protected function _helpText($campo, $valor) {
+        if (preg_match("/^[a-zA-Z0-9 ]{0,128}$/", $valor)) {
+            return true;
+        }
+        $this->mensaje[$campo][] = "El campo $campo debe tener entre menos de 128 carácteres.";
+        return false;
+    }
+
+    protected function _atemptsNum($campo, $valor) {
+        if (preg_match("/^[0-9]{0,11}$/", $valor)) {
+            return true;
+        }
+        $this->mensaje[$campo][] = "El campo $campo debe ser un numero entero";
+        return false;
+    }
+
+
     protected function _minmax($campo, $valor) {
         if (preg_match("/^[a-zA-Z0-9]{4,24}$/", $valor)) {
             return true;

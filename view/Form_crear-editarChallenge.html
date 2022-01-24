@@ -1,78 +1,72 @@
 {% extends "base.html" %} {% block main %}
-    <div class="container">
+<div class="container">
 
-        <!-- VALIDAR formulario para CHALLENGE BASICO - (PALABRA)-->
-        <h1 class="text-center mt-3 border-bottom border-2 border-dark p-3">Edit/Create Challenge</h1>
+    <!-- VALIDAR formulario para CHALLENGE BASICO - (PALABRA)-->
+    <h1 class="text-center mt-3 border-bottom border-2 border-dark p-3">Edit/Create Challenge</h1>
 
-        <div class="row">
-            <!-- IMAGEN-->
-            <div class="col-5 d-flex m-auto justify-content-center">
-                <img src="static/Captura.PNG" width="400px" height="500px">
-            </div>
+    <div class="row">
+        <!-- IMAGEN-->
+        <div class="col-5 d-flex m-auto justify-content-center">
+            <img src="static/Captura.PNG" width="400px" height="500px">
+        </div>
 
-            <!-- FORM -->
-            <div class="col-7 d-flex justify-content-center mt-5 mb-5 fs-5">
-                <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST"
-                    ENCTYPE="multipart/form-data">
+        <!-- FORM -->
+        <div class="col-7 d-flex justify-content-center mt-5 mb-5 fs-5">
+            <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
 
-                    <!-- INPUT TITLE -->
-                    <div class="">
-                        <label for="title" class="form-label">Title</label>
-                        <input id="title" type="text" class="form-control border border-dark" name="title"
-                            placeholder="insert here the challenge title" required>
-                        <div class="valid-feedback">
-                            may be okay
-                        </div>
+                <!-- INPUT TITLE -->
+                <div class="">
+                    <label for="title" class="form-label">Title</label>
+                    <input id="title" type="text" class="form-control border border-dark" name="title" placeholder="insert here the challenge title" required>
+                    <div class="valid-feedback">
+                        may be okay
                     </div>
-                    <!-- FIN - INPUT TITLE -->
+                </div>
+                <!-- FIN - INPUT TITLE -->
 
-                    <!-- INPUT SOLUTION -->
-                    <div>
-                        <label for="solution" class="form-label">Solution</label>
-                        <input id="solution" type="text" class="form-control border border-dark" name="solution"
-                            placeholder="insert here the challenge solution (one word)" required>
-                        <div class="valid-feedback">
-                            may be okay
-                        </div>
+                <!-- INPUT SOLUTION -->
+                <div>
+                    <label for="solution" class="form-label">Solution</label>
+                    <input id="solution" type="text" class="form-control border border-dark" name="solution" placeholder="insert here the challenge solution (one word)" required>
+                    <div class="valid-feedback">
+                        may be okay
                     </div>
-                    <!-- FIN - INPUT SOLUTION -->
+                </div>
+                <!-- FIN - INPUT SOLUTION -->
 
-                    <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
-                    <div>
-                        <label for="helptext" class="form-label">Help text</label>
-                        <textarea class="form-control border border-dark" name="title"
-                            placeholder="insert here the challenge title" required>
+                <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
+                <div>
+                    <label for="helptext" class="form-label">Help text</label>
+                    <textarea class="form-control border border-dark" name="helptext" placeholder="insert here the challenge title" required>
                         </textarea>
 
-                        <div class="valid-feedback">
-                            may be okay
-                        </div>
+                    <div class="valid-feedback">
+                        may be okay
                     </div>
-                    <!-- FIN - VEO VEO o Acertijo-->
+                </div>
+                <!-- FIN - VEO VEO o Acertijo-->
 
-                    <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
-                    <div>
-                        <label for="image" class="form-label">Image</label>
-                        <input id="image" type="file" class="form-control mt-2 border border-dark" name="title"
-                            placeholder="insert here the challenge title">
+                <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
+                <div>
+                    <label for="image" class="form-label">Image</label>
+                    <input id="image" type="file" class="form-control mt-2 border border-dark" name="image" placeholder="insert here the challenge title">
+                </div>
+                <!-- FIN - VEO VEO-->
+
+
+                <!-- INPUT NUMERO INTENTOS-->
+                <div>
+                    <label for="  " class="form-label">Number of Atempts</label>
+                    <input type="number" class="form-control border border-dark" style="max-width: 100px;" name="atempts" placeholder="attempts" max="9" required>
+                    <div class="valid-feedback">
+                        may be okay
                     </div>
-                    <!-- FIN - VEO VEO-->
+                </div>
+                <!-- FIN - INPUT NUMERO INTENTOS-->
 
-
-                    <!-- INPUT NUMERO INTENTOS-->
-                    <div>
-                        <label for="  " class="form-label">Number of Atempts</label>
-                        <input type="number" class="form-control border border-dark" style="max-width: 100px;"
-                            name="atempts" placeholder="attempts" max="9" required>
-                        <div class="valid-feedback">
-                            may be okay
-                        </div>
-                    </div>
-                    <!-- FIN - INPUT NUMERO INTENTOS-->
-
-                    <div class="d-flex justify-content-center mt-5">
-                        <button type="reset" class="btn btn-secondary">Reset</button>
-                        <button type="button" class="btn btn-success ms-2">
+                <div class="d-flex justify-content-center mt-5">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-success ms-2">
                             Create
                             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                                 class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -81,10 +75,10 @@
                             </svg>
                         </button>
 
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-
     </div>
-    {% endblock %}
+
+</div>
+{% endblock %}

@@ -15,7 +15,7 @@ class FileUpload
     public $tempdir;
     public $extension;
 
-    public function __construct($tagname, $uploadpath, array $validExtensions, $max_file_size = 5000000) // 5MB máximo
+    public function __construct($tagname, $uploadpath, array $validExtensions = ['jpg','png'], $max_file_size = 5000000) // 5MB máximo
     {
         $this->tagname = $tagname;
         $this->uploadpath = $uploadpath;
