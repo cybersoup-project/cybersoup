@@ -15,7 +15,8 @@ $map = array(
     'editChallenger' => array('controller' => 'Action', 'action' => 'editChallenger','rol' => 0),
     'profile' => array('controller' => 'Action', 'action' => 'profile', 'rol' => 0),
     'listChallengers' => array('controller' => 'Action', 'action' => 'listChallengers','rol' => 0),
-    'createEdit' => array('controller' => 'Action', 'action' => 'createEdit','rol' => 0)
+    'createEdit' => array('controller' => 'Action', 'action' => 'createEdit','rol' => 0),
+    'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0)
 );
 // Parseo de la ruta
 if (isset($_GET['action'])) {

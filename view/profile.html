@@ -1,37 +1,38 @@
 {% extends "base.html" %} {% block main %}
-<div class="container-fluid">
 
-    <!--FILA-->
-    <div class="row d-flex justify-content-center mt-5 mb-5 ">
-        <!-- CONTENEDOR-->
-        <div class="d-flex justify-content-center ">
-            <!--COLUMNAS-->
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">P</p>
+<div class="container">
+    <div class="row">
+        <!--FILA-->
+        <div class="row d-flex justify-content-center mt-5 mb-5 ">
+            <!-- CONTENEDOR-->
+            <div class="d-flex justify-content-center ">
+                <!--COLUMNAS-->
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">P</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">R</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">O</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">F</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">I</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">L</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
             </div>
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">R</p>
-            </div>
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">O</p>
-            </div>
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">F</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">I</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">L</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">E</p>
-            </div>
+            <span class="border-bottom border-2 border-dark mb-2 mt-5"></span>
         </div>
-        <span class="mt-4 border-bottom border-2 border-dark col-md-7 col-11"></span>
     </div>
-</div>
-    <div class="bg-light">
+ <div class="bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-4 offset-2">
@@ -46,18 +47,22 @@
             </div>
         </div>
     </div>
-
-    <nav class="col-12 mt-2">
+    <nav class="col-12">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Challenges overcome</button>
-          <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Challenges non overcome</button>
+            <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                aria-selected="true">Challenges overcome</button>
+            <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                aria-selected="false">Challenges non overcome</button>
         </div>
-      </nav>
-      <div class="tab-content border border-ligth" id="nav-tabContent">
-        <div class="tab-pane fade show active p-2" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    </div>
+    -->
+</div>
+{% endblock %}
 
-            
-        </div>
-        <div class="tab-pane fade p-2" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">No superaste 50 retos</div>
-      </div>
-    {% endblock %}
