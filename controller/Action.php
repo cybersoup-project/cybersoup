@@ -160,6 +160,11 @@ class Action {
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('profile.html', array("objectlist" => $challenges));
     }
+
+    function adminView(){
+        echo $this->twig->render('admin_view.html');
+    }
+
     function listChallengers(){
         require("model/Challenge.php");
         $challenge = new Challenge();
