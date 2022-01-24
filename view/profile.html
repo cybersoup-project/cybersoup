@@ -1,0 +1,115 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="container">
+    <div class="row">
+        <!--FILA-->
+        <div class="row d-flex justify-content-center mt-5 mb-5 ">
+            <!-- CONTENEDOR-->
+            <div class="d-flex justify-content-center ">
+                <!--COLUMNAS-->
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">P</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">R</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">O</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">F</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">I</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">L</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+            </div>
+            <span class="border-bottom border-2 border-dark mb-2 mt-5"></span>
+        </div>
+    </div>
+ <div class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 offset-2">
+                    <h1 class=" py-3 ps-3">Alejandro</h1>
+                    <h2 class=" py-3 ps-3">#752</h2>
+                    <button type="button" class="btn btn-outline-success border border-success m-3" onClick= "location.href='?action=createEdit'">CREATE YOUR CHALLENGE</button>
+                    <button type="button" class="btn btn-outline-success border border-success m-3" onClick= "location.href='?action=adminView'">AdminView</button>
+                </div>
+                <div class="col-4 text-end">
+                    <img src="static/logo.png" class="img-fluid py-3 mt-3 me-5" width="400" height="500">
+                </div>
+        
+            </div>
+        </div>
+    </div>
+    <nav class="col-12 mt-2 mb-2">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                aria-selected="true">Challenges overcome</button>
+            <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                aria-selected="false">Challenges non overcome</button>
+        </div>
+    </nav>
+    <div class="tab-content border border-ligth" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <h2>Challengers</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="row col-12 fw-bold border-bottom border-4">
+                            <div class="col-3">
+                                <span>Challenger</span>
+                            </div>
+                            <div class="col-3">
+                                <span>Category</span>
+                            </div>
+                            <div class="col-3">
+                                <span>Difficulty</span>
+                            </div>
+                            <div class="col-3">
+                                <span>Date</span>
+                            </div>
+                        </div>
+                        {% for item in objectlist %}
+                        <a href="#" class="text-decoration-none p-3 hover-gray">
+                            <div class="row col-12 text-dark">
+                                <div class="col">
+                                    <span>{{ item.title }}</span>
+                                </div>
+                                <div class="col">
+                                    <span>{{ item.name }}</span>
+                                </div>
+                                <div class="col">
+                                    <span>
+                                        {% for numero in 1..item.difficulty %}
+                                        <i class="bi bi-star-fill"></i>
+                                        {% endfor %}
+                                        {% for numero in item.difficulty..4 %}
+                                        <i class="bi bi-star"></i>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                                <div class="col">
+                                    <span>{{ item.date }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    </div>
+</div>
+{% endblock %}
