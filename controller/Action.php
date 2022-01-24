@@ -15,7 +15,7 @@ class Action {
     public function __construct() {
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
-        
+        $this->twig->addGlobal('usersession', UserSession::getUserSession());
     }
 
     public function index() {
@@ -25,7 +25,7 @@ class Action {
     }
 
     public function login() {
-        
+
         $errores = array();
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -74,77 +74,93 @@ class Action {
         /* Mas o menos lo mismo que el login, pero registrando al usuario. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("utils/validation.php");
+            require("utils/classValidar.php");
+            require("model/Usuario.php");
+            $user = new Usuario();
+            $validation = new Validacion();
+
             $errores = array();
             $valores = array(
-                "usuario" => $_POST['user'],
-                "nombre" => $_POST['nombre'],
-                "pw" => $_POST['pw'],
-                "pw2" => $_POST['pw2'],
-                "email" => $_POST['email'],
-                "genero" => $_POST['g'],
-                "nacimiento" => $_POST['nacimiento'],
+                "Full Name" => $_POST['full_name'] ?? '',
+                "Username" => $_POST['username'] ?? '',
+                "Password" => $_POST['password'] ?? '',
+                "Repeat Password" => $_POST['repeat_password'] ?? '',
+                "Email" => $_POST['email'] ?? '',
+                "Terms and Conditions" => $_POST['tos'] ?? '',
             );
 
-            /* Validaciones */
-            if (!isValidUsername($valores['usuario'])) {
-                $errores[] = "El usuario solo puede tener carácteres alfanumericos y tener un mínimo de 4 y un máximo de 24 carácteres.";
+            $regla = array(
+                array(
+                    'name' => 'Full Name',
+                    'regla' => 'name'
+                ),
+                array(
+                    'name' => 'Username',
+                    'regla' => 'minmax'
+                ),
+                array(
+                    'name' => 'Password',
+                    'regla' => 'password'
+                ),
+                array(
+                    'name' => 'Email',
+                    'regla' => 'email'
+                ),
+                array(
+                    'name' => 'Terms and Conditions',
+                    'regla' => 'checked'
+                )
+            );
+
+            $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
+
+            // Comprobar que las dos contraseñas sean iguales
+            if ($valores['Password'] !== $valores['Repeat Password']) {
+                $validaciones['Password'][] = "Passwords must match";
             }
 
-            if (!isValidUsername($valores['nombre'])) {
-                $errores[] = "El nombre solo puede tener carácteres alfanumericos y tener un mínimo de 4 y un máximo de 24 carácteres.";
+            // Comprobar que el nombre de usuario no exista ya.
+            $res = $user->getUserByUsername($valores['Username']);
+            if ($res) {
+                $validaciones['Username'][] = "El nombre de usuario ya está en uso, escoje otro.";
             }
 
-            if (!isSameString($valores['pw'], $valores['pw2'])) {
-                $errores[] = "Las contraseñas no coinciden.";
-            } else if ($valores['pw'] === "") {
-                $errores[] = "Las contraseñas no pueden estar vacías.";
+            // Comprobar que el email no exista ya.
+            $res = $user->getUserByEmail($valores['Email']);
+            if ($res) {
+                $errores['Email'][] = "El email ya está en uso, escoje otro.";
             }
 
-            if (!isValidEmail($valores['email'])) {
-                $errores[] = "El email no es válido.";
-            }
-
-            if (!esGeneroValido($valores['genero'])) {
-                $errores[] = "El género no es válido.";
-            }
-
-            if (!isValidDate($valores['nacimiento'])) {
-                $errores[] = "La fecha no es válida";
-            }
-
-            if (count($errores) === 0) {
-                require("model/Usuario.php");
-                $user = new Usuario();
-                /* Comprobar si email o usuario está en uso. */
-                /* Estaría mejor haberlo comprobado arriba, ya que esta parte del código queda un poco rara. */
-                $res = $user->getUserByUsername($valores['usuario']);
-                if ($res) {
-                    $errores[] = "El nombre de usuario ya está en uso, escoje otro.";
+            /* foreach ($validaciones as $key => $value) {
+                echo $key . " >> ";
+                foreach ($value as $k => $val) {
+                    echo $val . "<br>";
                 }
-                $res = $user->getUserByEmail($valores['email']);
-                if ($res) {
-                    $errores[] = "El email ya está en uso, escoje otro.";
-                }
-                if (count($errores) !== 0) {
-                    /* Abortar registro y mostrar errores en el formulario si lo anterior se cumple. */
-                    include("view/register.php");
-                    exit;
-                }
+            } */
+
+            /* print_r($validaciones); */
+
+            if (count($validaciones) === 0) {
                 /* Registrar usuario */
                 $usersession = UserSession::getUserSession();
-                $usersession->addSessionValue("username", $valores['usuario']);
-                $user->setUsuario($valores['usuario'], getHash($valores['pw']), $valores['email'], $valores['nacimiento'], $valores['genero'], $valores['nombre']);
-                $usersession->addSessionValue("userid", $user->getUserId($valores['usuario']));
-                $usersession->addSessionValue("rol", 1);
+
+                $rol = 1; // Rol a 1 (Usuario registrado)
+                $activo = 0; // Hace falta validar la cuenta por email;
+
+                $user->setUsuario($valores['Username'], getHash($valores['Password']), $valores['Full Name'], $valores['Email'], $activo, $rol);
+
+                $usersession->addSessionValue("username", $valores['Username']);
+                $usersession->addSessionValue("userid", $user->getUserId($valores['Username']));
+                $usersession->addSessionValue("rol", $rol);
+
                 $mensaje = array("Tu usuario ha sido registrado.");
-                require("model/Articulo.php");
-                include("view/articulos.php");
+                echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
                 //header("Location: index.php");
             } else {
-                include("view/register.php");
+                echo $this->twig->render('Form_Registro.html', array('errores' => $validaciones));
             }
         } else {
-            echo $this->twig->render('Form_Registro.html', array('nombre' => 'george'));
+            echo $this->twig->render('Form_Registro.html');
         }
     }
 
@@ -154,19 +170,23 @@ class Action {
         session_destroy();
         header("Location: index.php");
     }
-    function profile(){
+
+    function profile() {
         echo $this->twig->render('profile.html');
     }
-    function listChallengers(){
+
+    function listChallengers() {
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
-    function createEdit(){
+
+    function createEdit() {
         echo $this->twig->render('Form_crear-editarChallenge.html');
     }
-    function validateChallenge(){
+
+    function validateChallenge() {
         echo $this->twig->render('Form_validarChallenge.html');
     }
 }
