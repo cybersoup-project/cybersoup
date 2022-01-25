@@ -51,6 +51,7 @@ class Validacion {
             return $this;
         } else {
             return array();
+            /* return $this; */
         }
     }
 
@@ -117,17 +118,17 @@ class Validacion {
         if (filter_var($valor, FILTER_VALIDATE_EMAIL)) {
             return true;
         } else {
-            $this->mensaje[$campo][] = "El campo $campo debe estar en el formato de email usuario@servidor.com.";
+            $this->mensaje[$campo][] = "Field $campo must have the email format user@server.com.";
             return false;
         }
     }
 
-    protected function _genre($campo, $valor) {
+    protected function _gender($campo, $valor) {
         $generosValidos = array("h", "m", "nb");
         if (in_array($valor, $generosValidos)) {
             return true;
         }
-        $this->mensaje[$campo][] = "El campo $campo debe ser un género válido.";
+        $this->mensaje[$campo][] = "Field $campo must be a valid gender.";
         return false;
     }
 
@@ -135,7 +136,7 @@ class Validacion {
         if (preg_match("/^[a-zA-Z0-9 ]{4,24}$/", $valor)) {
             return true;
         }
-        $this->mensaje[$campo][] = "El campo $campo debe tener entre 4 y 24 carácteres.";
+        $this->mensaje[$campo][] = "Field $campo must be in between 4 and 24 characters.";
         return false;
     }
 
@@ -176,7 +177,7 @@ class Validacion {
         if (preg_match("/^[a-zA-Z0-9]{4,24}$/", $valor)) {
             return true;
         }
-        $this->mensaje[$campo][] = "El campo $campo debe tener entre 4 y 24 carácteres y no tener espacios.";
+        $this->mensaje[$campo][] = "Field $campo must be in between 4 and 24 characters, without spaces.";
         return false;
     }
 
@@ -184,7 +185,7 @@ class Validacion {
         if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,64}$/", $valor)) {
             return true;
         }
-        $this->mensaje[$campo][] = "El campo $campo debe tener entre 6 y 64 carácteres, almenos una mayúsucla, una minúscula, un número y un carácter especial.";
+        $this->mensaje[$campo][] = "Field $campo must have in between 6 and 64 characters, at least an uppercase, a lowercase, a number and a special character.";
         return false;
     }
 
@@ -194,7 +195,15 @@ class Validacion {
         if(($d) && ($d->format($format) === $valor)) {
             return true;
         }
-        $this->mensaje[$campo][] = "El campo $campo no es una fecha válida.";
+        $this->mensaje[$campo][] = "Field $campo is not a valid date.";
+        return false;
+    }
+
+    protected function _checked($campo, $valor) {
+        if($valor !== "") {
+            return true;
+        }
+        $this->mensaje[$campo][] = "Field $campo must be checked.";
         return false;
     }
 }
