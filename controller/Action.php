@@ -170,8 +170,6 @@ class Action {
         session_destroy();
         header("Location: index.php");
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     function profile(){
         /* echo $this->twig->render('profile.html'); */
         require("model/Challenge.php");
@@ -185,29 +183,11 @@ class Action {
     }
 
     function listChallengers(){
-=======
-
-    function profile() {
-        echo $this->twig->render('profile.html');
-    }
-
-    function listChallengers() {
->>>>>>> d7c112c (Register funcion completed (I guess))
-=======
-
-    function profile() {
-        echo $this->twig->render('profile.html');
-    }
-
-    function listChallengers() {
->>>>>>> gi_register_func
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     function createEdit(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
             
@@ -268,22 +248,6 @@ class Action {
     }
     
     function validateChallenge(){
-=======
-
-    function createEdit() {
-        echo $this->twig->render('Form_crear-editarChallenge.html');
-    }
-
-    function validateChallenge() {
->>>>>>> d7c112c (Register funcion completed (I guess))
-=======
-
-    function createEdit() {
-        echo $this->twig->render('Form_crear-editarChallenge.html');
-    }
-
-    function validateChallenge() {
->>>>>>> gi_register_func
         echo $this->twig->render('Form_validarChallenge.html');
     }
 }
