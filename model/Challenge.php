@@ -13,7 +13,7 @@ class Challenge extends Connection {
         $times_played=0;
         $times_success=0;
         $dificulty=0;
-        $sql = "INSERT INTO challenge (text,title,image,max_attempts,solution,verified,trusted,times_played,times_success,dificulty,date,category_id,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO challenge (text,title,image,max_attempts,solution,verified,trusted,times_played,times_success,difficulty,date,category_id,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $this->db->prepare($sql)->execute([$text,$title,$image,$atempts,$solution,$verified,$trusted,$times_played,$times_success,$dificulty,$date,$category_id,$user_id]);
     }
 
