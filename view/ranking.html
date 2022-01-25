@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="container">
+    {% for mensaje in mensajes %}
+    {{ mensaje }}
+    {% endfor %}
+    <div class="row">
+        <!--FILA-->
+        <div class="row d-flex justify-content-center mt-5 mb-5 ">
+            <!-- CONTENEDOR-->
+            <div class="d-flex justify-content-center ">
+                <!--COLUMNAS-->
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">R</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">A</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">N</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">K</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">I</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">N</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">G</p>
+                </div>
+            </div>
+            <span class="border-bottom border-2 border-dark col-7 mb-2 mt-5"></span>
+        </div>
+    </div>
+    <div class="d-flex">
+    <div class="d-none d-md-block">
+        <img src="static/ranking.jpeg" width="400" height="500" alt="">
+    </div>
+    <div class="col-8 bg-light ms-2">
+        
+        Poner ranking
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

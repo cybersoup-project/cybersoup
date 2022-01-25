@@ -183,6 +183,9 @@ class Action {
     function adminView(){
         echo $this->twig->render('admin_view.html');
     }
+    function ranking(){
+        echo $this->twig->render('ranking.html');
+    }
 
     function listChallengers(){
         require("model/Challenge.php");
