@@ -1,6 +1,9 @@
 {% extends "base.html" %} {% block main %}
 
 <div class="container">
+    {% for mensaje in mensajes %}
+        {{ mensaje }}
+    {% endfor %}
     <div class="row">
         <!--FILA-->
         <div class="row d-flex justify-content-center mt-5 mb-5 ">

@@ -30,44 +30,43 @@ class Action {
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("model/Usuario.php");
+            require("utils/validation.php");
             $usuario = new Usuario();
             $valores = array(
-                "user" => $_POST['user'],
-                "pw" => $_POST['pw']
+                "user" => $_POST['user'] ?? '',
+                "pw" => $_POST['pw']  ?? ''
             );
 
             /* Busco en la base de datos a ver si hay un usuario existente */
             $r = $usuario->getUserByUsername($valores['user']);
-
+            
             if ($r) {
                 /* Si existe el usuario, compruebo la contraseña */
-                if (password_verify($valores['pw'], $r['pass'])) {
-                    /* require("utils/UserSession.php"); */
+                if (password_verify($valores['pw'], $r['password'])) {
+                    /* require("utils/UserSession.php");  */
                     $usersession = UserSession::getUserSession();
-                    $usersession->addSessionValue("userid", $r['id']);
-                    $usersession->addSessionValue("username", $r['usuario']);
-                    $usersession->addSessionValue("rol", 1);
-                    $mensaje = array("Has iniciado sesión.");
-                    require("model/Articulo.php");
-                    include("view/articulos.php");
+                    $usersession->addSessionValue("iduser", $r['iduser']);
+                    $usersession->addSessionValue("username", $r['username']);
+                    $usersession->addSessionValue("rol", $r['role']);
+                    $mensajes = array ("Has iniciado sesión.");
+                   
                     /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
+                    echo $this->twig->render('profile.html', array('mensajes' => $mensajes));
                 } else {
                     /* Contraseña errónea */
                     $errores[] = "El usuario y/o la contraseña no son válidos.";
-                    include("view/login.php");
+                    echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
+                    
                 }
             } else {
                 // Usuario no válido (no existe en la base de datos). Le pongo el error e incluyo la view del login.
                 $errores[] = "El usuario y/o la contraseña no son válidos.";
-                include("view/login.php");
+                echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
             }
         } else {
             /* Muestro el formulario de registro */
             echo $this->twig->render('Form_LogIn.html');
         }
-        /* $usersession = UserSession::getUserSession();
-        $usersession->addSessionValue("username", $valores['usuario']);
-        $usersession->addSessionValue("userid", $user->getUserId($valores['usuario'])); */
     }
 
     public function register() {
@@ -163,6 +162,9 @@ class Action {
             echo $this->twig->render('Form_Registro.html');
         }
     }
+
+    
+
 
     function logout() {
         /* Salir de la sesión. Borro $_SESSION y la destruyo. */
