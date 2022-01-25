@@ -170,23 +170,84 @@ class Action {
         session_destroy();
         header("Location: index.php");
     }
-
-    function profile() {
-        echo $this->twig->render('profile.html');
+    function profile(){
+        /* echo $this->twig->render('profile.html'); */
+        require("model/Challenge.php");
+        $challenge = new Challenge();
+        $challenges = $challenge->getAllChallenges();
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges));
     }
 
-    function listChallengers() {
+    function adminView(){
+        echo $this->twig->render('admin_view.html');
+    }
+
+    function listChallengers(){
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
+    function createEdit(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+            
+            //----Data Collect--
+            $errores = array();
+            $valores = array(
+                "title" => $_POST['title'] ?? '',
+                "solution" => $_POST['solution'] ?? '',
+                "helptext" => $_POST['helptext'] ?? '',
+                "image" => $_POST['image'] ?? '',
+                "atempts" => $_POST['atempts'] ?? '',
+                //FECHA?
+            );
+        //**************Validations*******************/
+            require("utils/classValidar.php");
+            $validation=new Validacion();
+            $challenge = new Challenge();
+            $regla = array(
+                array(
+                    'name' => 'title',
+                    'regla' => 'tit'
+                ),
+                array(
+                    'name' => 'solution',
+                    'regla' => 'solutionCh'
+                ),
+                array(
+                    'name' => 'helptext',
+                    'regla' => 'helpText'
+                ),
+                array(
+                    'name' => 'atempts',
+                    'regla' => 'atemptsNum'
+                )
+                
+            );
+            $validaciones = $validation->rules($regla, $valores)->mensaje;
+            print_r($validaciones);
+            foreach ($validaciones as $key => $value) {
 
-    function createEdit() {
-        echo $this->twig->render('Form_crear-editarChallenge.html');
+                foreach ($value as $k => $val) {
+                    
+                }
+            }
+            if(count($validaciones)==0){
+                require("utils/fileUpload.php");
+                $img = new FileUpload("image","static/img/");
+                $imagen = $img->check();//Solo si el tipo de reto es de imagen!!!!!!!!!!
+                if(count($img->errores)==0){
+                    $challenge->setchalenges($text,$title, $solution, $helptext, $image, $atempts);
+
+                    $img->upload();
+                }
+            
+            }
+
+        }else echo $this->twig->render('Form_crear-editarChallenge.html');
     }
-
-    function validateChallenge() {
+    
+    function validateChallenge(){
         echo $this->twig->render('Form_validarChallenge.html');
     }
 }

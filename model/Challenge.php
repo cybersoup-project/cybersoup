@@ -4,6 +4,20 @@ require_once("model/connection.php");
 /* Al extender la conexión, se llama al constructor de connection, lo cual da acceso a $db */
 /* Los nombres de las funciones son explicativas. */
 class Challenge extends Connection {
+
+    public function setchalenges($text,$title, $solution, $helptext, $image, $atempts)
+    {
+        $date = date("Y-m-d");
+        $verified=0;
+        $trusted=0;
+        $times_played=0;
+        $times_success=0;
+        $dificulty=0;
+        $sql = "INSERT INTO challenge (text,title,image,solution,verified,trusted,times_played,times_success,dificulty,date,category_id,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        $this->db->prepare($sql)->execute([$text,$title,$image,$solution,$verified,$trusted,$times_played,$times_success,$dificulty,$date,$category_id,$user_id]);
+    }
+
+
     public function getAllChallenges()
     {
         return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory`", PDO::FETCH_ASSOC)->fetchAll();
