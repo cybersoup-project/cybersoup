@@ -1,95 +1,174 @@
 {% extends "base.html" %} {% block main %}
+<style>
+    .square {
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+    }
+    
+    .hover-gray:hover {
+        background-color: rgb(235, 235, 235);
+    }
+    
+    @media (max-width: 600px) {
+        .square {
+            width: 40px;
+            height: 40px;
+        }
+    }
+    
+    @media (max-width: 500px) {
+        .square {
+            width: 30px;
+            height: 30px;
+        }
+    }
+</style>
 <div class="container">
     <!-- VALIDAR formulario para CHALLENGE BASICO - (PALABRA)-->
-    <div class="container-fluid">
+    <div class="row">
         <!--FILA-->
-        <div class="row d-flex justify-content-center mt-5 mb-5 ">
+        <div class="row justify-content-center mt-5 mb-5 ">
             <!-- CONTENEDOR-->
-            <div class="d-flex justify-content-center ">
+
+            <div class="d-flex justify-content-center dflex d-lg-none">
                 <!--COLUMNAS-->
-                <!-- Solo cuando se edita reto -->
-                <div class="me-3">
-                    <p class="fs-3 square border border-3 border-dark">E</p>
-                </div>
-                <div class="me-3">
-                    <p class="fs-3 square border border-3 border-dark">D</p>
-                </div>
-                <div class="me-3">
-                    <p class="fs-3 square border border-3 border-dark">I</p>
-                </div>
-                <div class="me-3">
-                    <p class="fs-3 square border border-3 border-dark">T</p>
-                </div>
-                <!-- Solo cuando se crea reto -->
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">C</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">R</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">E</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">A</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">T</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">E</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <!--FILA-->
-        <div class="row d-flex justify-content-center mt-5 mb-5 ">
-            <!-- CONTENEDOR-->
-            <div class="d-flex justify-content-center ">
                 <!--COLUMNAS-->
-
-                <div class="me-3">
+                <!--  <div class="me-3 "><p class="fs-3 square border border-3 border-dark">E</p></div>
+                    <div class="me-3 "><p class="fs-3 square border border-3 border-dark">D</p></div>
+                    <div class="me-3 "><p class="fs-3 square border border-3 border-dark">I</p></div>
+                    <div class="me-3 "><p class="fs-3 square border border-3 border-dark">T</p></div> -->
+            </div>
+            <div class="d-flex justify-content-center mt-3 d-none d-md-flex d-lg-none">
+                <!--COLUMNAS-->
+                <div class="ms-2 me-3 ">
                     <p class="fs-3 square border border-3 border-dark">C</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">H</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">A</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">L</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">L</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">E</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">N</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">G</p>
                 </div>
-                <div class="me-3">
+                <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">E</p>
                 </div>
             </div>
-            <span class="mt-4 border-bottom border-2 border-dark col-md-9 col-11"></span>
+            <div class="d-flex justify-content-center mt-3 d-flex d-md-none">
+                <!--COLUMNAS-->
+                <div class="ms-2 me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">C</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">H</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">L</p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center d-lg-flex d-none">
+                <!--COLUMNAS-->
+                <!-- Este en caso de que sea create -->
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">C</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">R</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">A</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">T</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+                <!-- Esto solo en caso de que sea edit  -->
+                <!-- <div class="me-3 "><p class="fs-3 square border border-3 border-dark">E</p></div>
+                    <div class="me-3 "><p class="fs-3 square border border-3 border-dark">D</p></div>
+                    <div class="me-3 "><p class="fs-3 square border border-3 border-dark">I</p></div>
+                    <div class="me-3 "><p class="fs-3 square border border-3 border-dark">T</p></div> -->
+
+                <div class="ms-2 me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">C</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">H</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">A</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">L</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">L</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">N</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">G</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+            </div>
+            <span class="border-bottom border-2 border-dark mb-2 mt-5 d-lg-block d-none"></span>
         </div>
     </div>
 
     <div class="row">
         <!-- IMAGEN-->
         <div class="col-5 d-flex m-auto justify-content-center">
-            <img src="static/Captura.PNG" width="400px" height="500px">
+            <img src="static/Captura.PNG" class="d-md-block d-none" width="400px" height="500px">
         </div>
 
         <!-- FORM -->
-        <div class="col-7 d-flex justify-content-center mt-5 mb-5 fs-5">
+        <div class="col-12 col-md-7 d-flex justify-content-center mt-5 mb-5 fs-5">
             <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
 
                 <!-- INPUT TITLE -->
@@ -115,7 +194,7 @@
                 <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                 <div>
                     <label for="helptext" class="form-label">Help text</label>
-                    <textarea class="form-control border border-dark" name="helptext" placeholder="insert here the challenge title" required>
+                    <textarea class="form-control border border-dark" name="title" placeholder="insert here the challenge title" required>
                         </textarea>
 
                     <div class="valid-feedback">
@@ -127,7 +206,7 @@
                 <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
                 <div>
                     <label for="image" class="form-label">Image</label>
-                    <input id="image" type="file" class="form-control mt-2 border border-dark" name="image" placeholder="insert here the challenge title">
+                    <input id="image" type="file" class="form-control mt-2 border border-dark" name="title" placeholder="insert here the challenge title">
                 </div>
                 <!-- FIN - VEO VEO-->
 
