@@ -5,7 +5,7 @@ require_once("model/connection.php");
 /* Los nombres de las funciones son explicativas. */
 class Challenge extends Connection {
 
-    public function setchalenges($text,$title, $solution, $helptext, $image, $atempts,$user_id,$category_id)
+    public function setchalenges($text,$title, $solution, $image, $atempts,$user_id,$category_id)
     {
         $date = date("Y-m-d");
         $verified=0;
@@ -13,8 +13,8 @@ class Challenge extends Connection {
         $times_played=0;
         $times_success=0;
         $dificulty=0;
-        $sql = "INSERT INTO challenge (text,title,image,solution,verified,trusted,times_played,times_success,dificulty,date,category_id,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-        $this->db->prepare($sql)->execute([$text,$title,$image,$solution,$verified,$trusted,$times_played,$times_success,$dificulty,$date,$category_id,$user_id]);
+        $sql = "INSERT INTO challenge (text,title,image,max_attempts,solution,verified,trusted,times_played,times_success,dificulty,date,category_id,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $this->db->prepare($sql)->execute([$text,$title,$image,$atempts,$solution,$verified,$trusted,$times_played,$times_success,$dificulty,$date,$category_id,$user_id]);
     }
 
 

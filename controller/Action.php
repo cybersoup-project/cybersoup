@@ -237,37 +237,44 @@ class Action {
 
                 switch ($valores['radio']){
                     case 'riddle':
-                        $helptext=$valores['helptext'];
+                        $text=$valores['helptext'];
                         $image=null;
                         $centinelaImg=false;
+                        $radio=$valores['radio'];
                         break;
                     case 'image':
                         require("utils/fileUpload.php");
                         $img = new FileUpload("image","static/img/");
                         $imagen = $img->check();
-                        $helptext=null;
+                        $text=null;
                         $centinelaImg=true;
+                        $radio=$valores['radio'];
                         break;
                     case 'words':
                         $centinelaImg=false;
-                        $helptext=null;
-                        $image=null;    
+                        $text=null;
+                        $image=null;  
+                        $radio=$valores['radio'];  
                         break;
                     default:
-                        
+                        $radio='words';//si hay algun cmbio entramos en words
+                        break;
 
                 }
                 $usersession = UserSession::getUserSession();
                 require('model/Category.php');
                 $cat= new Category();
-
+                
                 if(isset($img)){
 
                     if(count($img->errores)==0){
                         $img->upload();
-                        $challenge->setchalenges($text,$title, $solution, $helptext, $img->filename, $atempts,$usersession->getSessionValue("userid"),$cat->getCategoryIdByName());
+                        $challenge->setchalenges($text,$title, $solution, $img->filename, $atempts,$usersession->getSessionValue("userid"),$cat->getCategoryIdByName($radio));
    
                     }
+                }else {
+                    
+                    $challenge->setchalenges($text,$title, $solution, $img->filename, $atempts,$usersession->getSessionValue("userid"),$cat->getCategoryIdByName($radio));
                 }
             
             }
