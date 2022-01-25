@@ -5,7 +5,7 @@ require_once("model/connection.php");
 /* Los nombres de las funciones son explicativas. */
 class Challenge extends Connection {
 
-    public function setchalenges($text,$title, $solution, $helptext, $image, $atempts)
+    public function setchalenges($text,$title, $solution, $helptext, $image, $atempts,$user_id,$category_id)
     {
         $date = date("Y-m-d");
         $verified=0;

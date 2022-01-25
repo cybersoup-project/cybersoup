@@ -13,6 +13,7 @@ class FileUpload
     public $max_file_size;
     public $errores = array();
     public $tempdir;
+    public $filename;
     public $extension;
 
     public function __construct($tagname, $uploadpath, array $validExtensions = ['jpg','png'], $max_file_size = 5000000) // 5MB máximo
@@ -106,6 +107,7 @@ class FileUpload
             }
 
             if (move_uploaded_file($this->tempdir, $nombreCompleto)) {
+                $this->filename = $nombreArchivo . "." . $this->extension;
                 return true;
                 //echo "<br> El fichero \"$nombreCompleto\" ha sido guardado";
             } else {

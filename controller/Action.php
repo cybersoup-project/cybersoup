@@ -204,6 +204,7 @@ class Action {
                 "helptext" => $_POST['helptext'] ?? '',
                 "image" => $_POST['image'] ?? '',
                 "atempts" => $_POST['atempts'] ?? '',
+                "radio" => $_POST['categoria'] ?? ''
                 //FECHA?
             );
         //**************Validations*******************/
@@ -231,20 +232,42 @@ class Action {
             );
             $validaciones = $validation->rules($regla, $valores)->mensaje;
             print_r($validaciones);
-            foreach ($validaciones as $key => $value) {
-
-                foreach ($value as $k => $val) {
-                    
-                }
-            }
+            
             if(count($validaciones)==0){
-                require("utils/fileUpload.php");
-                $img = new FileUpload("image","static/img/");
-                $imagen = $img->check();//Solo si el tipo de reto es de imagen!!!!!!!!!!
-                if(count($img->errores)==0){
-                    $challenge->setchalenges($text,$title, $solution, $helptext, $image, $atempts);
 
-                    $img->upload();
+                switch ($valores['radio']){
+                    case 'riddle':
+                        $helptext=$valores['helptext'];
+                        $image=null;
+                        $centinelaImg=false;
+                        break;
+                    case 'image':
+                        require("utils/fileUpload.php");
+                        $img = new FileUpload("image","static/img/");
+                        $imagen = $img->check();
+                        $helptext=null;
+                        $centinelaImg=true;
+                        break;
+                    case 'words':
+                        $centinelaImg=false;
+                        $helptext=null;
+                        $image=null;    
+                        break;
+                    default:
+                        
+
+                }
+                $usersession = UserSession::getUserSession();
+                require('model/Category.php');
+                $cat= new Category();
+
+                if(isset($img)){
+
+                    if(count($img->errores)==0){
+                        $img->upload();
+                        $challenge->setchalenges($text,$title, $solution, $helptext, $img->filename, $atempts,$usersession->getSessionValue("userid"),$cat->getCategoryIdByName());
+   
+                    }
                 }
             
             }
