@@ -285,14 +285,14 @@ class Action {
                 // ! Hacer errores!!
                 echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
             }
-        } else echo $this->twig->render('Form_crear-editarChallenge.html');
+        } else echo $this->twig->render('Form_crearChallenge.html');
     }
 
     function edit() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //MUESTRA DATOS
-
+            
             // VALIDACIONES
 
             //----Data Collect--
@@ -348,7 +348,7 @@ class Action {
                     echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
             }
-        } else echo $this->twig->render('Form_crear-editarChallenge.html');
+        } else echo $this->twig->render('Form_editChallenge.html');
     }
 
     function validateChallenge() {
