@@ -344,4 +344,9 @@ class Action {
     function validateChallenge() {
         echo $this->twig->render('Form_validarChallenge.html');
     }
+
+    function game() {
+        
+        echo $this->twig->render('game.html');
+    }
 }
