@@ -206,6 +206,14 @@ class Validacion {
         $this->mensaje[$campo][] = "Field $campo must be checked.";
         return false;
     }
+
+    protected function _dificultad($campo, $valor) {
+        if ($valor == 'easy' || $valor == 'middle' || $valor == 'hard') {
+            return true;
+        }
+        $this->mensaje[$campo][] = "Field $campo only must be 'easy|middle|hard' .";
+        return false;
+    }
 }
 
 /*
