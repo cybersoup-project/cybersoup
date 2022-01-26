@@ -233,15 +233,13 @@ class Action {
             $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
             /* print_r($validaciones); */
 
-            
-            /* die(); */
-
             if (count($validaciones) == 0) {
 
                 switch ($valores['radio']) {
                     case 'riddle':
                         $text = $valores['helptext'];
                         $image = null;
+                        $centinelaImg = false;
                         $radio = $valores['radio'];
                         break;
                     case 'images':
