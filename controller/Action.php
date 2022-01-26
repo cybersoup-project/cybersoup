@@ -30,10 +30,11 @@ class Action {
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("model/Usuario.php");
+            require("utils/validation.php");
             $usuario = new Usuario();
             $valores = array(
-                "user" => $_POST['user'],
-                "pw" => $_POST['pw']
+                "user" => $_POST['user'] ?? '',
+                "pw" => $_POST['pw']  ?? ''
             );
 
             /* Busco en la base de datos a ver si hay un usuario existente */
@@ -41,33 +42,30 @@ class Action {
 
             if ($r) {
                 /* Si existe el usuario, compruebo la contraseña */
-                if (password_verify($valores['pw'], $r['pass'])) {
-                    /* require("utils/UserSession.php"); */
+                if (password_verify($valores['pw'], $r['password'])) {
+                    /* require("utils/UserSession.php");  */
                     $usersession = UserSession::getUserSession();
-                    $usersession->addSessionValue("userid", $r['id']);
-                    $usersession->addSessionValue("username", $r['usuario']);
-                    $usersession->addSessionValue("rol", 1);
-                    $mensaje = array("Has iniciado sesión.");
-                    require("model/Articulo.php");
-                    include("view/articulos.php");
+                    $usersession->addSessionValue("iduser", $r['iduser']);
+                    $usersession->addSessionValue("username", $r['username']);
+                    $usersession->addSessionValue("rol", $r['role']);
+                    $mensajes = array("Has iniciado sesión.");
+
                     /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
+                    echo $this->twig->render('profile.html', array('mensajes' => $mensajes));
                 } else {
                     /* Contraseña errónea */
                     $errores[] = "El usuario y/o la contraseña no son válidos.";
-                    include("view/login.php");
+                    echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
                 }
             } else {
                 // Usuario no válido (no existe en la base de datos). Le pongo el error e incluyo la view del login.
                 $errores[] = "El usuario y/o la contraseña no son válidos.";
-                include("view/login.php");
+                echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
             }
         } else {
             /* Muestro el formulario de registro */
             echo $this->twig->render('Form_LogIn.html');
         }
-        /* $usersession = UserSession::getUserSession();
-        $usersession->addSessionValue("username", $valores['usuario']);
-        $usersession->addSessionValue("userid", $user->getUserId($valores['usuario'])); */
     }
 
     public function register() {
@@ -164,13 +162,16 @@ class Action {
         }
     }
 
+
+
+
     function logout() {
         /* Salir de la sesión. Borro $_SESSION y la destruyo. */
         $_SESSION = array();
         session_destroy();
         header("Location: index.php");
     }
-    function profile(){
+    function profile() {
         /* echo $this->twig->render('profile.html'); */
         require("model/Challenge.php");
         $challenge = new Challenge();
@@ -178,32 +179,37 @@ class Action {
         echo $this->twig->render('profile.html', array("objectlist" => $challenges));
     }
 
-    function adminView(){
+    function adminView() {
         echo $this->twig->render('admin_view.html');
     }
+    function ranking() {
+        echo $this->twig->render('ranking.html');
+    }
 
-    function listChallengers(){
+    function listChallengers() {
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
-    function createEdit(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
-            
+
+    function create() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             //----Data Collect--
             $errores = array();
             $valores = array(
                 "title" => $_POST['title'] ?? '',
                 "solution" => $_POST['solution'] ?? '',
                 "helptext" => $_POST['helptext'] ?? '',
-                "image" => $_POST['image'] ?? '',
                 "atempts" => $_POST['atempts'] ?? '',
+                "radio" => $_POST['categoria'] ?? ''
                 //FECHA?
             );
-        //**************Validations*******************/
+            //**************Validations*******************/
             require("utils/classValidar.php");
-            $validation=new Validacion();
+            require("model/Challenge.php");
+            $validation = new Validacion();
             $challenge = new Challenge();
             $regla = array(
                 array(
@@ -222,32 +228,132 @@ class Action {
                     'name' => 'atempts',
                     'regla' => 'atemptsNum'
                 )
-                
+
             );
-            $validaciones = $validation->rules($regla, $valores)->mensaje;
-            print_r($validaciones);
-            foreach ($validaciones as $key => $value) {
+            $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
+            /* print_r($validaciones); */
 
-                foreach ($value as $k => $val) {
-                    
+            if (count($validaciones) == 0) {
+
+                switch ($valores['radio']) {
+                    case 'riddle':
+                        $text = $valores['helptext'];
+                        $image = null;
+                        $centinelaImg = false;
+                        $radio = $valores['radio'];
+                        break;
+                    case 'images':
+                        require("utils/fileUpload.php");
+                        $img = new FileUpload("image", "static/img/");
+                        $imagen = $img->check();
+                        $text = null;
+                        $radio = $valores['radio'];
+                        break;
+                    case 'words':
+                        $text = null;
+                        $image = null;
+                        $radio = $valores['radio'];
+                        break;
+                    default:
+                        $radio = 'words'; //si hay algun cmbio entramos en words
+                        $text = null;
+                        $image = null;
+                        break;
                 }
-            }
-            if(count($validaciones)==0){
-                require("utils/fileUpload.php");
-                $img = new FileUpload("image","static/img/");
-                $imagen = $img->check();//Solo si el tipo de reto es de imagen!!!!!!!!!!
-                if(count($img->errores)==0){
-                    $challenge->setchalenges($text,$title, $solution, $helptext, $image, $atempts);
 
-                    $img->upload();
+                $usersession = UserSession::getUserSession();
+                require('model/Category.php');
+                $cat = new Category();
+
+                if (isset($img)) {
+                    if (count($img->errores) == 0) {
+                        $img->upload();
+                        $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], $img->filename, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
+                        echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                    } else {
+                        // ! Hacer errores!!
+                        echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
+                    }
+                } else {
+                    $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
+                    echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
-            
+            } else {
+                // ! Hacer errores!!
+                echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
             }
-
-        }else echo $this->twig->render('Form_crear-editarChallenge.html');
+        } else echo $this->twig->render('Form_crear-editarChallenge.html');
     }
-    
-    function validateChallenge(){
+
+    function edit() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            //MUESTRA DATOS
+
+            // VALIDACIONES
+
+            //----Data Collect--
+            $errores = array();
+            $valores = array(
+                "title" => $_POST['title'] ?? '',
+                "solution" => $_POST['solution'] ?? '',
+                "helptext" => $_POST['helptext'] ?? '',
+                "image" => $_POST['image'] ?? '',
+                "atempts" => $_POST['atempts'] ?? '',
+                "radio" => $_POST['categoria'] ?? ''
+                //FECHA?
+            );
+
+            require("utils/classValidar.php");
+            require("model/Challenge.php");
+            $validation = new Validacion();
+            $challenge = new Challenge();
+            $regla = array(
+                array(
+                    'name' => 'title',
+                    'regla' => 'tit'
+                ),
+                array(
+                    'name' => 'solution',
+                    'regla' => 'solutionCh'
+                ),
+                array(
+                    'name' => 'helptext',
+                    'regla' => 'helpText'
+                ),
+                array(
+                    'name' => 'atempts',
+                    'regla' => 'atemptsNum'
+                )
+            );
+            
+            $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
+
+            if (count($validaciones) == 0) {
+
+                $usersession = UserSession::getUserSession();
+                require('model/Category.php');
+                $cat = new Category();
+
+                if (isset($img)) {
+                    if (count($img->errores) == 0) {
+                        $img->upload();
+                        $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio));
+                    }
+                } else {
+                    $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio));
+                    echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                }
+            }
+        } else echo $this->twig->render('Form_crear-editarChallenge.html');
+    }
+
+    function validateChallenge() {
         echo $this->twig->render('Form_validarChallenge.html');
+    }
+
+    function game() {
+        
+        echo $this->twig->render('game.html');
     }
 }

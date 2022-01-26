@@ -1,4 +1,29 @@
-{% extends "base.html" %} {% block main %}
+ {% extends "base.html" %} {% block script %}
+<script>
+    // Accedemos al botón
+    var riddleInput = document.getElementById('riddleInput');
+    var imageInput = document.getElementById('image');
+
+
+    // evento para el input radio del "words"
+    document.getElementById('riddleRadio').addEventListener('click', function(e) {
+        imageInput.disabled = true;
+        riddleInput.disabled = false;
+        console.log('hola');
+    });
+
+    document.getElementById('imgRadio').addEventListener('click', function(e) {
+        imageInput.disabled = false;
+        riddleInput.disabled = true;
+    });
+
+    document.getElementById('wordsRadio').addEventListener('click', function(e) {
+        imageInput.disabled = true;
+        riddleInput.disabled = true;
+    });
+</script>
+{% endblock %} {% block main %}
+
 <style>
     .square {
         width: 60px;
@@ -26,6 +51,7 @@
         }
     }
 </style>
+
 <div class="container">
     <!-- VALIDAR formulario para CHALLENGE BASICO - (PALABRA)-->
     <div class="row">
@@ -172,7 +198,7 @@
             <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
 
                 <!-- INPUT TITLE -->
-                <div class="">
+                <div>
                     <label for="title" class="form-label">Title</label>
                     <input id="title" type="text" class="form-control border border-dark" name="title" placeholder="insert here the challenge title" required>
                     <div class="valid-feedback">
@@ -190,11 +216,28 @@
                     </div>
                 </div>
                 <!-- FIN - INPUT SOLUTION -->
+                <!-- RadioButton-->
+                <div class="d-flex">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="categoria" id="riddleRadio" value="riddles">
+                        <label class="form-check-label" for="inlineRadio1">Riddle</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="categoria" id="imgRadio" value="images">
+                        <label class="form-check-label" for="inlineRadio2">Image</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="categoria" id="wordsRadio" value="words" checked>
+                        <label class="form-check-label" for="inlineRadio2">Words</label>
+                    </div>
 
+                </div>
+
+                <!-- FIN -RadioButton-->
                 <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                 <div>
                     <label for="helptext" class="form-label">Help text</label>
-                    <textarea class="form-control border border-dark" name="title" placeholder="insert here the challenge title" required></textarea>
+                    <textarea id="riddleInput" class="form-control border border-dark" name="title" placeholder="insert here the challenge title" disabled></textarea>
 
                     <div class="valid-feedback">
                         may be okay
@@ -205,7 +248,7 @@
                 <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
                 <div>
                     <label for="image" class="form-label">Image</label>
-                    <input id="image" type="file" class="form-control mt-2 border border-dark" name="title" placeholder="insert here the challenge title">
+                    <input id="image" type="file" class="form-control mt-2 border border-dark" name="image" placeholder="insert here the challenge image" disabled>
                 </div>
                 <!-- FIN - VEO VEO-->
 
