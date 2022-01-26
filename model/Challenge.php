@@ -22,13 +22,22 @@ class Challenge extends Connection {
     }
 
     public function getLast10Challenges() {
-        return $this->db->query("SELECT * FROM `challenge` ORDER BY `idchallenge` DESC LIMIT 10", PDO::FETCH_ASSOC)->fetch();
+        return $this->db->query("SELECT * FROM `challenge`  ORDER BY `idchallenge` DESC LIMIT 10", PDO::FETCH_ASSOC)->fetch();
     }
 
     public function getChallengeById($id) {
         return $this->db->query("SELECT * FROM `challenge` WHERE `idchallenge` = $id", PDO::FETCH_ASSOC)->fetch();
     }
+
     public function getMyChallenges($user_id) {
         return $this->db->query("SELECT * FROM `challenge` WHERE `user_id` = $user_id", PDO::FETCH_ASSOC)->fetchAll();
+    }
+
+    public function getNotValidChallenges() {
+        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 0", PDO::FETCH_ASSOC)->fetchAll();
+    }
+    
+    public function getLast10ChallengesVerified() {
+        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 1  ORDER BY `idchallenge` DESC LIMIT 10", PDO::FETCH_ASSOC)->fetch();
     }
 }
