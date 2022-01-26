@@ -208,6 +208,7 @@ class Action {
                 "radio" => $_POST['categoria'] ?? ''
                 //FECHA?
             );
+            
             //**************Validations*******************/
             require("utils/classValidar.php");
             require("model/Challenge.php");
@@ -328,7 +329,7 @@ class Action {
                     'regla' => 'atemptsNum'
                 )
             );
-            
+
             $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
 
             if (count($validaciones) == 0) {
@@ -355,7 +356,18 @@ class Action {
     }
 
     function game() {
-        
-        echo $this->twig->render('game.html');
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            require("model/Challenge.php");
+            $challenge = new Challenge();
+            $chl = $challenge->getChallengeById($_GET['id']);
+
+            if ($chl) {
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution'])));
+            } else {
+                // ! No Existe el reto (404)
+            }
+        } else {
+            // ! Mostrar 404
+        }
     }
 }
