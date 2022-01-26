@@ -5,22 +5,6 @@
     var imageInput = document.getElementById('image');
 
 
-    // evento para el input radio del "words"
-    document.getElementById('riddleRadio').addEventListener('click', function (e) {
-        imageInput.disabled = true;
-        riddleInput.disabled = false;
-        console.log('hola');
-    });
-
-    document.getElementById('imgRadio').addEventListener('click', function (e) {
-        imageInput.disabled = false;
-        riddleInput.disabled = true;
-    });
-
-    document.getElementById('wordsRadio').addEventListener('click', function (e) {
-        imageInput.disabled = true;
-        riddleInput.disabled = true;
-    });
 </script>
 {% endblock %} {% block main %}
 
@@ -172,11 +156,29 @@
             <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST"
                 ENCTYPE="multipart/form-data">
 
+                <!-- RadioButton-->
+                <div class="d-flex">
+                    <div class="form-check form-check-inline ">
+                        <input class="form-check-input" type="radio" name="categoria" id="riddleRadio" value="riddle" >
+                        <label class="form-check-label" for="inlineRadio1">Riddle</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="categoria" id="imgRadio" value="image" >
+                        <label class="form-check-label" for="inlineRadio2">Image</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="categoria" id="wordsRadio" value="words" checked >
+                        <label class="form-check-label" for="inlineRadio2">Words</label>
+                    </div>
+                </div>
+
+                <!-- FIN -RadioButton-->
+
                 <!-- INPUT TITLE -->
                 <div>
                     <label for="title" class="form-label">Title</label>
                     <input id="title" type="text" class="form-control border border-dark" name="title"
-                        placeholder="insert here the challenge title" required>
+                        placeholder="insert here the challenge title" value= "{{ valuesForm.title }}" required>
                     <div class="valid-feedback">
                         may be okay
                     </div>
@@ -187,29 +189,13 @@
                 <div>
                     <label for="solution" class="form-label">Solution</label>
                     <input id="solution" type="text" class="form-control border border-dark" name="solution"
-                        placeholder="insert here the challenge solution (one word)" required>
+                        placeholder="insert here the challenge solution (one word)" value= "{{ valuesForm.solution }}" required>
                     <div class="valid-feedback">
                         may be okay
                     </div>
                 </div>
                 <!-- FIN - INPUT SOLUTION -->
-                <!-- RadioButton-->
-                <div class="d-flex">
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="categoria" id="riddleRadio" value="riddle" disabled>
-                        <label class="form-check-label" for="inlineRadio1">Riddle</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="categoria" id="imgRadio" value="image" disabled>
-                        <label class="form-check-label" for="inlineRadio2">Image</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="categoria" id="wordsRadio" value="words" checked disabled>
-                        <label class="form-check-label" for="inlineRadio2">Words</label>
-                    </div>
-                </div>
-
-                <!-- FIN -RadioButton-->
+                
                 <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                 <div>
                     <label for="helptext" class="form-label">Help text</label>
@@ -221,14 +207,6 @@
                     </div>
                 </div>
                 <!-- FIN - VEO VEO o Acertijo-->
-
-                <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
-                <div>
-                    <label for="image" class="form-label">Image</label>
-                    <input id="image" type="file" class="form-control mt-2 border border-dark" name="title"
-                        placeholder="insert here the challenge title" disabled>
-                </div>
-                <!-- FIN - VEO VEO-->
 
 
                 <!-- INPUT NUMERO INTENTOS-->
@@ -246,7 +224,7 @@
                 <p>Place dificulty</p>
                 <div id="levels" class="btn-group mt-0" role="group" aria-label="Basic mixed styles example">
                     <!-- EASY -->
-                    <input type="radio" class="btn-check" name="options" id="easy" autocomplete="off" required>
+                    <input type="radio" class="btn-check" name="dificultad" value="easy" id="easy" autocomplete="off" required>
                     <label class="btn btn-outline-success" style="width: 130px;" for="easy">
                         Easy
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
@@ -257,7 +235,7 @@
                         </svg>
                     </label>
                     <!-- MIDDLE -->
-                    <input type="radio" class="btn-check" name="options" id="middle" autocomplete="off" required>
+                    <input type="radio" class="btn-check" name="dificultad" value="middle" id="middle" autocomplete="off" required>
                     <label class="btn btn-outline-warning" style="width: 130px;" for="middle">
                         Middle
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
@@ -269,7 +247,7 @@
                     </label>
 
                     <!-- HARD -->
-                    <input type="radio" class="btn-check" name="options" id="hard" autocomplete="off" required>
+                    <input type="radio" class="btn-check" name="dificultad" value="hard" id="hard" autocomplete="off" required>
                     <label class="btn btn-outline-danger" style="width: 130px;" for="hard">
                         Hard
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
@@ -282,7 +260,9 @@
                 </div>
 
                 <div class="d-flex justify-content-center mt-5">
+
                     <button type="reset" class="btn btn-secondary">Reset</button>
+
                     <button type="submit" class="btn btn-success ms-2">
                         Validate
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">

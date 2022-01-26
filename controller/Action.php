@@ -279,11 +279,29 @@ class Action {
     }
 
     function edit() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //MUESTRA DATOS
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            require("model/Challenge.php");
+            require("model/Category.php");
 
-            //MUESTRA DATOS
+            $challenge = new Challenge();
+            $category = new Category();
+
+            if ($values = $challenge->getChallengeById($_GET['idChallenge'])) 
+            {
+                $category = $category->getCategoryNameById($values['category_id']);
+
+                print_r($values);
+                print_r($category);
+                echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
+
+            }
             
-            // VALIDACIONES
+        
+        }
+
+        // VALIDACIONES
+        /*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //----Data Collect--
             $errores = array();
@@ -293,7 +311,7 @@ class Action {
                 "helptext" => $_POST['helptext'] ?? '',
                 "image" => $_POST['image'] ?? '',
                 "atempts" => $_POST['atempts'] ?? '',
-                "radio" => $_POST['categoria'] ?? ''
+                "radio" => $_POST['dificultad'] ?? ''
                 //FECHA?
             );
 
@@ -317,6 +335,10 @@ class Action {
                 array(
                     'name' => 'atempts',
                     'regla' => 'atemptsNum'
+                ),
+                array (
+                    'name' => 'radio',
+                    'regla' => 'dificultad'
                 )
             );
             
@@ -338,7 +360,7 @@ class Action {
                     echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
             }
-        } else echo $this->twig->render('Form_editChallenge.html');
+        } else echo $this->twig->render('Form_editChallenge.html');*/
     }
 
     function validateChallenge() {
