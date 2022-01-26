@@ -28,4 +28,7 @@ class Challenge extends Connection {
     public function getChallengeById($id) {
         return $this->db->query("SELECT * FROM `challenge` WHERE `idchallenge` = $id", PDO::FETCH_ASSOC)->fetch();
     }
+    public function getMyChallenges($user_id) {
+        return $this->db->query("SELECT * FROM `challenge` WHERE `user_id` = $user_id", PDO::FETCH_ASSOC)->fetchAll();
+    }
 }
