@@ -192,7 +192,7 @@ class Action {
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
-    function createEdit() {
+    function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //----Data Collect--
@@ -260,6 +260,69 @@ class Action {
                         $radio = 'words'; //si hay algun cmbio entramos en words
                         break;
                 }
+
+                $usersession = UserSession::getUserSession();
+                require('model/Category.php');
+                $cat = new Category();
+
+                if (isset($img)) {
+                    if (count($img->errores) == 0) {
+                        $img->upload();
+                        $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio));
+                    }
+                } else {
+                    $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio));
+                    echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                }
+            }
+        } else echo $this->twig->render('Form_crear-editarChallenge.html');
+    }
+
+    function edit() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            //MUESTRA DATOS
+
+            // VALIDACIONES
+
+            //----Data Collect--
+            $errores = array();
+            $valores = array(
+                "title" => $_POST['title'] ?? '',
+                "solution" => $_POST['solution'] ?? '',
+                "helptext" => $_POST['helptext'] ?? '',
+                "image" => $_POST['image'] ?? '',
+                "atempts" => $_POST['atempts'] ?? '',
+                "radio" => $_POST['categoria'] ?? ''
+                //FECHA?
+            );
+
+            require("utils/classValidar.php");
+            require("model/Challenge.php");
+            $validation = new Validacion();
+            $challenge = new Challenge();
+            $regla = array(
+                array(
+                    'name' => 'title',
+                    'regla' => 'tit'
+                ),
+                array(
+                    'name' => 'solution',
+                    'regla' => 'solutionCh'
+                ),
+                array(
+                    'name' => 'helptext',
+                    'regla' => 'helpText'
+                ),
+                array(
+                    'name' => 'atempts',
+                    'regla' => 'atemptsNum'
+                )
+            );
+            
+            $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
+
+            if (count($validaciones) == 0) {
 
                 $usersession = UserSession::getUserSession();
                 require('model/Category.php');
