@@ -94,11 +94,9 @@
                                 </div>
                                 <div class="col">
                                     <span>
-                                        {% for numero in 1..item.difficulty %}
-                                        <i class="bi bi-star-fill"></i>
-                                        {% endfor %}
-                                        {% for numero in item.difficulty..4 %}
-                                        <i class="bi bi-star"></i>
+                                        {% for i in 1..5 %}
+                                        {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                                        <i class="{{ starClass }}"></i>
                                         {% endfor %}
                                     </span>
                                 </div>
