@@ -272,11 +272,17 @@ class Action {
                         $img->upload();
                         $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], $img->filename, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
                         echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                    } else {
+                        // ! Hacer errores!!
+                        echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
                     }
                 } else {
                     $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
                     echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
+            } else {
+                // ! Hacer errores!!
+                echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
             }
         } else echo $this->twig->render('Form_crear-editarChallenge.html');
     }
