@@ -192,7 +192,7 @@ class Action {
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
-    function createEdit() {
+    function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //----Data Collect--
@@ -278,7 +278,7 @@ class Action {
         } else echo $this->twig->render('Form_crear-editarChallenge.html');
     }
 
-    function validateChallenge() {
-        echo $this->twig->render('Form_validarChallenge.html');
+    function edit() {
+        echo $this->twig->render('Form_editar.html');
     }
 }
