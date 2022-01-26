@@ -51,7 +51,8 @@ class Action {
                     $mensajes = array("Has iniciado sesión.");
 
                     /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
-                    echo $this->twig->render('profile.html', array('mensajes' => $mensajes));
+                    /* echo $this->twig->render('profile.html', array('mensajes' => $mensajes)); */
+                    header('location: ?action=profile');
                 } else {
                     /* Contraseña errónea */
                     $errores[] = "El usuario y/o la contraseña no son válidos.";
@@ -173,9 +174,10 @@ class Action {
     }
     function profile() {
         /* echo $this->twig->render('profile.html'); */
+        $usersession = UserSession::getUserSession();
         require("model/Challenge.php");
         $challenge = new Challenge();
-        $challenges = $challenge->getAllChallenges();
+        $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
         echo $this->twig->render('profile.html', array("objectlist" => $challenges));
     }
 
