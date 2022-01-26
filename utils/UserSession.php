@@ -24,7 +24,7 @@ class UserSession
 
     public function isLoggedIn()
     {
-        return isset($_SESSION['userid']);
+        return isset($_SESSION['iduser']);
     }
 
     public function getUsername()
