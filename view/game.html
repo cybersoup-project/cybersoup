@@ -45,12 +45,60 @@
         console.log("Input changed", input);
     } */
 
+    function coloreame(campos, respuesta) {
+
+        respuesta = JSON.parse(respuesta);  
+        
+        for (let index = 0; index < campos.length; index++) {
+            
+            switch(respuesta.word[index]) {
+                case "ok":
+                    campos[index].style.backgroundColor = "#0f0";
+                    break;
+                case "exists":
+                    campos[index].style.backgroundColor = "#ff0";
+                    break;
+                case "null":
+                    campos[index].style.backgroundColor = "#f00";
+                    break;
+            }
+            
+            
+        }
+
+    }
+
+    
+
     function onKeyPress(button) {
         let campos = document.getElementsByName("campo");
         let palabra = "";
 
-        if (button == "{ent}") {
-            
+        if (button == "{ent}" && campos[campos.length-1].textContent != "") {
+            // Todos los campos rellenos y listos para enviar
+            //console.log("funciona");
+            let xhr = new XMLHttpRequest();
+
+            let palabra  = "";
+
+            for (let index = 0; index < campos.length; index++) {
+                palabra = palabra + campos[index].textContent;
+            }
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const chlid = urlParams.get('id')
+
+            xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
+
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    coloreame(campos, xhr.responseText);
+                }
+            }
+
+            xhr.send();
         }
 
         if (button == "{backspace}") {
@@ -66,7 +114,7 @@
                 }
                 
             }
-        } else {
+        } else if (button != "{ent}") {
             for (let i = 0; i < campos.length; i++) {
                 /* palabra = palabra + campos[i].textContent; */
                 /* console.log(typeof button); */
