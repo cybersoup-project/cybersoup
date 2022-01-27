@@ -175,7 +175,13 @@ class Action {
     function profile() {
         /* echo $this->twig->render('profile.html'); */
         $usersession = UserSession::getUserSession();
+
+        if(!$usersession->getSessionValue("iduser")) {
+            header("Location: ?action=register");
+        }
+
         require("model/Challenge.php");
+
         $challenge = new Challenge();
         $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
         echo $this->twig->render('profile.html', array("objectlist" => $challenges));

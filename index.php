@@ -3,6 +3,7 @@ require("utils/UserSession.php");
 $usersession = UserSession::getUserSession();
 
 require_once("controller/Action.php");
+require_once("controller/Api.php");
 $map = array(
     'index' => array('controller' => 'Action', 'action' => 'index', 'rol' => 0),
     'login' => array('controller' => 'Action', 'action' => 'login', 'rol' => 0),
@@ -19,7 +20,8 @@ $map = array(
     'edit' => array('controller' => 'Action', 'action' => 'edit','rol' => 0),
     'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0),
     'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0),
-    'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0)
+    'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0),
+    'checkWord' => array('controller' => 'Api', 'action' => 'checkWord','rol' => 0)
 );
 // Parseo de la ruta
 if (isset($_GET['action'])) {
