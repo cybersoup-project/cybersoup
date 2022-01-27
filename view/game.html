@@ -45,6 +45,31 @@
         console.log("Input changed", input);
     } */
 
+    function coloreame(campos, respuesta) {
+
+        respuesta = JSON.parse(respuesta);  
+        
+        for (let index = 0; index < campos.length; index++) {
+            
+            switch(respuesta.word[index]) {
+                case "ok":
+                    campos[index].style.backgroundColor = "#0f0";
+                    break;
+                case "exists":
+                    campos[index].style.backgroundColor = "#ff0";
+                    break;
+                case "null":
+                    campos[index].style.backgroundColor = "#f00";
+                    break;
+            }
+            
+            
+        }
+
+    }
+
+    
+
     function onKeyPress(button) {
         let campos = document.getElementsByName("campo");
         let palabra = "";
@@ -69,6 +94,7 @@
             xhr.onreadystatechange = () => {
                 if(xhr.readyState == 4 && xhr.status == 200) {
                     console.log(xhr.responseText);
+                    coloreame(campos, xhr.responseText);
                 }
             }
 

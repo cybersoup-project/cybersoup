@@ -1,5 +1,7 @@
 <?php
 
+// TODO meter los intentos en la base de datos
+
 class Api {
 
     public function checkWord() {
@@ -49,6 +51,7 @@ class Api {
                         $respuesta['word'][] = "null";
                     }
                 }
+                $respuesta['status'] = "incomplete";
             }
         } else {
             // ! ID no existe o palabra no igual en longitud
