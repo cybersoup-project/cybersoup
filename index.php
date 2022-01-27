@@ -18,7 +18,8 @@ $map = array(
     'create' => array('controller' => 'Action', 'action' => 'create','rol' => 0),
     'edit' => array('controller' => 'Action', 'action' => 'edit','rol' => 0),
     'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0),
-    'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0)
+    'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0),
+    'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0)
 );
 // Parseo de la ruta
 if (isset($_GET['action'])) {

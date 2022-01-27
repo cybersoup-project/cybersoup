@@ -10,6 +10,18 @@
     background-color: rgb(235, 235, 235);
 }
 
+.challengeimage {
+    text-align: center;
+}
+
+.challengeimage > img {
+    max-height: 500px;
+}
+
+.challengeimage > p {
+    text-align: justify;
+}
+
 @media (max-width: 600px) {
     .square {
         width: 40px;

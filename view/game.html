@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+<script>
+    const Keyboard = window.SimpleKeyboard.default;
+
+    let keyboard = new Keyboard({
+        /* onChange: input => onChange(input), */
+        onKeyPress: button => onKeyPress(button),
+        mergeDisplay: true,
+        layoutName: "default",
+        layout: {
+            default: [
+                "Q W E R T Y U I O P {backspace}",
+                "A S D F G H J K L {ent}",
+                "Z X C V B N M"
+            ]
+        },
+        display: {
+            "{numbers}": "123",
+            "{ent}": "enter",
+            "{escape}": "esc ⎋",
+            "{tab}": "tab ⇥",
+            "{backspace}": "⌫",
+            "{capslock}": "caps lock ⇪",
+            "{shift}": "⇧",
+            "{controlleft}": "ctrl ⌃",
+            "{controlright}": "ctrl ⌃",
+            "{altleft}": "alt ⌥",
+            "{altright}": "alt ⌥",
+            "{metaleft}": "cmd ⌘",
+            "{metaright}": "cmd ⌘",
+            "{abc}": "ABC"
+        }
+    });
+
+
+    /* function onChange(input) {
+        document.querySelector(".input").value = input;
+        console.log("Input changed", input);
+    } */
+
+    function onKeyPress(button) {
+        let campos = document.getElementsByName("campo");
+        let palabra = "";
+
+        if (button == "{ent}") {
+            
+        }
+
+        if (button == "{backspace}") {
+            for (let i = 0; i < campos.length-1; i++) {
+                var lastfield = campos[i];
+                var newfield = campos[i+1];
+                if(newfield.textContent == "") {
+                    lastfield.textContent = "";
+                }
+
+                if(newfield == campos[campos.length-1]) {
+                    newfield.textContent = "";
+                }
+                
+            }
+        } else {
+            for (let i = 0; i < campos.length; i++) {
+                /* palabra = palabra + campos[i].textContent; */
+                /* console.log(typeof button); */
+
+                if (campos[i].textContent.length == 0) {
+                    campos[i].textContent = button;
+                    break;
+                }
+            }
+        }
+
+        /* for(let i = 0; i < campos.length; i++) {
+            palabra = palabra + campos[i].textContent;
+        } */
+
+        console.log("Button pressed", button);
+    }
+</script>
+{% endblock %}
+
+{% block main %}
+
+<div id="gamecontainer">
+    <div class="d-flex justify-content-center">
+        <!--COLUMNAS-->
+        <div class="me-3 ">
+            <p class="fs-3 square border border-3 border-secondary">C</p>
+        </div>
+        <div class="me-3 ">
+            <p class="fs-3 square border border-3 border-secondary">H</p>
+        </div>
+        <div class="me-3 ">
+            <p class="fs-3 square border border-3 border-secondary">A</p>
+        </div>
+        <div class="me-3">
+            <p class="fs-3 square border border-3 border-secondary">L</p>
+        </div>
+        <div class="me-3">
+            <p class="fs-3 square border border-3 border-secondary">L</p>
+        </div>
+        <div class="me-3">
+            <p class="fs-3 square border border-3 border-secondary">E</p>
+        </div>
+        <div class="me-3">
+            <p class="fs-3 square border border-3 border-secondary">N</p>
+        </div>
+        <div class="me-3">
+            <p class="fs-3 square border border-3 border-secondary">G</p>
+        </div>
+        <div class="me-3">
+            <p class="fs-3 square border border-3 border-secondary">E</p>
+        </div>
+    </div>
+    <!-- LINEA NO FUNCIONAL -->
+    <span class="border-bottom border-2 border-dark mb-2 mt-5"></span>
+    <div id="gamecontent" class="p-5 border border-2 mt-3">
+        <h2>{{ challenge.title }}</h2>
+        <div class="challengeimage">
+            {% if challenge.image %}
+            <img src="static/img/{{ challenge.image }}" alt="Logo">
+            {% endif %}
+            {% if challenge.text %}
+            <p>{{ challenge.text }}</p>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center my-5">
+            <!--COLUMNAS-->
+
+            {% for i in 1..length %}
+            <div class="me-3">
+                <p class="fs-3 square border border-3 border-secondary" name="campo"></p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="simple-keyboard"></div>
+    </div>
+
+</div>
+
+{% endblock %}
