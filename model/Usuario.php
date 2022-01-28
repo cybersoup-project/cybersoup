@@ -36,4 +36,9 @@ class Usuario extends Connection
         $this->db->prepare($sql)->execute([$id]);
     }
 
+    public function getRanking() { 
+        return $this->db->query("SELECT `username`, `score` FROM `user` ORDER BY `score` DESC", PDO::FETCH_ASSOC)->fetchAll();
+    }
+   
 }
+
