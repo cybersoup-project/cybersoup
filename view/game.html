@@ -45,6 +45,7 @@
         console.log("Input changed", input);
     } */
 
+<<<<<<< HEAD
     function coloreame(campos, respuesta) {
 
         respuesta = JSON.parse(respuesta);  
@@ -70,10 +71,13 @@
 
     
 
+=======
+>>>>>>> cbee486 (rafa edit)
     function onKeyPress(button) {
         let campos = document.getElementsByName("campo");
         let palabra = "";
 
+<<<<<<< HEAD
         if (button == "{ent}" && campos[campos.length-1].textContent != "") {
             // Todos los campos rellenos y listos para enviar
             //console.log("funciona");
@@ -99,6 +103,10 @@
             }
 
             xhr.send();
+=======
+        if (button == "{ent}") {
+            
+>>>>>>> cbee486 (rafa edit)
         }
 
         if (button == "{backspace}") {
@@ -114,7 +122,11 @@
                 }
                 
             }
+<<<<<<< HEAD
         } else if (button != "{ent}") {
+=======
+        } else {
+>>>>>>> cbee486 (rafa edit)
             for (let i = 0; i < campos.length; i++) {
                 /* palabra = palabra + campos[i].textContent; */
                 /* console.log(typeof button); */
