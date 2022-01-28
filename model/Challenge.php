@@ -14,7 +14,7 @@ class Challenge extends Connection
         $times_success = 0;
         $dificulty = 0;
         $sql = "INSERT INTO challenge (text,title,image,max_attempts,solution,verified,trusted,times_played,times_success,difficulty,date,category_id,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $this->db->prepare($sql)->execute([$text, $title, $image, $atempts, $solution, $verified, $trusted, $times_played, $times_success, $dificulty, $date, $category_id, $user_id]);
+        $this->db->prepare($sql)->execute([$title, $text, $image, $atempts, $solution, $verified, $trusted, $times_played, $times_success, $dificulty, $date, $category_id, $user_id]);
     }
 
     public function updateChallenges($text, $title, $image, $max_attempts, $solution, $difficulty, $idChallenge)
