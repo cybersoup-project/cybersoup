@@ -191,7 +191,10 @@ class Action {
         echo $this->twig->render('admin_view.html');
     }
     function ranking() {
-        echo $this->twig->render('ranking.html');
+        require("model/Usuario.php");
+        $ranking = new Usuario();
+        $rankings = $ranking->getRanking();
+        echo $this->twig->render('ranking.html', array("objectlist" =>$rankings));
     }
 
     function listChallengers() {

@@ -35,5 +35,9 @@ class Usuario extends Connection
         $sql = "UPDATE user SET active=1 WHERE iduser=?";
         $this->db->prepare($sql)->execute([$id]);
     }
-
+    
+    public function getRanking() {
+        //usuarios ordenados por puntuacion
+    }
 }
+
