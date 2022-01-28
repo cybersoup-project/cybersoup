@@ -149,7 +149,7 @@ class Action {
                 $user->setUsuario($valores['Username'], getHash($valores['Password']), $valores['Full Name'], $valores['Email'], $activo, $rol);
 
                 $usersession->addSessionValue("username", $valores['Username']);
-                $usersession->addSessionValue("userid", $user->getUserId($valores['Username']));
+                $usersession->addSessionValue("iduser", $user->getUserId($valores['Username']));
                 $usersession->addSessionValue("rol", $rol);
 
                 $mensaje = array("Tu usuario ha sido registrado.");
@@ -162,9 +162,6 @@ class Action {
             echo $this->twig->render('Form_Registro.html');
         }
     }
-
-
-
 
     function logout() {
         /* Salir de la sesión. Borro $_SESSION y la destruyo. */
@@ -284,7 +281,7 @@ class Action {
                         echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                     } else {
                         // ! Hacer errores!!
-                        echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
+                        echo $this->twig->render('Form_crearChallenge.html', array("errores" => "Hubo errores"));
                     }
                 } else {
                     $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
@@ -292,7 +289,7 @@ class Action {
                 }
             } else {
                 // ! Hacer errores!!
-                echo $this->twig->render('Form_crear-editarChallenge.html', array("errores" => "Hubo errores"));
+                echo $this->twig->render('Form_crearChallenge.html', array("errores" => "Hubo errores"));
             }
         } else echo $this->twig->render('Form_crearChallenge.html');
     }
