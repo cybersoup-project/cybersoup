@@ -296,28 +296,23 @@ class Action {
 
     function edit() {
         //MUESTRA DATOS
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST') {
             require("model/Challenge.php");
             require("model/Category.php");
+            require("utils/classValidar.php");
 
             $challenge = new Challenge();
             $category = new Category();
 
-            if ($values = $challenge->getChallengeById($_GET['idChallenge'])) 
-            {
+            $idChallenge = $_GET['idChallenge'];
+
+            if ($values = $challenge->getChallengeById($idChallenge)) {
                 $category = $category->getCategoryNameById($values['category_id']);
 
-                print_r($values);
-                print_r($category);
                 echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
-
             }
-            
-        
-        }
+            // VALIDACIONES
 
-        // VALIDACIONES
-        /*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //----Data Collect--
             $errores = array();
@@ -331,10 +326,7 @@ class Action {
                 //FECHA?
             );
 
-            require("utils/classValidar.php");
-            require("model/Challenge.php");
             $validation = new Validacion();
-            $challenge = new Challenge();
             $regla = array(
                 array(
                     'name' => 'title',
@@ -352,7 +344,7 @@ class Action {
                     'name' => 'atempts',
                     'regla' => 'atemptsNum'
                 ),
-                array (
+                array(
                     'name' => 'radio',
                     'regla' => 'dificultad'
                 )
@@ -362,21 +354,21 @@ class Action {
 
             if (count($validaciones) == 0) {
 
-                $usersession = UserSession::getUserSession();
-                require('model/Category.php');
-                $cat = new Category();
-
-                if (isset($img)) {
+                if (isset($img) && $category['name'] == "images") {
                     if (count($img->errores) == 0) {
                         $img->upload();
-                        $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio));
+                        $challenge->updateChallenges($valores['helptext'], $valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['dificultad'], $idChallenge);
+                        echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                     }
                 } else {
-                    $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio));
+                    $challenge->updateChallenges($valores['helptext'], $valores['title'], null, $valores['atempts'], $valores['solution'], $valores['dificultad'], $idChallenge);
                     echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
             }
-        } else echo $this->twig->render('Form_editChallenge.html');*/
+        } else {
+            echo $this->twig->render('Form_editChallenge.html');
+            echo "no hay idchallenge o es incorrecto";
+        }
     }
 
     function validateChallenge() {
