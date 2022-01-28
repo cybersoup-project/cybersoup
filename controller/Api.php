@@ -84,7 +84,6 @@ class Api {
                 } else {
                     $respuesta['status'] = "failed";
                 }
-                
             }
         } else {
             // ! ID no existe o palabra no igual en longitud
