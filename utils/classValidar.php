@@ -208,7 +208,7 @@ class Validacion {
     }
 
     protected function _dificultad($campo, $valor) {
-        if ($valor == 'easy' || $valor == 'middle' || $valor == 'hard') {
+        if ($valor == '1' || $valor == '2' || $valor == '3') {
             return true;
         }
         $this->mensaje[$campo][] = "Field $campo only must be 'easy|middle|hard' .";
