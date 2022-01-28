@@ -16,20 +16,12 @@ $map = array(
     'editChallenger' => array('controller' => 'Action', 'action' => 'editChallenger','rol' => 0),
     'profile' => array('controller' => 'Action', 'action' => 'profile', 'rol' => 0),
     'listChallengers' => array('controller' => 'Action', 'action' => 'listChallengers','rol' => 0),
-<<<<<<< HEAD
     'create' => array('controller' => 'Action', 'action' => 'create','rol' => 1),
     'edit' => array('controller' => 'Action', 'action' => 'edit','rol' => 0),
     'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0),
     'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0),
     'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0),
     'checkWord' => array('controller' => 'Api', 'action' => 'checkWord','rol' => 0)
-=======
-    'create' => array('controller' => 'Action', 'action' => 'create','rol' => 0),
-    'edit' => array('controller' => 'Action', 'action' => 'edit','rol' => 0),
-    'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0),
-    'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0),
-    'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0)
->>>>>>> cbee486 (rafa edit)
 );
 // Parseo de la ruta
 if (isset($_GET['action'])) {

@@ -4,8 +4,6 @@
     var riddleInput = document.getElementById('riddleInput');
     var imageInput = document.getElementById('image');
 
-<<<<<<< HEAD
-=======
     //nombre de categoria
     var name = "{{ category.name }}";
 
@@ -37,7 +35,6 @@
         }
     }
 
->>>>>>> cbee486 (rafa edit)
 
 </script>
 {% endblock %} {% block main %}
@@ -70,10 +67,6 @@
     }
 </style>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbee486 (rafa edit)
 <div class="container">
     <!-- VALIDAR formulario para CHALLENGE BASICO - (PALABRA)-->
     <div class="row">
@@ -194,22 +187,6 @@
             <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST"
                 ENCTYPE="multipart/form-data">
 
-<<<<<<< HEAD
-                <!-- RadioButton-->
-                <div class="d-flex">
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="categoria" id="riddleRadio" value="riddle" >
-                        <label class="form-check-label" for="inlineRadio1">Riddle</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="categoria" id="imgRadio" value="image" >
-                        <label class="form-check-label" for="inlineRadio2">Image</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="categoria" id="wordsRadio" value="words" checked >
-                        <label class="form-check-label" for="inlineRadio2">Words</label>
-                    </div>
-=======
 
                 <!-- RadioButton-->
                 <div class="d-flex">
@@ -235,15 +212,10 @@
                         <label class="form-check-label" for="inlineRadio2">Image</label>
                     </div>
                     
->>>>>>> cbee486 (rafa edit)
                 </div>
 
                 <!-- FIN -RadioButton-->
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbee486 (rafa edit)
                 <!-- INPUT TITLE -->
                 <div>
                     <label for="title" class="form-label">Title</label>
@@ -255,10 +227,6 @@
                 </div>
                 <!-- FIN - INPUT TITLE -->
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbee486 (rafa edit)
                 <!-- INPUT SOLUTION -->
                 <div>
                     <label for="solution" class="form-label">Solution</label>
@@ -270,19 +238,11 @@
                 </div>
                 <!-- FIN - INPUT SOLUTION -->
                 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbee486 (rafa edit)
                 <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                 <div>
                     <label for="helptext" class="form-label">Help text</label>
                     <textarea id="riddleInput" class="form-control border border-dark" name="title"
-<<<<<<< HEAD
-                        placeholder="insert here the challenge title" disabled></textarea>
-=======
                         placeholder="insert here the challenge title" > {{ valuesForm.text }}</textarea>
->>>>>>> cbee486 (rafa edit)
 
                     <div class="valid-feedback">
                         may be okay
@@ -290,8 +250,6 @@
                 </div>
                 <!-- FIN - VEO VEO o Acertijo-->
 
-<<<<<<< HEAD
-=======
                                 
                 <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
                 <div>
@@ -300,29 +258,20 @@
                 </div>
                 <!-- FIN - VEO VEO-->
 
->>>>>>> cbee486 (rafa edit)
 
                 <!-- INPUT NUMERO INTENTOS-->
                 <div>
                     <label for="  " class="form-label">Number of Atempts</label>
                     <input type="number" class="form-control border border-dark" style="max-width: 100px;"
-<<<<<<< HEAD
-                        name="atempts" placeholder="attempts" max="9" required>
-=======
                         name="atempts" placeholder="attempts" max="9" value="{{ valuesForm.max_attempts }}" required>
->>>>>>> cbee486 (rafa edit)
                     <div class="valid-feedback">
                         may be okay
                     </div>
                 </div>
                 <!-- FIN - INPUT NUMERO INTENTOS-->
 
-<<<<<<< HEAD
-                <!--estos deberan ser omitidos en las paginas editar/crear Challenge-->
-=======
 
                 <!--SET DIFICULT-->
->>>>>>> cbee486 (rafa edit)
                 <p>Place dificulty</p>
                 <div id="levels" class="btn-group mt-0" role="group" aria-label="Basic mixed styles example">
                     <!-- EASY -->
@@ -338,11 +287,7 @@
                     </label>
                     <!-- MIDDLE -->
                     <input type="radio" class="btn-check" name="dificultad" value="middle" id="middle" autocomplete="off" required>
-<<<<<<< HEAD
-                    <label class="btn btn-outline-warning" style="width: 130px;" for="middle">
-=======
                     <label class="btn btn-outline-warning align-middle" style="width: 130px;" for="middle">
->>>>>>> cbee486 (rafa edit)
                         Middle
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                             class="bi bi-emoji-smile" viewBox="0 0 16 16">
@@ -354,11 +299,7 @@
 
                     <!-- HARD -->
                     <input type="radio" class="btn-check" name="dificultad" value="hard" id="hard" autocomplete="off" required>
-<<<<<<< HEAD
-                    <label class="btn btn-outline-danger" style="width: 130px;" for="hard">
-=======
                     <label class="btn btn-outline-danger align-middle" style="width: 130px;" for="hard">
->>>>>>> cbee486 (rafa edit)
                         Hard
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                             class="bi bi-emoji-dizzy" viewBox="0 0 16 16">
@@ -368,14 +309,6 @@
                         </svg>
                     </label>
                 </div>
-<<<<<<< HEAD
-
-=======
-                <!--END SET DIFICULT-->
-
-
-                <!--FORM BUTTOM -->
->>>>>>> cbee486 (rafa edit)
                 <div class="d-flex justify-content-center mt-5">
 
                     <button type="reset" class="btn btn-secondary">Reset</button>
@@ -386,13 +319,8 @@
                             <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
                         </svg>
                     </button>
-<<<<<<< HEAD
-
-                </div>
-=======
                 </div>
                 
->>>>>>> cbee486 (rafa edit)
             </form>
         </div>
     </div>
