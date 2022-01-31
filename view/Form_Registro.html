@@ -1,5 +1,44 @@
 {% extends "base.html" %}
 
+{% block script %}
+
+<script>
+    let username = document.getElementById("usernameinput");
+    let feedback = document.getElementById("usernamefeedback");
+
+    username.addEventListener('input', function (evt) {
+        if (evt.target.value.length > 3) {
+            /* console.log(evt.target.value); */
+            let xhr = new XMLHttpRequest();
+
+            xhr.open("GET", "?action=userExists&user=" + evt.target.value);
+
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    let res = JSON.parse(xhr.responseText);
+                    if(res.exists) {
+                        feedback.textContent = "This username is already in use.";
+                        feedback.style.color = "#f00";
+                    } else {
+                        feedback.textContent = "This username is available.";
+                        feedback.style.color = "#0f0";
+                    }
+                    feedback.style.display = "block";
+                    
+                }
+            }
+
+            xhr.send();
+        } else {
+            feedback.style.color = "#000";
+            feedback.textContent = "Username must be at least 4 characters long.";
+        }
+    });
+</script>
+
+{% endblock %}
+
 {% block main %}
 <div class="container-fluid ">
 
@@ -39,7 +78,7 @@
 </div>
 
 <div class="row">
-    <div class="col-6 me-3">
+    <div class="col-6">
         <img class="img-fluid d-none d-md-block" src="static/vector-people.png">
     </div>
     <form class="row g-3 col-12 col-md-6 needs-validation" id="form" ACTION="" NAME="inserta" METHOD="POST"
@@ -58,22 +97,33 @@
         {% endif %}
 
         <div class="col-12 col-md-6">
-            <label for="validationCustom01" class="form-label">Full Name</label>
+            <!-- <label for="validationCustom01" class="form-label">Full Name</label>
             <input type="text" class="form-control" name="full_name" placeholder="Juan" required>
             <div class="invalid-feedback">
                 Please enter your name.
+            </div> -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="full_name" placeholder="Juan" required>
+                <label for="floatingInput">Full Name</label>
             </div>
         </div>
         <div class="col-12 col-md-6">
-            <label for="validationCustomUsername" class="form-label">Username</label>
-            <div class="input-group has-validation">
-                <span class="input-group-text" id="usuario">@</span>
-                <input type="text" class="form-control" id="validationCustomUsername" name="username"
-                    aria-describedby="inputGroupPrepend" placeholder="Juanito123" required>
-                <div class="invalid-feedback">
-                    Please enter a user name.
+            <!-- <label for="validationCustomUsername" class="form-label">Username</label> -->
+            <!-- <div class="input-group has-validation"> -->
+                <!-- <span class="input-group-text" id="usuario">@</span> -->
+                <!-- <input type="text" class="form-control" id="validationCustomUsername" name="username" 
+                    aria-describedby="inputGroupPrepend" placeholder="Juanito123" required> -->
+                <div class="form-floating mb-3">
+                    <input type="text" id="usernameinput" class="form-control" name="username" placeholder="Juanito123" required>
+                    <label for="floatingInput">Username</label>
                 </div>
-            </div>
+                <!-- <div class="invalid-feedback">
+                    Please enter a user name.
+                </div> -->
+                <div class="usernamefeedback" id="usernamefeedback">
+                    
+                </div>
+            <!-- </div> -->
         </div>
 
         {% if errores.Password %}
@@ -85,17 +135,26 @@
         {% endif %}
 
         <div class="col-12 col-md-6">
-            <label for="validationCustom05" class="form-label">Password</label>
+            <!-- <label for="validationCustom05" class="form-label">Password</label>
             <input type="password" class="form-control" id="validationCustom05" name="password" required>
             <div class="invalid-feedback">
                 Passwords do not match.
+            </div> -->
+            <div class="form-floating mb-3">
+                <input type="password" placeholder="Password" class="form-control" name="password" required>
+                <label for="floatingInput">Password</label>
             </div>
         </div>
+
         <div class="col-12 col-md-6">
-            <label for="validationCustom06" class="form-label">Repeat Password</label>
+            <!-- <label for="validationCustom06" class="form-label">Repeat Password</label>
             <input type="password" class="form-control" id="validationCustom06" name="repeat_password" required>
             <div class="invalid-feedback">
                 Passwords do not match.
+            </div> -->
+            <div class="form-floating mb-3">
+                <input type="password" placeholder="Repeat Password" class="form-control" name="repeat_password" required>
+                <label for="floatingInput">Repeat Password</label>
             </div>
         </div>
 
@@ -108,11 +167,15 @@
         {% endif %}
 
         <div class="col-12mr-1">
-            <label for="validationCustom03" class="form-label">E-mail</label>
+            <!-- <label for="validationCustom03" class="form-label">E-mail</label>
             <input type="text" class="form-control" id="validationCustom03" name="email" placeholder="Juan@algo.es"
                 required>
             <div class="invalid-feedback">
                 Enter a valid email address
+            </div> -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="email" placeholder="Juan@algo.es">
+                <label for="floatingInput">Email</label>
             </div>
         </div>
 
