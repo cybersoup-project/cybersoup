@@ -88,6 +88,7 @@ class Api {
         } else {
             // ! ID no existe o palabra no igual en longitud
             $respuesta['status'] = "err";
+            // JS won't do anything
         }
 
         header("Content-Type: application/json; charset=UTF-8");
@@ -113,5 +114,36 @@ class Api {
 
         header("Content-Type: application/json; charset=UTF-8");
         echo json_encode($respuesta);
+    }
+
+    public function getHealth() {
+        require("model/Attempts.php");
+        require("model/Challenge.php");
+
+        $usersession = UserSession::getUserSession();
+        
+        $valores = array(
+            "idchallenge" => $_GET['id'] ?? "",
+            "idusuario" => $usersession->getSessionValue("iduser")
+        );
+
+        $respuesta = array();
+
+        $attempt = new Attempts();
+        $chl = new Challenge();
+
+        $challenge = $chl->getChallengeById($valores['idchallenge']);
+
+        $attempts = $attempt->getUserAttemptsAtChallenge($valores['idusuario'], $valores['idchallenge']);
+
+        if($challenge) {
+            $respuesta['health'] = $challenge['max_attempts'] - count($attempts);
+        } else {
+            $respuesta['health'] = 0;
+        }
+
+        header("Content-Type: application/json; charset=UTF-8");
+        echo json_encode($respuesta);
+
     }
 }

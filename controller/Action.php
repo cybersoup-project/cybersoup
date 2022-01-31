@@ -380,11 +380,18 @@ class Action {
     function game() {
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             require("model/Challenge.php");
+            require("model/Attempts.php");
+
+            $usersession = UserSession::getUserSession();
             $challenge = new Challenge();
             $chl = $challenge->getChallengeById($_GET['id']);
+            $attempt = new Attempts();
+
+            $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
+            $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
 
             if ($chl) {
-                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution'])));
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
             } else {
                 // ! No Existe el reto (404)
             }
