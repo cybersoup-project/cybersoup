@@ -15,7 +15,7 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  composer.phar install
+  composer install
 ```
 
 Start the server
