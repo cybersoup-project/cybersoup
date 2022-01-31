@@ -181,7 +181,9 @@ class Action {
 
         $challenge = new Challenge();
         $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
-        echo $this->twig->render('profile.html', array("objectlist" => $challenges));
+        $challengesl = $challenge->getMyChallengesLose($usersession->getSessionValue("iduser"));
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" =>$challengesl));
+        
     }
 
     function adminView() {
