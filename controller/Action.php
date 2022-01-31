@@ -191,9 +191,12 @@ class Action {
     }
     function ranking() {
         require("model/Usuario.php");
+        $usersession = UserSession::getUserSession();
         $ranking = new Usuario();
         $rankings = $ranking->getRanking();
-        echo $this->twig->render('ranking.html', array("objectlist" =>$rankings));
+        $miRanking=array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
+        $rankingMio = $ranking->getMyRanking($usersession->getSessionValue("iduser"));
+        echo $this->twig->render('ranking.html', array("objectlist" =>$rankings, "objectlists" =>$rankingMio,'miRanking'=>$miRanking+1));
     }
 
     function listChallengers() {
