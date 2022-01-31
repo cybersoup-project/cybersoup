@@ -39,7 +39,10 @@ class Challenge extends Connection
     }
 
     public function getMyChallenges($user_id) {
-        return $this->db->query("SELECT * FROM `challenge` WHERE `user_id` = $user_id", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT `difficulty`,`category_id`,`title` FROM `challenge` WHERE `idchallenge` IN (SELECT `challenge_id` FROM `winners` WHERE `winners`.`user_id` = $user_id); ", PDO::FETCH_ASSOC)->fetchAll();
+    }
+    public function getMyChallengesLose($user_id) {
+        return $this->db->query("SELECT `difficulty`,`category_id`,`title` FROM `challenge` WHERE `idchallenge` IN (SELECT `challenge_id` FROM `losers` WHERE `losers`.`user_id` = $user_id); ", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getNotValidChallenges() {
