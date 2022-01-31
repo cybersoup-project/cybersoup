@@ -93,4 +93,25 @@ class Api {
         header("Content-Type: application/json; charset=UTF-8");
         echo json_encode($respuesta);
     }
+
+    public function userExists() {
+        require("model/Usuario.php");
+        
+        $valores = array(
+            "usuario" => $_GET['user'] ?? ""
+        );
+
+        $respuesta = array(
+            'exists' => false
+        );
+
+        $user = new Usuario();
+
+        if($user->getUserByUsername($valores['usuario'])) {
+            $respuesta['exists'] = !$respuesta['exists'];
+        }
+
+        header("Content-Type: application/json; charset=UTF-8");
+        echo json_encode($respuesta);
+    }
 }
