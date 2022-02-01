@@ -5,6 +5,15 @@
 class Api {
 
     public function checkWord() {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $usersession = UserSession::getUserSession();
+        $userid = $usersession->getSessionValue("iduser");
+
+        if($userid == 0) {
+            die("{\"status\":\"not logged in\"}");
+        }
+
         $valores = array(
             "palabra" => mb_strtoupper($_GET['palabra']) ?? "",
             "id" => $_GET['id'] ?? ""
@@ -24,10 +33,9 @@ class Api {
         // comprueba si existe el id y que las palabras tengan la misma longitud
         if ($chlrow && (mb_strlen($valores['palabra']) == mb_strlen($chlrow['solution']))) {
             require_once("model/Attempts.php");
-            $attempt = new Attempts();
-            $usersession = UserSession::getUserSession();
 
-            $userid = $usersession->getSessionValue("iduser");
+            $attempt = new Attempts();
+            
             $countattempts = $attempt->getUserAttemptsAtChallenge($userid, $valores['id']);
 
             $loser = $attempt->isUserLoserAtChallenge($userid, $valores['id']);
@@ -120,12 +128,18 @@ class Api {
         require("model/Attempts.php");
         require("model/Challenge.php");
 
+        header("Content-Type: application/json; charset=UTF-8");
+
         $usersession = UserSession::getUserSession();
         
         $valores = array(
             "idchallenge" => $_GET['id'] ?? "",
             "idusuario" => $usersession->getSessionValue("iduser")
         );
+
+        if($valores['idusuario'] == 0) {
+            die("{\"status\":\"not logged in\"}");
+        }
 
         $respuesta = array();
 
@@ -141,8 +155,6 @@ class Api {
         } else {
             $respuesta['health'] = 0;
         }
-
-        header("Content-Type: application/json; charset=UTF-8");
         echo json_encode($respuesta);
 
     }

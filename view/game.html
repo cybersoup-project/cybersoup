@@ -7,6 +7,7 @@
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="static/js/game.js"></script>
 <!-- <script>
     heartfn = () => {
@@ -230,17 +231,46 @@
     <!-- LINEA NO FUNCIONAL -->
     <span class="border-bottom border-2 border-dark mb-2 mt-5"></span>
     <div id="gamecontent" class="p-5 border border-2 mt-3">
-        {% if winner %}
-            <div class="p-4 bg-success text-white">
-                <span class="fs-3">We have a winner!</span> <span> You have already won at this challenge.</span>
+        <div id="stats" class="row text-center mb-2">
+            <div class="col">
+                <i class="bi bi-person-fill"></i> {{ challenge.times_played }} Times Played
             </div>
-        {% endif %}
-        {% if loser %}
-        <div class="p-4 bg-danger text-white">
-            <span class="fs-3">Sorry!</span> <span> You have used all the attempts you had at this challenge!</span>
+            <div class="col">
+                <i class="bi bi-person-check-fill"></i> {{ challenge.times_success }} Times Succedeed
+            </div>
+            <div class="col">
+                <i class="bi bi-bar-chart"></i>
+                {% for i in 1..5 %}
+                {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                <i class="{{ starClass }}"></i>
+                {% endfor %}
+            </div>
+            <div class="col">
+                <i class="bi bi-calendar-date"></i> {{ challenge.date }}
+            </div>
         </div>
-        {% endif %}
-        <h2>{{ challenge.title }}</h2>
+        <div id="results">
+            {% if winner %}
+            <div class="p-4 bg-success text-white mb-3">
+                <span class="fs-3 fw-bold">We have a winner!</span> <span> You have already won at this
+                    challenge.</span>
+            </div>
+            {% endif %}
+            {% if loser %}
+            <div class="p-4 bg-danger text-white mb-3">
+                <span class="fs-3 fw-bold">Sorry!</span> <span> You have used all the attempts you had at this
+                    challenge!</span>
+            </div>
+            {% endif %}
+            {% if not usersession.isLoggedIn() %}
+            <div class="p-3 bg-warning mb-3">
+                <span class="fs-3 fw-bold">Sorry!</span> <span> You must be <a href="index.php?action=login">logged
+                        in</a> to play.</span>
+            </div>
+            {% endif %}
+        </div>
+        <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill"
+                style="color: #800080"></i> {% endif %}</h2>
         <div class="challengeimage">
             {% if challenge.image %}
             <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}">

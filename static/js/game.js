@@ -1,3 +1,4 @@
+// triggered on page load and after every attempt.
 heartfn = () => {
 
     let health = document.getElementById("health");
@@ -18,9 +19,13 @@ heartfn = () => {
             respuesta = JSON.parse(xhr.responseText);
             health.innerHTML = "";
 
-            for (let index = 0; index < respuesta.health; index++) {
-                health.appendChild(heart.cloneNode(true));
-                console.log("heart");
+            if (respuesta.status == "not logged in") {
+                health.textContent = "Please log in to play.";
+            } else {
+                for (let index = 0; index < respuesta.health; index++) {
+                    health.appendChild(heart.cloneNode(true));
+                    console.log("heart");
+                }
             }
         }
     }
@@ -29,6 +34,7 @@ heartfn = () => {
 
 }
 
+// show the keyboard
 const Keyboard = window.SimpleKeyboard.default;
 
 let keyboard = new Keyboard({
@@ -66,10 +72,17 @@ let keyboard = new Keyboard({
     console.log("Input changed", input);
 } */
 
+// triggered on win
 function confettifn() {
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
     }
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Congratulations!',
+        text: 'You have already succeded at this challenge!'
+    })
 
     confetti({
         angle: randomInRange(55, 125),
@@ -89,10 +102,8 @@ function confettifn() {
 
 }
 
+// color the fields according to the answer.
 function coloreame(campos, respuesta) {
-
-    respuesta = JSON.parse(respuesta);
-
     for (let index = 0; index < campos.length; index++) {
 
         switch (respuesta.word[index]) {
@@ -113,13 +124,13 @@ function coloreame(campos, respuesta) {
     }
 }
 
+// on keyboard keypress
 function onKeyPress(button) {
     let campos = document.getElementsByName("campo");
     let palabra = "";
 
     if (button == "{ent}" && campos[campos.length - 1].textContent != "") {
-        // Todos los campos rellenos y listos para enviar
-        //console.log("funciona");
+        // if all the fields are fullfilled
         let xhr = new XMLHttpRequest();
 
         palabra = "";
@@ -132,12 +143,24 @@ function onKeyPress(button) {
         const urlParams = new URLSearchParams(queryString);
         const chlid = urlParams.get('id')
 
-        xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid, false);
+        xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log(xhr.responseText);
-                coloreame(campos, xhr.responseText);
+                res = JSON.parse(xhr.responseText);
+                if (res.status == "not logged in") {
+                    // if the user is not logged in, show a message.
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'You must be logged in to do that!',
+                        footer: 'Please&nbsp;<a href="index.php?action=login">log in</a>&nbsp;or&nbsp;<a href="index.php?action=register">register</a>'
+                    })
+                } else {
+                    // else, color the fields
+                    coloreame(campos, res);
+                }
             }
         }
 
