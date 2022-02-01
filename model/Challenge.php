@@ -50,7 +50,7 @@ class Challenge extends Connection
     }
     
     public function getLast10ChallengesVerified() {
-        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 1  ORDER BY `idchallenge` DESC LIMIT 10", PDO::FETCH_ASSOC)->fetch();
+        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 1  LIMIT 10", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getPoints() {
