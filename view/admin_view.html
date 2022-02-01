@@ -76,11 +76,9 @@
         <div class="col-xxl-4 col-lg-5 col-12">
 
             <div class="border border-secondary p-4">
-                <p class="fs-2 border-bottom border-dark"><b>User</b></p>
-                <h1 class="ps-3"><b>Alejandro</b></h1>
+                <p class="fs-2 border-bottom border-dark"><b>{{ user.username }}</b></p>
+                <h1 class="ps-3"><b>{{ name.full_name }}</b></h1>
                 <span class="ps-3 fs-4 text-secondary">admin</span>
-                <p class="ps-3 fs-4"><b>UserName</b></p>
-                <p class="ps-3 fs-4">#752</p>
 
                 <p class="fs-2 border-bottom border-dark mt-5"><b>statistics of the games</b></p>
 
@@ -99,7 +97,7 @@
                                 not validated <br>
                                 reported </h4>
                         </div>
-                        
+
                     </div>
                 </div>
                 <button type="button" class="btn btn-dark btn-lg border w-100 mt-2"
@@ -113,7 +111,6 @@
                             d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
                     </svg>
                 </button>
-                <button type="button" class="btn btn-dark btn-lg border w-100 mt-2" onClick= "location.href='?action=edit'">Edit Challenge</button>
             </div>
         </div>
 
@@ -150,7 +147,7 @@
                                         <span>Date</span>
                                     </div>
                                 </div>
-                                {% for item in objectlist %}
+                                {% for item in objectlists %}
                                 <a href="#" class="text-decoration-none p-3 hover-gray">
                                     <div class="row col-12 text-dark">
                                         <div class="col">
@@ -161,11 +158,9 @@
                                         </div>
                                         <div class="col">
                                             <span>
-                                                {% for numero in 1..item.difficulty %}
-                                                <i class="bi bi-star-fill"></i>
-                                                {% endfor %}
-                                                {% for numero in item.difficulty..4 %}
-                                                <i class="bi bi-star"></i>
+                                                {% for i in 1..5 %}
+                                                {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                                                <i class="{{ starClass }}"></i>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -181,18 +176,52 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="noValidated" role="tabpanel" aria-labelledby="noValidated-tab">
-                    <table class="table table-striped">
-                        <tr>
-                            <th class="w-50">Title</th>
-                            <th>Date</th>
-                            <th>Category</th>
-                        </tr>
-                        <tr>
-                            <td>Sin cabeza2</td>
-                            <td>04/11/2009</td>
-                            <td>Word</td>
-                        </tr>
-                    </table>
+                    <div class="row justify-content-bettwen">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="row col-12 fw-bold border-bottom border-4">
+                                    <div class="col-3">
+                                        <span>Challenger</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>Category</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>Difficulty</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span>Date</span>
+                                    </div>
+                                </div>
+                                {% for item in objectlist %}
+                                <a href="?action=edit&idChallenge={{ item.idchallenge }}"
+                                    class="text-decoration-none p-3 hover-gray">
+                                    <div class="row col-12 text-dark">
+                                        <div class="col">
+                                            <span>{{ item.title }}</span>
+                                        </div>
+                                        <div class="col">
+                                            <span>{{ item.name }}</span>
+                                        </div>
+                                        <div class="col">
+                                            <span>
+                                                {% for i in 1..5 %}
+                                                {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi
+                                                bi-star") %}
+                                                <i class="{{ starClass }}"></i>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <span>{{ item.date }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
