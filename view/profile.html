@@ -39,8 +39,10 @@
                 <div class="col-4 offset-2">
                     <h1 class=" py-3 ps-3">{{ userdata.username }}</h1>
                     <h2 class=" py-3 ps-3">#--{{ miRanking }}--#</h2>
-                    <button type="button" class="btn btn-outline-success border border-success m-3" onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
-                    <button type="button" class="btn btn-outline-success border border-success m-3" onClick="location.href='?action=adminView'">AdminView</button>
+                    <button type="button" class="btn btn-outline-success border border-success m-3"
+                        onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
+                    <button type="button" class="btn btn-outline-success border border-success m-3"
+                        onClick="location.href='?action=adminView'">AdminView</button>
                 </div>
                 <div class="col-4 text-end">
                     <img src="static/logo.png" class="img-fluid py-3 mt-3 me-5" width="400" height="500">
@@ -52,8 +54,10 @@
     </div>
     <nav class="col-12 mt-2 mb-2">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Challenges overcome</button>
-            <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Challenges non
+            <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">Challenges overcome</button>
+            <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Challenges non
                 overcome</button>
         </div>
     </nav>
@@ -65,17 +69,14 @@
                     <hr>
                     <div class="row">
                         <div class="row col-12 fw-bold border-bottom border-4">
-                            <div class="col-3">
+                            <div class="col">
                                 <span>Challenger</span>
                             </div>
-                            <div class="col-3">
+                            <div class="col">
                                 <span>Category</span>
                             </div>
-                            <div class="col-3">
+                            <div class="col">
                                 <span>Difficulty</span>
-                            </div>
-                            <div class="col-3">
-                                <span>Date</span>
                             </div>
                         </div>
                         {% for item in objectlist %}
@@ -95,9 +96,6 @@
                                         {% endfor %}
                                     </span>
                                 </div>
-                                <div class="col">
-                                    <span>{{ item.date }}</span>
-                                </div>
                             </div>
                         </a>
                         {% endfor %}
@@ -113,22 +111,19 @@
                     <hr>
                     <div class="row">
                         <div class="row col-12 fw-bold border-bottom border-4">
-                            <div class="col-3">
+                            <div class="col">
                                 <span>Challenger</span>
                             </div>
-                            <div class="col-3">
+                            <div class="col">
                                 <span>Category</span>
                             </div>
-                            <div class="col-3">
+                            <div class="col">
                                 <span>Difficulty</span>
-                            </div>
-                            <div class="col-3">
-                                <span>Date</span>
                             </div>
                         </div>
                         {% for item in objectlists %}
                         <a href="#" class="text-decoration-none p-3 hover-gray">
-                            <div class="row col-12 text-dark">
+                            <div class="row justify-content-left col-12 text-dark">
                                 <div class="col">
                                     <span>{{ item.title }}</span>
                                 </div>
@@ -142,9 +137,6 @@
                                         <i class="{{ starClass }}"></i>
                                         {% endfor %}
                                     </span>
-                                </div>
-                                <div class="col">
-                                    <span>{{ item.date }}</span>
                                 </div>
                             </div>
                         </a>

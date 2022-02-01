@@ -39,18 +39,18 @@ class Challenge extends Connection
     }
 
     public function getMyChallenges($user_id) {
-        return $this->db->query("SELECT `difficulty`,`category_id`,`title` FROM `challenge` WHERE `idchallenge` IN (SELECT `challenge_id` FROM `winners` WHERE `winners`.`user_id` = $user_id); ", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT name, difficulty, title FROM challenge JOIN winners ON winners.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE winners.user_id = $user_id", PDO::FETCH_ASSOC)->fetchAll();
     }
     public function getMyChallengesLose($user_id) {
-        return $this->db->query("SELECT `difficulty`,`category_id`,`title` FROM `challenge` WHERE `idchallenge` IN (SELECT `challenge_id` FROM `losers` WHERE `losers`.`user_id` = $user_id); ", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT name, difficulty, title FROM challenge JOIN losers ON losers.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE losers.user_id = $user_id; ", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getNotValidChallenges() {
-        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 0", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT `name`, `difficulty`, `title`,`idChallenge` FROM `challenge` JOIN category ON category.idcategory = challenge.category_id WHERE `verified` = 0 ;", PDO::FETCH_ASSOC)->fetchAll();
     }
     
     public function getLast10ChallengesVerified() {
-        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 1  LIMIT 10", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT `name`, `difficulty`, `title` FROM `challenge` JOIN category ON category.idcategory = challenge.category_id WHERE `verified` = 1 ORDER BY challenge.idchallenge DESC LIMIT 10;", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getPoints() {
