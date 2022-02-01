@@ -1,9 +1,7 @@
 {% extends "base.html" %} {% block main %}
 
 <div class="container">
-    {% for mensaje in mensajes %}
-    {{ mensaje }}
-    {% endfor %}
+    {% for mensaje in mensajes %} {{ mensaje }} {% endfor %}
     <div class="row">
         <!--FILA-->
         <div class="row d-flex justify-content-center mt-5 mb-5 ">
@@ -39,12 +37,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-4 offset-2">
-                    <h1 class=" py-3 ps-3">Alejandro</h1>
-                    <h2 class=" py-3 ps-3">#752</h2>
-                    <button type="button" class="btn btn-outline-success border border-success m-3"
-                        onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
-                    <button type="button" class="btn btn-outline-success border border-success m-3"
-                        onClick="location.href='?action=adminView'">AdminView</button>
+                    <h1 class=" py-3 ps-3">{{ userdata.username }}</h1>
+                    <h2 class=" py-3 ps-3">#--{{ miRanking }}--#</h2>
+                    <button type="button" class="btn btn-outline-success border border-success m-3" onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
+                    <button type="button" class="btn btn-outline-success border border-success m-3" onClick="location.href='?action=adminView'">AdminView</button>
                 </div>
                 <div class="col-4 text-end">
                     <img src="static/logo.png" class="img-fluid py-3 mt-3 me-5" width="400" height="500">
@@ -56,10 +52,8 @@
     </div>
     <nav class="col-12 mt-2 mb-2">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                type="button" role="tab" aria-controls="nav-home" aria-selected="true">Challenges overcome</button>
-            <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
-                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Challenges non
+            <button id="btn" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Challenges overcome</button>
+            <button id="btn" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Challenges non
                 overcome</button>
         </div>
     </nav>
