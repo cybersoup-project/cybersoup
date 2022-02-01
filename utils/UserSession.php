@@ -11,6 +11,7 @@ class UserSession
         $_SESSION['lastvisited']  = time();
         $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
         if (!isset($_SESSION['rol'])) $_SESSION['rol'] = 0;
+        if (!isset($_SESSION['iduser'])) $_SESSION['iduser'] = 0;
     }
 
     public static function getUserSession()
@@ -24,7 +25,7 @@ class UserSession
 
     public function isLoggedIn()
     {
-        return isset($_SESSION['iduser']);
+        return !($_SESSION['iduser'] === 0);
     }
 
     public function getUsername()

@@ -5,6 +5,15 @@
 class Api {
 
     public function checkWord() {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $usersession = UserSession::getUserSession();
+        $userid = $usersession->getSessionValue("iduser");
+
+        if($userid == 0) {
+            die("{\"status\":\"not logged in\"}");
+        }
+
         $valores = array(
             "palabra" => mb_strtoupper($_GET['palabra']) ?? "",
             "id" => $_GET['id'] ?? ""
@@ -24,10 +33,9 @@ class Api {
         // comprueba si existe el id y que las palabras tengan la misma longitud
         if ($chlrow && (mb_strlen($valores['palabra']) == mb_strlen($chlrow['solution']))) {
             require_once("model/Attempts.php");
-            $attempt = new Attempts();
-            $usersession = UserSession::getUserSession();
 
-            $userid = $usersession->getSessionValue("iduser");
+            $attempt = new Attempts();
+            
             $countattempts = $attempt->getUserAttemptsAtChallenge($userid, $valores['id']);
 
             $loser = $attempt->isUserLoserAtChallenge($userid, $valores['id']);
@@ -88,6 +96,7 @@ class Api {
         } else {
             // ! ID no existe o palabra no igual en longitud
             $respuesta['status'] = "err";
+            // JS won't do anything
         }
 
         header("Content-Type: application/json; charset=UTF-8");
@@ -114,4 +123,59 @@ class Api {
         header("Content-Type: application/json; charset=UTF-8");
         echo json_encode($respuesta);
     }
+
+    public function getHealth() {
+        require("model/Attempts.php");
+        require("model/Challenge.php");
+
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $usersession = UserSession::getUserSession();
+        
+        $valores = array(
+            "idchallenge" => $_GET['id'] ?? "",
+            "idusuario" => $usersession->getSessionValue("iduser")
+        );
+
+        if($valores['idusuario'] == 0) {
+            die("{\"status\":\"not logged in\"}");
+        }
+
+        $respuesta = array();
+
+        $attempt = new Attempts();
+        $chl = new Challenge();
+
+        $challenge = $chl->getChallengeById($valores['idchallenge']);
+
+        $attempts = $attempt->getUserAttemptsAtChallenge($valores['idusuario'], $valores['idchallenge']);
+
+        if($challenge) {
+            $respuesta['health'] = $challenge['max_attempts'] - count($attempts);
+        } else {
+            $respuesta['health'] = 0;
+        }
+        echo json_encode($respuesta);
+
+    }
+
+    public function getStats() {
+        require_once("model/Attempts.php");
+        require_once("model/Usuario.php");
+
+        $usersession = UserSession::getUserSession();
+        
+        $valores = array(
+            "iduser" => $usersession->getSessionValue("iduser")
+        );
+
+        $attempts = new Attempts();
+        $wins= $attempts -> getUserWins($valores['iduser']);
+        $fails= $attempts -> getUserFails($valores['iduser']);
+
+        header("Content-Type: application/json; charset=UTF-8");
+        $respuesta=array("wins" => $wins['count(*)'], "fails" => $fails['count(*)']);
+        echo json_encode($respuesta);
+
+}
 }

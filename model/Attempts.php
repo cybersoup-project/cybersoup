@@ -31,4 +31,10 @@ class Attempts extends Connection {
         $this->db->prepare($sql)->execute([$userid, $challengeid]);
     }
 
+    public function getUserWins($userid) {
+        return $this->db->query("SELECT count(*) FROM `winners` WHERE `user_id` = $userid; ", PDO::FETCH_ASSOC)->fetch();
+    }
+    public function getUserFails($userid) {
+        return $this->db->query("SELECT count(*) FROM `losers` WHERE `user_id` = $userid; ", PDO::FETCH_ASSOC)->fetch();
+    }
 }

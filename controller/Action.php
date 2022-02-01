@@ -8,23 +8,27 @@ require 'vendor/autoload.php';
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class Action {
+class Action
+{
     public $loader;
     public $twig;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
         $this->twig->addGlobal('usersession', UserSession::getUserSession());
     }
 
-    public function index() {
+    public function index()
+    {
         /* Si la acción es index, lo incluyo */
         echo $this->twig->render('index.html', array('nombre' => 'george'));
         //include("view/index.php");
     }
 
-    public function login() {
+    public function login()
+    {
 
         $errores = array();
         /* Si la petición es POST, significa que es un intento de login. */
@@ -69,7 +73,8 @@ class Action {
         }
     }
 
-    public function register() {
+    public function register()
+    {
         /* Mas o menos lo mismo que el login, pero registrando al usuario. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("utils/validation.php");
@@ -153,8 +158,9 @@ class Action {
                 $usersession->addSessionValue("rol", $rol);
 
                 $mensaje = array("Tu usuario ha sido registrado.");
-                echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
+                //echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
                 //header("Location: index.php");
+                header('location: ?action=profile');
             } else {
                 echo $this->twig->render('Form_Registro.html', array('errores' => $validaciones));
             }
@@ -163,17 +169,25 @@ class Action {
         }
     }
 
-    function logout() {
+    function logout()
+    {
         /* Salir de la sesión. Borro $_SESSION y la destruyo. */
         $_SESSION = array();
         session_destroy();
         header("Location: index.php");
     }
     function profile() {
-        /* echo $this->twig->render('profile.html'); */
+        //datos del usuario
+        require_once("model/Usuario.php");
         $usersession = UserSession::getUserSession();
+        $us= new Usuario();
+        $datos= $us->getUserById($usersession->getSessionValue("iduser"));
+        //Valor del Ranking
+        $ranking = new Usuario();
+        $rankings = $ranking->getRanking();
+        $miRanking=array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
 
-        if(!$usersession->getSessionValue("iduser")) {
+        if (!$usersession->getSessionValue("iduser")) {
             header("Location: ?action=register");
         }
 
@@ -181,27 +195,46 @@ class Action {
 
         $challenge = new Challenge();
         $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
-        echo $this->twig->render('profile.html', array("objectlist" => $challenges));
+        $challengesl = $challenge->getMyChallengesLose($usersession->getSessionValue("iduser"));
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" =>$challengesl,"userdata"=>$datos,'miRanking'=>$miRanking+1));
+        
     }
 
-    function adminView() {
-        echo $this->twig->render('admin_view.html');
-    }
-    function ranking() {
+    function adminView()
+    {
         require("model/Usuario.php");
+        require("model/Challenge.php");
+
+        $user = new Usuario();
+        $users = $user->getUserById(UserSession::getUserSession()->getSessionValue("iduser"));
+        $name = $user->getUserById(UserSession::getUserSession()->getSessionValue("iduser"));
+        
+        $challenge = new Challenge();
+        $notValidC = $challenge->getNotValidChallenges();
+        $last10ValidC = $challenge->getLast10ChallengesVerified();
+        echo $this->twig->render('admin_view.html', array("objectlist" => $notValidC, "objectlists" => $last10ValidC, "user" => $users, "name"=>$name));
+    }
+    function ranking()
+    {
+        require("model/Usuario.php");
+        $usersession = UserSession::getUserSession();
         $ranking = new Usuario();
         $rankings = $ranking->getRanking();
-        echo $this->twig->render('ranking.html', array("objectlist" =>$rankings));
+        $miRanking = array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
+        $rankingMio = $ranking->getMyRanking($usersession->getSessionValue("iduser"));
+        echo $this->twig->render('ranking.html', array("objectlist" => $rankings, "objectlists" => $rankingMio, 'miRanking' => $miRanking + 1));
     }
 
-    function listChallengers() {
+    function listChallengers()
+    {
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
     }
 
-    function create() {
+    function create()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //----Data Collect--
@@ -214,7 +247,7 @@ class Action {
                 "radio" => $_POST['categoria'] ?? ''
                 //FECHA?
             );
-            
+
             //**************Validations*******************/
             require("utils/classValidar.php");
             require("model/Challenge.php");
@@ -294,7 +327,8 @@ class Action {
         } else echo $this->twig->render('Form_crearChallenge.html');
     }
 
-    function edit() {
+    function edit()
+    {
         //MUESTRA DATOS
         if ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST') {
             require("model/Challenge.php");
@@ -371,18 +405,27 @@ class Action {
         }
     }
 
-    function validateChallenge() {
+    function validateChallenge()
+    {
         echo $this->twig->render('Form_validarChallenge.html');
     }
 
-    function game() {
+    function game()
+    {
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             require("model/Challenge.php");
+            require("model/Attempts.php");
+
+            $usersession = UserSession::getUserSession();
             $challenge = new Challenge();
             $chl = $challenge->getChallengeById($_GET['id']);
+            $attempt = new Attempts();
+
+            $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
+            $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
 
             if ($chl) {
-                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution'])));
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
             } else {
                 // ! No Existe el reto (404)
             }

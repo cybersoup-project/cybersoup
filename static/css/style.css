@@ -27,6 +27,15 @@
     display: none;
 }
 
+#health {
+    color: #f00;
+    display: inline-flex;
+}
+
+#health > i {
+    margin: 0 5px;
+}
+
 @media (max-width: 600px) {
     .square {
         width: 40px;

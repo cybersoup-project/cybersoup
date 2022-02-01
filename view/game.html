@@ -5,8 +5,46 @@
 {% endblock %}
 
 {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
-<script>
+<<<<<<< HEAD
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+=======
+>>>>>>> efa41a9837c7a79f7e01946218ed2209c0bef12f
+<script src="static/js/game.js"></script>
+<!-- <script>
+    heartfn = () => {
+
+
+        let health = document.getElementById("health");
+        let heart = document.createElement("i");
+        heart.classList = "bi bi-heart-fill";
+
+        let xhr = new XMLHttpRequest();
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const chlid = urlParams.get('id')
+
+        xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + chlid);
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+                respuesta = JSON.parse(xhr.responseText);
+                health.innerHTML = "";
+
+                for (let index = 0; index < respuesta.health; index++) {
+                    health.appendChild(heart.cloneNode(true));
+                    console.log("heart");
+                }
+            }
+        }
+
+        xhr.send();
+
+    }
+
     const Keyboard = window.SimpleKeyboard.default;
 
     let keyboard = new Keyboard({
@@ -39,19 +77,41 @@
         }
     });
 
-
     /* function onChange(input) {
         document.querySelector(".input").value = input;
         console.log("Input changed", input);
     } */
 
+    function confettifn() {
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        confetti({
+            angle: randomInRange(55, 125),
+            spread: randomInRange(50, 70),
+            particleCount: randomInRange(50, 100),
+            origin: { y: 0.6 }
+        });
+
+        setTimeout(() => {
+            confetti({
+                angle: randomInRange(55, 125),
+                spread: randomInRange(50, 70),
+                particleCount: randomInRange(50, 100),
+                origin: { y: 0.6 }
+            });
+        }, 500);
+
+    }
+
     function coloreame(campos, respuesta) {
 
-        respuesta = JSON.parse(respuesta);  
-        
+        respuesta = JSON.parse(respuesta);
+
         for (let index = 0; index < campos.length; index++) {
-            
-            switch(respuesta.word[index]) {
+
+            switch (respuesta.word[index]) {
                 case "ok":
                     campos[index].style.backgroundColor = "#0f0";
                     break;
@@ -62,24 +122,26 @@
                     campos[index].style.backgroundColor = "#f00";
                     break;
             }
-            
-            
         }
 
+        if (respuesta.status == "success") {
+            confettifn();
+        }
     }
 
-    
+
 
     function onKeyPress(button) {
         let campos = document.getElementsByName("campo");
         let palabra = "";
 
-        if (button == "{ent}" && campos[campos.length-1].textContent != "") {
+
+        if (button == "{ent}" && campos[campos.length - 1].textContent != "") {
             // Todos los campos rellenos y listos para enviar
             //console.log("funciona");
             let xhr = new XMLHttpRequest();
 
-            let palabra  = "";
+            let palabra = "";
 
             for (let index = 0; index < campos.length; index++) {
                 palabra = palabra + campos[index].textContent;
@@ -89,30 +151,31 @@
             const urlParams = new URLSearchParams(queryString);
             const chlid = urlParams.get('id')
 
-            xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
+            xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid, false);
 
             xhr.onreadystatechange = () => {
-                if(xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
                     console.log(xhr.responseText);
                     coloreame(campos, xhr.responseText);
                 }
             }
 
             xhr.send();
+            heartfn();
         }
 
         if (button == "{backspace}") {
-            for (let i = 0; i < campos.length-1; i++) {
+            for (let i = 0; i < campos.length - 1; i++) {
                 var lastfield = campos[i];
-                var newfield = campos[i+1];
-                if(newfield.textContent == "") {
+                var newfield = campos[i + 1];
+                if (newfield.textContent == "") {
                     lastfield.textContent = "";
                 }
 
-                if(newfield == campos[campos.length-1]) {
+                if (newfield == campos[campos.length - 1]) {
                     newfield.textContent = "";
                 }
-                
+
             }
         } else if (button != "{ent}") {
             for (let i = 0; i < campos.length; i++) {
@@ -125,14 +188,14 @@
                 }
             }
         }
-
-        /* for(let i = 0; i < campos.length; i++) {
-            palabra = palabra + campos[i].textContent;
-        } */
-
         console.log("Button pressed", button);
     }
-</script>
+
+
+
+    window.onload = heartfn;
+
+</script> -->
 {% endblock %}
 
 {% block main %}
@@ -171,14 +234,56 @@
     <!-- LINEA NO FUNCIONAL -->
     <span class="border-bottom border-2 border-dark mb-2 mt-5"></span>
     <div id="gamecontent" class="p-5 border border-2 mt-3">
-        <h2>{{ challenge.title }}</h2>
+        <div id="stats" class="row text-center mb-2">
+            <div class="col">
+                <i class="bi bi-person-fill"></i> {{ challenge.times_played }} Times Played
+            </div>
+            <div class="col">
+                <i class="bi bi-person-check-fill"></i> {{ challenge.times_success }} Times Succedeed
+            </div>
+            <div class="col">
+                <i class="bi bi-bar-chart"></i>
+                {% for i in 1..5 %}
+                {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                <i class="{{ starClass }}"></i>
+                {% endfor %}
+            </div>
+            <div class="col">
+                <i class="bi bi-calendar-date"></i> {{ challenge.date }}
+            </div>
+        </div>
+        <div id="results">
+            {% if winner %}
+            <div class="p-4 bg-success text-white mb-3">
+                <span class="fs-3 fw-bold">We have a winner!</span> <span> You have already won at this
+                    challenge.</span>
+            </div>
+            {% endif %}
+            {% if loser %}
+            <div class="p-4 bg-danger text-white mb-3">
+                <span class="fs-3 fw-bold">Sorry!</span> <span> You have used all the attempts you had at this
+                    challenge!</span>
+            </div>
+            {% endif %}
+            {% if not usersession.isLoggedIn() %}
+            <div class="p-3 bg-warning mb-3">
+                <span class="fs-3 fw-bold">Sorry!</span> <span> You must be <a href="index.php?action=login">logged
+                        in</a> to play.</span>
+            </div>
+            {% endif %}
+        </div>
+        <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill"
+                style="color: #800080"></i> {% endif %}</h2>
         <div class="challengeimage">
             {% if challenge.image %}
-            <img src="static/img/{{ challenge.image }}" alt="Logo">
+            <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}">
             {% endif %}
             {% if challenge.text %}
             <p>{{ challenge.text }}</p>
             {% endif %}
+        </div>
+        <div id="attempts" class="text-center">
+
         </div>
         <div class="d-flex justify-content-center my-5">
             <!--COLUMNAS-->
@@ -188,6 +293,12 @@
                 <p class="fs-3 square border border-3 border-secondary" name="campo"></p>
             </div>
             {% endfor %}
+        </div>
+        <span class="fw-bold">Your health: </span>
+        <div id="health" class="mb-3">
+            <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
+            </div>
         </div>
         <div class="simple-keyboard"></div>
     </div>
