@@ -8,34 +8,35 @@
     var name = "{{ category.name }}";
 
     switch (name) {
-        case "riddles": {
-            document.getElementById('riddleRadio').setAttribute("checked", "true");
-            document.getElementById('imgRadio').setAttribute("checked", "false");
-            document.getElementById('wordsRadio').setAttribute("checked", "false");
-            imageInput.disabled = true;
-            riddleInput.disabled = true;
-            break;
-        }
+        case "riddles":
+            {
+                document.getElementById('riddleRadio').setAttribute("checked", "true");
+                document.getElementById('imgRadio').setAttribute("checked", "false");
+                document.getElementById('wordsRadio').setAttribute("checked", "false");
+                imageInput.disabled = true;
+                riddleInput.disabled = true;
+                break;
+            }
 
-        case "images": {
-            document.getElementById('imgRadio').setAttribute("checked", "true");
-            document.getElementById('riddleRadio').setAttribute("checked", "false");
-            document.getElementById('wordsRadio').setAttribute("checked", "false");
-            imageInput.disabled = false;
-            riddleInput.disabled = true;
-            break;
-        }
-        case "words": {
-            document.getElementById('wordsRadio').setAttribute("checked", "true");
-            document.getElementById('imgRadio').setAttribute("checked", "false");
-            document.getElementById('riddleRadio').setAttribute("checked", "false");
-            imageInput.disabled = true;
-            riddleInput.disabled = false;
-            break;
-        }
+        case "images":
+            {
+                document.getElementById('imgRadio').setAttribute("checked", "true");
+                document.getElementById('riddleRadio').setAttribute("checked", "false");
+                document.getElementById('wordsRadio').setAttribute("checked", "false");
+                imageInput.disabled = false;
+                riddleInput.disabled = true;
+                break;
+            }
+        case "words":
+            {
+                document.getElementById('wordsRadio').setAttribute("checked", "true");
+                document.getElementById('imgRadio').setAttribute("checked", "false");
+                document.getElementById('riddleRadio').setAttribute("checked", "false");
+                imageInput.disabled = true;
+                riddleInput.disabled = false;
+                break;
+            }
     }
-
-
 </script>
 {% endblock %} {% block main %}
 
@@ -47,18 +48,18 @@
         vertical-align: middle;
         display: table-cell;
     }
-
+    
     .hover-gray:hover {
         background-color: rgb(235, 235, 235);
     }
-
+    
     @media (max-width: 600px) {
         .square {
             width: 40px;
             height: 40px;
         }
     }
-
+    
     @media (max-width: 500px) {
         .square {
             width: 30px;
@@ -142,7 +143,7 @@
                 </div>
                 <div class="me-3 ">
                     <p class="fs-3 square border border-3 border-dark">T</p>
-                </div> 
+                </div>
 
                 <div class="ms-2 me-3 ">
                     <p class="fs-3 square border border-3 border-dark">C</p>
@@ -184,34 +185,30 @@
 
         <!-- FORM -->
         <div class="col-12 col-md-7 d-flex justify-content-center mt-5 mb-5 fs-5">
-            <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST"
-                ENCTYPE="multipart/form-data">
+            <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
 
 
                 <!-- RadioButton-->
                 <div class="d-flex">
                     <div class="form-check form-check-inline">
 
-                        <input id="wordsRadio" class="form-check-input" type="radio" name="categoria"
-                        value="words" DISABLED>
+                        <input id="wordsRadio" class="form-check-input" type="radio" name="categoria" value="words" DISABLED>
 
                         <label class="form-check-label" for="inlineRadio2">Words</label>
                     </div>
                     <div class="form-check form-check-inline ">
 
-                        <input id="riddleRadio" class="form-check-input" type="radio" name="categoria" 
-                        value="riddle" DISABLED>
+                        <input id="riddleRadio" class="form-check-input" type="radio" name="categoria" value="riddle" DISABLED>
 
                         <label class="form-check-label" for="inlineRadio1">Riddle</label>
                     </div>
                     <div class="form-check form-check-inline">
 
-                        <input id="imgRadio" class="form-check-input" type="radio" name="categoria"
-                        value="image" DISABLED>
+                        <input id="imgRadio" class="form-check-input" type="radio" name="categoria" value="image" DISABLED>
 
                         <label class="form-check-label" for="inlineRadio2">Image</label>
                     </div>
-                    
+
                 </div>
 
                 <!-- FIN -RadioButton-->
@@ -219,8 +216,7 @@
                 <!-- INPUT TITLE -->
                 <div>
                     <label for="title" class="form-label">Title</label>
-                    <input id="title" type="text" class="form-control border border-dark" name="title"
-                        placeholder="insert here the challenge title" value= "{{ valuesForm.title }}" required>
+                    <input id="title" type="text" class="form-control border border-dark" name="title" placeholder="insert here the challenge title" value="{{ valuesForm.title }}" required>
                     <div class="valid-feedback">
                         may be okay
                     </div>
@@ -230,19 +226,17 @@
                 <!-- INPUT SOLUTION -->
                 <div>
                     <label for="solution" class="form-label">Solution</label>
-                    <input id="solution" type="text" class="form-control border border-dark" name="solution"
-                        placeholder="insert here the challenge solution (one word)" value= "{{ valuesForm.solution }}" required>
+                    <input id="solution" type="text" class="form-control border border-dark" name="solution" placeholder="insert here the challenge solution (one word)" value="{{ valuesForm.solution }}" required>
                     <div class="valid-feedback">
                         may be okay
                     </div>
                 </div>
                 <!-- FIN - INPUT SOLUTION -->
-                
+
                 <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                 <div>
                     <label for="helptext" class="form-label">Help text</label>
-                    <textarea id="riddleInput" class="form-control border border-dark" name="title"
-                        placeholder="insert here the challenge title" > {{ valuesForm.text }}</textarea>
+                    <textarea id="riddleInput" class="form-control border border-dark" name="title" placeholder="insert here the challenge title"> {{ valuesForm.text }}</textarea>
 
                     <div class="valid-feedback">
                         may be okay
@@ -250,7 +244,7 @@
                 </div>
                 <!-- FIN - VEO VEO o Acertijo-->
 
-                                
+
                 <!-- En el UNICO -UNICO- caso de que sea el juego VEO VEO -->
                 <div>
                     <label for="image" class="form-label">Image</label>
@@ -262,8 +256,7 @@
                 <!-- INPUT NUMERO INTENTOS-->
                 <div>
                     <label for="  " class="form-label">Number of Atempts</label>
-                    <input type="number" class="form-control border border-dark" style="max-width: 100px;"
-                        name="atempts" placeholder="attempts" max="9" value="{{ valuesForm.max_attempts }}" required>
+                    <input type="number" class="form-control border border-dark" style="max-width: 100px;" name="atempts" placeholder="attempts" max="9" value="{{ valuesForm.max_attempts }}" required>
                     <div class="valid-feedback">
                         may be okay
                     </div>
@@ -310,8 +303,11 @@
                     </label>
                 </div>
                 <div class="d-flex justify-content-center mt-5">
+                    <button type="submit" class="btn btn-danger ms-2">
+                        <i class="bi bi-x-lg"></i>
+                        Not Validate
+                    </button>
 
-                    <button type="reset" class="btn btn-secondary">Reset</button>
 
                     <button type="submit" class="btn btn-success ms-2">
                         Validate
@@ -320,7 +316,7 @@
                         </svg>
                     </button>
                 </div>
-                
+
             </form>
         </div>
     </div>

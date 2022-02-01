@@ -45,7 +45,8 @@
                         onClick="location.href='?action=adminView'">AdminView</button>
                 </div>
                 <div class="col-4 text-end">
-                    <img src="static/logo.png" class="img-fluid py-3 mt-3 me-5" width="400" height="500">
+                    <canvas id="chart"></canvas>
+
                 </div>
 
 
@@ -110,8 +111,10 @@
                     <h2>Challengers</h2>
                     <hr>
                     <div class="row">
-                        <div class="row col-12 fw-bold border-bottom border-4">
-                            <div class="col">
+
+                        <div class="row col-12 fw-bold ">
+                            <div class="col-3">
+
                                 <span>Challenger</span>
                             </div>
                             <div class="col">
@@ -121,6 +124,7 @@
                                 <span>Difficulty</span>
                             </div>
                         </div>
+                        <div class="col-12 border border-2"></div>
                         {% for item in objectlists %}
                         <a href="#" class="text-decoration-none p-3 hover-gray">
                             <div class="row justify-content-left col-12 text-dark">
@@ -148,4 +152,53 @@
         </div>
     </div>
 </div>
+{% endblock %} {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // <block:setup:1>
+
+    let data = {
+        labels: ['Wins', 'Fails'],
+        datasets: [{
+            label: 'dataset',
+            data: [],
+            backgroundColor: ['green', 'red'],
+        }]
+    };
+    // </block:setup>
+
+    // <block:config:0>
+    const config = {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'User Stats'
+                }
+            }
+        },
+    };
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getStats", false);
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            respuesta = JSON.parse(xhr.responseText);
+            data.datasets[0].data = [respuesta.wins, respuesta.fails];
+        }
+    }
+    xhr.send();
+
+    const myChart = new Chart(
+        document.getElementById('chart'),
+        config
+    );
+</script>
 {% endblock %}

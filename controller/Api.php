@@ -146,4 +146,24 @@ class Api {
         echo json_encode($respuesta);
 
     }
+
+    public function getStats() {
+        require_once("model/Attempts.php");
+        require_once("model/Usuario.php");
+
+        $usersession = UserSession::getUserSession();
+        
+        $valores = array(
+            "iduser" => $usersession->getSessionValue("iduser")
+        );
+
+        $attempts = new Attempts();
+        $wins= $attempts -> getUserWins($valores['iduser']);
+        $fails= $attempts -> getUserFails($valores['iduser']);
+
+        header("Content-Type: application/json; charset=UTF-8");
+        $respuesta=array("wins" => $wins['count(*)'], "fails" => $fails['count(*)']);
+        echo json_encode($respuesta);
+
+}
 }
