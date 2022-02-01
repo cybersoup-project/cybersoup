@@ -23,7 +23,8 @@ $map = array(
     'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0),
     'checkWord' => array('controller' => 'Api', 'action' => 'checkWord','rol' => 0),
     'userExists' => array('controller' => 'Api', 'action' => 'userExists','rol' => 0),
-    'getHealth' => array('controller' => 'Api', 'action' => 'getHealth','rol' => 0)
+    'getHealth' => array('controller' => 'Api', 'action' => 'getHealth','rol' => 0),
+    'getStats' => array('controller' => 'Api', 'action' => 'getStats','rol' => 0)
 );
 // Parseo de la ruta
 if (isset($_GET['action'])) {
