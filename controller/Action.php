@@ -158,8 +158,9 @@ class Action
                 $usersession->addSessionValue("rol", $rol);
 
                 $mensaje = array("Tu usuario ha sido registrado.");
-                echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
+                //echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
                 //header("Location: index.php");
+                header('location: ?action=profile');
             } else {
                 echo $this->twig->render('Form_Registro.html', array('errores' => $validaciones));
             }
@@ -175,10 +176,16 @@ class Action
         session_destroy();
         header("Location: index.php");
     }
-    function profile()
-    {
-        /* echo $this->twig->render('profile.html'); */
+    function profile() {
+        //datos del usuario
+        require_once("model/Usuario.php");
         $usersession = UserSession::getUserSession();
+        $us= new Usuario();
+        $datos= $us->getUserById($usersession->getSessionValue("iduser"));
+        //Valor del Ranking
+        $ranking = new Usuario();
+        $rankings = $ranking->getRanking();
+        $miRanking=array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
 
         if (!$usersession->getSessionValue("iduser")) {
             header("Location: ?action=register");
@@ -189,7 +196,8 @@ class Action
         $challenge = new Challenge();
         $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
         $challengesl = $challenge->getMyChallengesLose($usersession->getSessionValue("iduser"));
-        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" => $challengesl));
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" =>$challengesl,"userdata"=>$datos,'miRanking'=>$miRanking+1));
+        
     }
 
     function adminView()
