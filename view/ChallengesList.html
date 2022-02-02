@@ -2,7 +2,7 @@
 
 
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-12 col-md-8">
         <div class="container-fluid">
             <!--FILA-->
             <div class="row d-flex justify-content-center mt-5 mb-5 ">
@@ -36,9 +36,7 @@
                     <div class="me-3">
                         <p class="fs-3 square border border-3 border-dark">E</p>
                     </div>
-                    <div class="me-3">
-                        <p class="fs-3 square border border-3 border-dark">R</p>
-                    </div>
+
                     <div class="me-3">
                         <p class="fs-3 square border border-3 border-dark">S</p>
                     </div>
@@ -50,15 +48,15 @@
         <div class="row">
             <div class="row col-12 fw-bold">
                 <div class="col-3">
-                    <span>Challenger</span>
+                    <span>Challenge</span>
                 </div>
-                <div class="col-3">
+                <div class="col-3 d-none d-md-block">
                     <span>Category</span>
                 </div>
-                <div class="col-3">
+                <div class="col-3 offset-3 offset-md-0">
                     <span>Difficulty</span>
                 </div>
-                <div class="col-3">
+                <div class="col-3 d-none d-md-block">
                     <span>Date</span>
                 </div>
             </div>
@@ -69,7 +67,7 @@
                     <div class="col">
                         <span>{{ item.title }}</span>
                     </div>
-                    <div class="col">
+                    <div class="col d-none d-md-block">
                         <span>{{ item.name }}</span>
                     </div>
                     <div class="col">
@@ -80,7 +78,7 @@
                             {% endfor %}
                         </span>
                     </div>
-                    <div class="col">
+                    <div class="col d-none d-md-block">
                         <span>{{ item.date }}</span>
                     </div>
                 </div>
