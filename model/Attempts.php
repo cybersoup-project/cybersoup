@@ -17,18 +17,21 @@ class Attempts extends Connection {
     }
 
     public function setAttempt($userid, $challengeid, $solution) {
-        $sql = "INSERT INTO attempts (solution, user_id, challenge_id) VALUES (?,?,?)";
-        $this->db->prepare($sql)->execute([$solution, $userid, $challengeid]);
+        $date = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO attempts (solution, user_id, challenge_id, date) VALUES (?,?,?,?)";
+        $this->db->prepare($sql)->execute([$solution, $userid, $challengeid, $date]);
     }
 
     public function setWinner($attempt_nr, $userid, $challengeid) {
-        $sql = "INSERT INTO winners (attempt, user_id, challenge_id) VALUES (?,?,?)";
-        $this->db->prepare($sql)->execute([$attempt_nr, $userid, $challengeid]);
+        $date = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO winners (attempt, user_id, challenge_id, date) VALUES (?,?,?,?)";
+        $this->db->prepare($sql)->execute([$attempt_nr, $userid, $challengeid, $date]);
     }
 
     public function setLoser($userid, $challengeid) {
-        $sql = "INSERT INTO losers (user_id, challenge_id) VALUES (?,?)";
-        $this->db->prepare($sql)->execute([$userid, $challengeid]);
+        $date = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO losers (user_id, challenge_id) VALUES (?,?.?)";
+        $this->db->prepare($sql)->execute([$userid, $challengeid, $date]);
     }
 
     public function getUserWins($userid) {
