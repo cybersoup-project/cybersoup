@@ -278,27 +278,22 @@ class Action
             if (count($validaciones) == 0) {
 
                 switch ($valores['radio']) {
-                    case 'riddle':
-                        $text = $valores['helptext'];
+                    case 'riddles':
                         $image = null;
-                        $centinelaImg = false;
-                        $radio = $valores['radio'];
+                        $radio = 'riddles';
                         break;
                     case 'images':
                         require("utils/fileUpload.php");
                         $img = new FileUpload("image", "static/img/");
                         $imagen = $img->check();
-                        $text = null;
-                        $radio = $valores['radio'];
+                        $radio = 'images';
                         break;
                     case 'words':
-                        $text = null;
                         $image = null;
-                        $radio = $valores['radio'];
+                        $radio = 'words';
                         break;
                     default:
                         $radio = 'words'; //si hay algun cmbio entramos en words
-                        $text = null;
                         $image = null;
                         break;
                 }
@@ -310,14 +305,14 @@ class Action
                 if (isset($img)) {
                     if (count($img->errores) == 0) {
                         $img->upload();
-                        $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], $img->filename, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
+                        $challenge->setchalenges($valores['helptext'],$valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'] ,$usersession->getSessionValue("iduser"));
                         echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                     } else {
                         // ! Hacer errores!!
                         echo $this->twig->render('Form_crearChallenge.html', array("errores" => "Hubo errores"));
                     }
                 } else {
-                    $challenge->setchalenges($valores['title'], $valores['helptext'], $valores['solution'], null, $valores['atempts'], $usersession->getSessionValue("iduser"), $cat->getCategoryIdByName($radio)['idcategory']);
+                    $challenge->setchalenges($valores['helptext'],$valores['title'], $valores['solution'], null, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
                     echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
             } else {
