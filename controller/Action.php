@@ -388,6 +388,11 @@ class Action
                     echo $this->twig->render('admin_view.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
             }
+            else
+            {
+                echo $this->twig->render('Form_editChallenge.html', array("errores" => "Hubo errores"));
+            }
+            
         } else if ($values = $challenge->getChallengeById($idChallenge)) {
                 $category = $category->getCategoryNameById($values['category_id']);
 
