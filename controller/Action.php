@@ -376,13 +376,18 @@ class Action
                     if (count($img->errores) == 0) {
                         $img->upload();
                         $challenge->updateChallenges($valores['helptext'], $valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
-                        echo $this->twig->render('admin_view.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                        header ("Location: index.php?action=adminView");
                     }
                 } else {
                     $challenge->updateChallenges($valores['helptext'], $valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
-                    echo $this->twig->render('admin_view.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                    header ("Location: index.php?action=adminView");
                 }
             }
+            else
+            {
+                echo $this->twig->render('Form_editChallenge.html', array("errores" => "Hubo errores"));
+            }
+            
         } else if ($values = $challenge->getChallengeById($idChallenge)) {
                 $category = $category->getCategoryNameById($values['category_id']);
 
