@@ -93,14 +93,11 @@
                         </div>
 
                         <div class="ms-2 text-start">
-                            <h4>valid <br>
-                                not validated <br>
-                                reported </h4>
+                            <h4>valid <br> not validated <br> reported </h4>
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-dark btn-lg border w-100 mt-2"
-                    onClick="location.href='?action=create'">
+                <button type="button" class="btn btn-dark btn-lg border w-100 mt-2" onClick="location.href='?action=create'">
                     Create challenge
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
@@ -117,13 +114,11 @@
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed"
-                        type="button" role="tab" aria-controls="completed" aria-selected="true">Last 10 Challenges
+                    <button class="nav-link active" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="true">Last 10 Challenges
                         validated</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="noValidated-tab" data-bs-toggle="tab" data-bs-target="#noValidated"
-                        type="button" role="tab" aria-controls="noValidated" aria-selected="false">Challenges Not
+                    <button class="nav-link" id="noValidated-tab" data-bs-toggle="tab" data-bs-target="#noValidated" type="button" role="tab" aria-controls="noValidated" aria-selected="false">Challenges Not
                         Validated</button>
                 </li>
             </ul>
@@ -170,13 +165,13 @@
                 </div>
                 <div class="tab-pane fade" id="noValidated" role="tabpanel" aria-labelledby="noValidated-tab">
                     <div class="row justify-content-bettwen">
-                        <div class="col-8">
+                        <div class="col-11">
                             <div class="row">
                                 <div class="row col-12 fw-bold border-bottom border-4">
                                     <div class="col">
                                         <span>Challenger</span>
                                     </div>
-                                    <div class="col">
+                                    <div class="col d-none d-md-block">
                                         <span>Category</span>
                                     </div>
                                     <div class="col">
@@ -184,13 +179,12 @@
                                     </div>
                                 </div>
                                 {% for item in objectlist %}
-                                <a href="?action=edit&idChallenge={{ item.idChallenge }}"
-                                    class="text-decoration-none p-3 hover-gray">
+                                <a href="?action=edit&idChallenge={{ item.idChallenge }}" class="text-decoration-none p-3 hover-gray">
                                     <div class="row col-12 text-dark">
                                         <div class="col">
                                             <span>{{ item.title }}</span>
                                         </div>
-                                        <div class="col">
+                                        <div class="col d-none d-md-block">
                                             <span>{{ item.name }}</span>
                                         </div>
                                         <div class="col">
