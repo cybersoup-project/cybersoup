@@ -58,4 +58,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9265ADBE89434B66A166CC6478AA3E12 }}
           package: .
-          run: sh /home/site/prepare.sh
