@@ -27,8 +27,8 @@ class Usuario extends Connection
     public function setUsuario($usuario, $pw, $full_name, $email, $active, $role)
     {
         $creation_date = date("Y-m-d");
-        $sql = "INSERT INTO user (username, password, full_name, email, active, role, creation_date) VALUES (?,?,?,?,?,?,?)";
-        $this->db->prepare($sql)->execute([$usuario, $pw, $full_name, $email, $active, $role, $creation_date]);
+        $sql = "INSERT INTO user (username, password, full_name, email, active, role, creation_date, score) VALUES (?,?,?,?,?,?,?,?)";
+        $this->db->prepare($sql)->execute([$usuario, $pw, $full_name, $email, $active, $role, $creation_date, 0]);
     }
 
     public function setValidateUserById($id) {

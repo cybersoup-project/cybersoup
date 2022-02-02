@@ -7,7 +7,7 @@ class Challenge extends Connection
 {
 
     public function setchalenges($text, $title, $solution, $image, $atempts, $user_id, $category_id) {
-        $date = date("Y-m-d");
+        $date = date("Y-m-d H:i:s");
         $verified = 0;
         $trusted = 0;
         $times_played = 0;
