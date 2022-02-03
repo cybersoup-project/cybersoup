@@ -30,7 +30,7 @@ class Attempts extends Connection {
 
     public function setLoser($userid, $challengeid) {
         $date = date("Y-m-d H:i:s");
-        $sql = "INSERT INTO losers (user_id, challenge_id) VALUES (?,?.?)";
+        $sql = "INSERT INTO losers (user_id, challenge_id, date) VALUES (?,?,?)";
         $this->db->prepare($sql)->execute([$userid, $challengeid, $date]);
     }
 
