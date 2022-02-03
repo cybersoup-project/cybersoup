@@ -36,6 +36,12 @@
     margin: 0 5px;
 }
 
+@media screen and (max-width: 576px) {
+    .container {
+        padding: 0 !important;
+    }
+}
+
 @media (max-width: 600px) {
     .square {
         width: 40px;

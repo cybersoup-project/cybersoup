@@ -47,23 +47,25 @@
     </div>
     <!-- LINEA NO FUNCIONAL -->
     <span class="border-bottom border-2 border-dark mb-2 mt-5"></span>
-    <div id="gamecontent" class="p-0 p-md-5 border border-2 mt-3">
-        <div id="stats" class="row text-center mb-2">
-            <div class="col">
-                <i class="bi bi-person-fill"></i> {{ challenge.times_played }} Times Played
-            </div>
-            <div class="col">
-                <i class="bi bi-person-check-fill"></i> {{ challenge.times_success }} Times Succedeed
-            </div>
-            <div class="col">
-                <i class="bi bi-bar-chart"></i>
-                {% for i in 1..5 %}
-                {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
-                <i class="{{ starClass }}"></i>
-                {% endfor %}
-            </div>
-            <div class="col">
-                <i class="bi bi-calendar-date"></i> {{ challenge.date }}
+    <div id="gamecontent" class="bg-light mt-3">
+        <div class="container-fluid">
+            <div id="stats" class="row text-center bg-light p-2">
+                <div class="col-12 col-md-6 col-lg">
+                    <i class="bi bi-person-fill"></i> {{ challenge.times_played }} Times Played
+                </div>
+                <div class="col-12 col-md-6 col-lg">
+                    <i class="bi bi-person-check-fill"></i> {{ challenge.times_success }} Times Succedeed
+                </div>
+                <div class="col-12 col-md-6 col-lg">
+                    <i class="bi bi-bar-chart"></i>
+                    {% for i in 1..5 %}
+                    {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                    <i class="{{ starClass }}"></i>
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-md-6 col-lg">
+                    <i class="bi bi-calendar-date"></i> {{ challenge.date }}
+                </div>
             </div>
         </div>
         <div id="results">
@@ -86,32 +88,32 @@
             </div>
             {% endif %}
         </div>
-        <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill"
-                style="color: #800080"></i> {% endif %}</h2>
-        <div class="challengeimage">
-            {% if challenge.image %}
-            <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}">
-            {% endif %}
-            {% if challenge.text %}
-            <p>{{ challenge.text }}</p>
-            {% endif %}
-        </div>
-        <div id="attempts" class="text-center">
-
-        </div>
-        <div class="d-flex justify-content-center my-5">
-            <!--COLUMNAS-->
-
-            {% for i in 1..length %}
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-secondary" name="campo"></p>
+        <div class="p-1 p-md-4">
+            <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill"
+                    style="color: #800080"></i> {% endif %}</h2>
+            <div class="challengeimage">
+                {% if challenge.image %}
+                <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}">
+                {% endif %}
+                {% if challenge.text %}
+                <p>{{ challenge.text }}</p>
+                {% endif %}
             </div>
-            {% endfor %}
-        </div>
-        <span class="fw-bold">Your health: </span>
-        <div id="health" class="mb-3">
-            <div class="spinner-border" role="status">
-                <span class="sr-only"></span>
+            <div id="attempts" class="text-center">
+            </div>
+            <div class="d-flex justify-content-center my-5">
+                <!--WORD FIELDS-->
+                {% for i in 1..length %}
+                <div class="mx-1">
+                    <p class="fs-3 square border border-3 border-secondary" name="campo"></p>
+                </div>
+                {% endfor %}
+            </div>
+            <span class="fw-bold">Your health: </span>
+            <div id="health" class="mb-3">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                </div>
             </div>
         </div>
         <div class="simple-keyboard"></div>

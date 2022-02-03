@@ -55,16 +55,21 @@ class Api {
                     $countattempts = $attempt->getUserAttemptsAtChallenge($userid, $valores['id']);
                     if ($chlrow['max_attempts'] > count($countattempts)) { // * still has attempts left
 
+                        
                         if ($valores['palabra'] === $valores['solution']) { // * word is equal = win
 
                             $respuesta['status'] = "success";
-                            for ($i = 0; $i < mb_strlen($sol); $i += 1) {
+                            for ($i = 0; $i < mb_strlen($valores['solution']); $i += 1) {
                                 $respuesta['word'][] = "ok";
                             }
 
                             // * Winner winner chicken dinner
-                            $attempt->setAttempt($userid, $valores['id'], $valores['palabra']);
-                            $attempt->setWinner(count($countattempts), $userid, $valores['id']);
+
+                            // $attempt->setAttempt($userid, $valores['id'], $valores['palabra']);
+                            // We don't store the win as an attempt but we add one to the attempt count
+                            // in the winner table.
+
+                            $attempt->setWinner(count($countattempts) + 1, $userid, $valores['id']);
                         } else { // * word is not equal, set attempt and response.
                             $intento = mb_str_split($valores['palabra']);
                             $sol = mb_str_split($valores['solution']);
@@ -90,6 +95,9 @@ class Api {
                         $attempt->setLoser($userid, $valores['id']);
                     }
                 } else {
+                    if($winner) {
+                        $respuesta['status'] = "success";
+                    }
                     // * user is already a winner or a loser
                 }
             } else {

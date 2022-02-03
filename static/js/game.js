@@ -98,16 +98,18 @@ let keyboard = new Keyboard({
 } */
 
 // triggered on win
-function confettifn() {
+function confettifn(respuesta) {
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    Swal.fire({
-        icon: 'success',
-        title: 'Congratulations!',
-        text: 'You have already succeded at this challenge!'
-    })
+    if (respuesta.word.length != 0) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Congratulations!',
+            text: 'You have succeded at this challenge!'
+        })
+    }
 
     confetti({
         angle: randomInRange(55, 125),
@@ -144,7 +146,7 @@ function coloreame(campos, respuesta) {
     }
 
     if (respuesta.status == "success") {
-        confettifn();
+        confettifn(respuesta);
     }
 }
 
