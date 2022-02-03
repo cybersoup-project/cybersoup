@@ -1,3 +1,23 @@
+
+// https://animate.style/
+const animateCSS = (element, animation, prefix = 'animate__') =>
+    // We create a Promise and return it
+    new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`;
+        const node = document.querySelector(element);
+
+        node.classList.add(`${prefix}animated`, animationName);
+
+        // When the animation ends, we clean the classes and resolve the Promise
+        function handleAnimationEnd(event) {
+            event.stopPropagation();
+            node.classList.remove(`${prefix}animated`, animationName);
+            resolve('Animation ended');
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd, { once: true });
+    });
+
 // triggered on page load and after every attempt.
 heartfn = () => {
 
@@ -22,9 +42,14 @@ heartfn = () => {
             if (respuesta.status == "not logged in") {
                 health.textContent = "Please log in to play.";
             } else {
-                for (let index = 0; index < respuesta.health; index++) {
-                    health.appendChild(heart.cloneNode(true));
-                    console.log("heart");
+                if (respuesta.health > 0) {
+                    for (let index = 0; index < respuesta.health; index++) {
+                        health.appendChild(heart.cloneNode(true));
+                        console.log("heart");
+                    }
+                } else {
+                    health.textContent = "Out of lives!";
+                    animateCSS('#health', 'shakeX');
                 }
             }
         }
@@ -73,16 +98,18 @@ let keyboard = new Keyboard({
 } */
 
 // triggered on win
-function confettifn() {
+function confettifn(respuesta) {
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    Swal.fire({
-        icon: 'success',
-        title: 'Congratulations!',
-        text: 'You have already succeded at this challenge!'
-    })
+    if (respuesta.word.length != 0) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Congratulations!',
+            text: 'You have succeded at this challenge!'
+        })
+    }
 
     confetti({
         angle: randomInRange(55, 125),
@@ -105,7 +132,6 @@ function confettifn() {
 // color the fields according to the answer.
 function coloreame(campos, respuesta) {
     for (let index = 0; index < campos.length; index++) {
-
         switch (respuesta.word[index]) {
             case ("ok" || respuesta.status == "success"):
                 campos[index].style.backgroundColor = "#0f0";
@@ -120,7 +146,7 @@ function coloreame(campos, respuesta) {
     }
 
     if (respuesta.status == "success") {
-        confettifn();
+        confettifn(respuesta);
     }
 }
 
@@ -158,7 +184,7 @@ function onKeyPress(button) {
                         footer: 'Please&nbsp;<a href="index.php?action=login">log in</a>&nbsp;or&nbsp;<a href="index.php?action=register">register</a>'
                     })
                 } else {
-                    // else, color the fields
+                    // else, color the fields or/and show modals
                     coloreame(campos, res);
                 }
             }
