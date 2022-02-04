@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <!--FILA-->
-        <div class="row justify-content-center mt-5 mb-5 ">
+        <div class="row justify-content-center ms-2 ms-md-none mt-5 mb-5 ">
             <!-- CONTENEDOR-->
             <div class="d-flex justify-content-center dflex d-md-none">
                 <!--COLUMNAS-->
@@ -86,9 +86,9 @@
                     <div class="d-flex ">
 
                         <div class="ps-2 text-end">
-                            <h4><span class="text-success">34</span><br>
-                                <span class="text-primary">4</span><br>
-                                <span class="text-danger">3</span>
+                            <h4><span class="text-success">{{ valid }}</span><br>
+                                <span class="text-primary">{{ NotValid }}</span><br>
+                                <span class="text-danger">...</span>
                             </h4>
                         </div>
 
@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="col">
                                             <span>
-                                                {% for i in 1..5 %}
+                                                {% for i in 1..3 %}
                                                 {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
                                                 <i class="{{ starClass }}"></i>
                                                 {% endfor %}
@@ -189,7 +189,7 @@
                                         </div>
                                         <div class="col">
                                             <span>
-                                                {% for i in 1..5 %}
+                                                {% for i in 1..3 %}
                                                 {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi
                                                 bi-star") %}
                                                 <i class="{{ starClass }}"></i>
