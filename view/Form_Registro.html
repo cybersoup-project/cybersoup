@@ -14,10 +14,10 @@
             xhr.open("GET", "?action=userExists&user=" + evt.target.value);
 
             xhr.onreadystatechange = () => {
-                if(xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
                     console.log(xhr.responseText);
                     let res = JSON.parse(xhr.responseText);
-                    if(res.exists) {
+                    if (res.exists) {
                         feedback.textContent = "This username is already in use.";
                         feedback.style.color = "#f00";
                     } else {
@@ -25,7 +25,7 @@
                         feedback.style.color = "#0f0";
                     }
                     feedback.style.display = "block";
-                    
+
                 }
             }
 
@@ -40,178 +40,182 @@
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid ">
+<div class="container-xl py-4">
+    <div class="container-fluid ">
 
-    <!--FILA-->
-    <div class="row d-flex justify-content-center my-4">
-        <!-- CONTENEDOR-->
-        <div class="d-flex justify-content-center ">
-            <!--COLUMNAS-->
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">R</p>
-            </div>
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">E</p>
-            </div>
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">G</p>
-            </div>
-            <div class="me-3 ">
-                <p class="fs-3 square border border-3 border-dark">I</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">S</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">T</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">E</p>
-            </div>
-            <div class="me-3">
-                <p class="fs-3 square border border-3 border-dark">R</p>
-            </div>
+        <!--FILA-->
+        <div class="row d-flex justify-content-center my-4">
+            <!-- CONTENEDOR-->
+            <div class="d-flex justify-content-center ">
+                <!--COLUMNAS-->
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">R</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">G</p>
+                </div>
+                <div class="me-3 ">
+                    <p class="fs-3 square border border-3 border-dark">I</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">S</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">T</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">E</p>
+                </div>
+                <div class="me-3">
+                    <p class="fs-3 square border border-3 border-dark">R</p>
+                </div>
 
+            </div>
+            <span class="mt-4 border-bottom border-2 border-dark col-md-7 col-11"></span>
         </div>
-        <span class="mt-4 border-bottom border-2 border-dark col-md-7 col-11"></span>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-6">
-        <img class="img-fluid d-none d-md-block" src="static/vector-people.png">
-    </div>
-    <form class="col-12 col-md-6 needs-validation pt-5" id="form" ACTION="" NAME="inserta" METHOD="POST"
-        ENCTYPE="multipart/form-data">
-        <div class="row">
-            {% if errores['Full Name'] %}
-            <div class="col-12">
-                {% for error in errores['Full Name'] %}
+    <div class="row">
+        <div class="col-6">
+            <img class="img-fluid d-none d-md-block" src="static/vector-people.png">
+        </div>
+        <form class="col-12 col-md-6 needs-validation pt-5" id="form" ACTION="" NAME="inserta" METHOD="POST"
+            ENCTYPE="multipart/form-data">
+            <div class="row">
+                {% if errores['Full Name'] %}
+                <div class="col-12">
+                    {% for error in errores['Full Name'] %}
                     <p class="text-danger my-0">{{ error }}</p>
-                {% endfor %}
-    
-                {% for error in errores.Username %}
+                    {% endfor %}
+
+                    {% for error in errores.Username %}
                     <p class="text-danger my-0">{{ error }}</p>
-                {% endfor %}
-            </div>
-            {% endif %}
-    
-            <div class="col-12 col-md-6">
-                <!-- <label for="validationCustom01" class="form-label">Full Name</label>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="col-12 col-md-6">
+                    <!-- <label for="validationCustom01" class="form-label">Full Name</label>
                 <input type="text" class="form-control" name="full_name" placeholder="Juan" required>
                 <div class="invalid-feedback">
                     Please enter your name.
                 </div> -->
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="full_name" placeholder="Juan" required>
-                    <label for="floatingInput">Full Name</label>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="full_name" placeholder="Juan" required>
+                        <label for="floatingInput">Full Name</label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <!-- <label for="validationCustomUsername" class="form-label">Username</label> -->
-                <!-- <div class="input-group has-validation"> -->
+                <div class="col-12 col-md-6">
+                    <!-- <label for="validationCustomUsername" class="form-label">Username</label> -->
+                    <!-- <div class="input-group has-validation"> -->
                     <!-- <span class="input-group-text" id="usuario">@</span> -->
                     <!-- <input type="text" class="form-control" id="validationCustomUsername" name="username"
                         aria-describedby="inputGroupPrepend" placeholder="Juanito123" required> -->
                     <div class="form-floating mb-3">
-                        <input type="text" id="usernameinput" class="form-control" name="username" placeholder="Juanito123" required>
+                        <input type="text" id="usernameinput" class="form-control" name="username"
+                            placeholder="Juanito123" required>
                         <label for="floatingInput">Username</label>
                     </div>
                     <!-- <div class="invalid-feedback">
                         Please enter a user name.
                     </div> -->
                     <div class="usernamefeedback" id="usernamefeedback">
-    
+
                     </div>
-                <!-- </div> -->
-            </div>
-    
-            {% if errores.Password %}
-            <div class="col-12">
-                {% for error in errores.Password %}
+                    <!-- </div> -->
+                </div>
+
+                {% if errores.Password %}
+                <div class="col-12">
+                    {% for error in errores.Password %}
                     <p class="text-danger my-0">{{ error }}</p>
                     {% endfor %}
-            </div>
-            {% endif %}
-    
-            <div class="col-12 col-md-6">
-                <!-- <label for="validationCustom05" class="form-label">Password</label>
+                </div>
+                {% endif %}
+
+                <div class="col-12 col-md-6">
+                    <!-- <label for="validationCustom05" class="form-label">Password</label>
                 <input type="password" class="form-control" id="validationCustom05" name="password" required>
                 <div class="invalid-feedback">
                     Passwords do not match.
                 </div> -->
-                <div class="form-floating mb-3">
-                    <input type="password" placeholder="Password" class="form-control" name="password" required>
-                    <label for="floatingInput">Password</label>
+                    <div class="form-floating mb-3">
+                        <input type="password" placeholder="Password" class="form-control" name="password" required>
+                        <label for="floatingInput">Password</label>
+                    </div>
                 </div>
-            </div>
-    
-            <div class="col-12 col-md-6">
-                <!-- <label for="validationCustom06" class="form-label">Repeat Password</label>
+
+                <div class="col-12 col-md-6">
+                    <!-- <label for="validationCustom06" class="form-label">Repeat Password</label>
                 <input type="password" class="form-control" id="validationCustom06" name="repeat_password" required>
                 <div class="invalid-feedback">
                     Passwords do not match.
                 </div> -->
-                <div class="form-floating mb-3">
-                    <input type="password" placeholder="Repeat Password" class="form-control" name="repeat_password" required>
-                    <label for="floatingInput">Repeat Password</label>
+                    <div class="form-floating mb-3">
+                        <input type="password" placeholder="Repeat Password" class="form-control" name="repeat_password"
+                            required>
+                        <label for="floatingInput">Repeat Password</label>
+                    </div>
                 </div>
-            </div>
-    
-            {% if errores.Email %}
-            <div class="col-12">
-                {% for error in errores.Email %}
+
+                {% if errores.Email %}
+                <div class="col-12">
+                    {% for error in errores.Email %}
                     <p class="text-danger my-0">{{ error }}</p>
                     {% endfor %}
-            </div>
-            {% endif %}
-    
-            <div class="col-12">
-                <!-- <label for="validationCustom03" class="form-label">E-mail</label>
+                </div>
+                {% endif %}
+
+                <div class="col-12">
+                    <!-- <label for="validationCustom03" class="form-label">E-mail</label>
                 <input type="text" class="form-control" id="validationCustom03" name="email" placeholder="Juan@algo.es"
                     required>
                 <div class="invalid-feedback">
                     Enter a valid email address
                 </div> -->
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="email" placeholder="Juan@algo.es">
-                    <label for="floatingInput">Email</label>
-                </div>
-            </div>
-    
-            {% if errores['Terms and Conditions'] %}
-            <div class="col-12">
-                {% for error in errores['Terms and Conditions'] %}
-                    <p class="text-danger my-0">{{ error }}</p>
-                    {% endfor %}
-            </div>
-            {% endif %}
-    
-            <div class="col-12">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="checked" id="invalidCheck" name="tos" required>
-                    <label class="form-check-label" for="invalidCheck">
-                        Accept the terms of use.
-                    </label>
-                    <div class="invalid-feedback">
-                        You have not accepted the conditions.
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="email" placeholder="Juan@algo.es">
+                        <label for="floatingInput">Email</label>
                     </div>
                 </div>
+
+                {% if errores['Terms and Conditions'] %}
+                <div class="col-12">
+                    {% for error in errores['Terms and Conditions'] %}
+                    <p class="text-danger my-0">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="checked" id="invalidCheck" name="tos"
+                            required>
+                        <label class="form-check-label" for="invalidCheck">
+                            Accept the terms of use.
+                        </label>
+                        <div class="invalid-feedback">
+                            You have not accepted the conditions.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" NAME="submit" type="submit">Register</button>
+                </div>
             </div>
-            <div class="col-12">
-                <button class="btn btn-primary" NAME="submit" type="submit">Register</button>
-            </div>
-        </div>
-    </form>
-    <div>
-        <!--                     <?php
+        </form>
+        <div>
+            <!--                     <?php
             //CODIGO PHP ****************************************************************************************
                             foreach($errores as $error){
                                 echo "<p class='text-danger'>".$error."</p>";
                             }
             //CODIGO PHP ****************************************************************************************
                         ?> -->
+        </div>
     </div>
 </div>
-
 {% endblock %}
