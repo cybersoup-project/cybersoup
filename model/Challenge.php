@@ -78,7 +78,8 @@ class Challenge extends Connection
 
     public function getlastChallengeId($date) {
         return $this->db->query("SELECT `idchallenge` FROM `challenge` WHERE date(date) = '$date' AND `category_id`=4", PDO::FETCH_ASSOC)->fetch();
-
+    }
+    
     public function getNumChallengeValidate(){
         return $this->db-> query("SELECT count(*) FROM `challenge` where `verified`=1 ", PDO::FETCH_ASSOC)->fetch();
     }
