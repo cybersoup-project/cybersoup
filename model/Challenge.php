@@ -23,7 +23,18 @@ class Challenge extends Connection
         $sql = "UPDATE challenge SET text=?, title=?, image=?, max_attempts=?, solution=?, verified=?, difficulty=?  WHERE idchallenge=?";
         $this->db->prepare($sql)->execute(array($text, $title, $image, $max_attempts, $solution, $verified, $difficulty, $idChallenge));
     }
+    
+    public function updateChallengesPlay($times_played, $idchallenge)
+    {
+        $sql = "UPDATE challenge SET times_played=?  WHERE idchallenge=?";
+        $this->db->prepare($sql)->execute(array($times_played, $idchallenge));
+    }
 
+    public function updateChallengesWins($times_success, $idchallenge)
+    {
+        $sql = "UPDATE challenge SET times_success=?  WHERE idchallenge=?";
+        $this->db->prepare($sql)->execute(array($times_success, $idchallenge));
+    }
 
     public function getAllChallenges() {
         return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` ORDER BY `idchallenge` DESC", PDO::FETCH_ASSOC)->fetchAll();

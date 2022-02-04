@@ -69,6 +69,8 @@ class Api {
                             // We don't store the win as an attempt but we add one to the attempt count
                             // in the winner table.
 
+                            $chl->updateChallengesPlay($chlrow['times_played'] + 1, $valores['id']);
+                            $chl->updateChallengesWins($chlrow['times_success'] + 1, $valores['id']);
                             $attempt->setWinner(count($countattempts) + 1, $userid, $valores['id']);
                         } else { // * word is not equal, set attempt and response.
                             $intento = mb_str_split($valores['palabra']);
@@ -94,6 +96,7 @@ class Api {
                     } else { // * no attempts left, set loser
                         $attempt->setLoser($userid, $valores['id']);
                     }
+                    $chl->updateChallengesPlay($chlrow['times_played'] + 1, $valores['id']);
                 } else {
                     if($winner) {
                         $respuesta['status'] = "success";

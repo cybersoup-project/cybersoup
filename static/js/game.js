@@ -135,12 +135,15 @@ function coloreame(campos, respuesta) {
         switch (respuesta.word[index]) {
             case ("ok" || respuesta.status == "success"):
                 campos[index].style.backgroundColor = "#0f0";
+                campos[index].style.setProperty('border-color', '#0c0', 'important');
                 break;
             case "exists":
-                campos[index].style.backgroundColor = "#ff0";
+                campos[index].style.backgroundColor = "#ffc342";
+                campos[index].style.setProperty('border-color', '#ffae00', 'important');
                 break;
             case "null":
                 campos[index].style.backgroundColor = "#f00";
+                campos[index].style.setProperty('border-color', '#c00', 'important');
                 break;
         }
     }
