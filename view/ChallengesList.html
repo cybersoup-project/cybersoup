@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block main %}
 
 
-<div class="row justify-content-center">
+<div class="row justify-content-center p-2">
     <div class="col-12 col-md-8">
         <div class="container-fluid">
             <!--FILA-->
@@ -91,37 +91,5 @@
         </div>
     </div>
 </div>
-<!-- <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Challenger</th>
-                <th scope="col">Category</th>
-                <th scope="col">Difficulty</th>
-                <th scope="col">Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in objectlist %}
-            <a href="index.php">
-                <tr>
-
-                    <td>{{ item.title }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>
-
-                        {% for numero in 1..item.difficulty %}
-                        <i class="bi bi-star-fill"></i>
-                        {% endfor %}
-                        {% for numero in item.difficulty..4 %}
-                        <i class="bi bi-star"></i>
-                        {% endfor %}
-                    </td>
-                    <td>{{ item.date }}</td>
-
-                </tr>
-            </a>
-            {% endfor %}
-        </tbody>
-    </table> -->
 
 {% endblock %}
