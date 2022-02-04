@@ -212,7 +212,11 @@ class Action
         $challenge = new Challenge();
         $notValidC = $challenge->getNotValidChallenges();
         $last10ValidC = $challenge->getLast10ChallengesVerified();
-        echo $this->twig->render('admin_view.html', array("objectlist" => $notValidC, "objectlists" => $last10ValidC, "user" => $users, "name"=>$name));
+        $numValid= $challenge->getNumChallengeValidate();
+        $numNotValid= $challenge->getNumChallengeNotValidate();
+        $numValid = $numValid ? $numValid["count(*)"] : 0;
+        $numNotValid = $numNotValid ? $numNotValid["count(*)"] : 0;
+        echo $this->twig->render('admin_view.html', array("objectlist" => $notValidC, "objectlists" => $last10ValidC, "user" => $users, "name"=>$name, "valid" => $numValid, "NotValid" => $numNotValid));
     }
     function ranking()
     {
