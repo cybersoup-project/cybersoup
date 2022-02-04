@@ -1,92 +1,92 @@
 {% extends "base.html" %} {% block main %}
 
-
-<div class="row justify-content-center p-2">
-    <div class="col-12 col-md-9">
-        <div class="">
-            <!--FILA-->
-            <div class="row justify-content-center mt-5 mb-5 ">
-                <!-- CONTENEDOR-->
-                <div class="d-flex ms-2 ms-md-none justify-content-center ">
-                    <!--COLUMNAS-->
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">C</p>
+<div class="container-xl py-4">
+    <div class="row justify-content-center p-2">
+        <div class="col-12 col-md-9">
+            <div class="">
+                <!--FILA-->
+                <div class="row justify-content-center mt-5 mb-5 ">
+                    <!-- CONTENEDOR-->
+                    <div class="d-flex ms-2 ms-md-none justify-content-center ">
+                        <!--COLUMNAS-->
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">C</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">H</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">A</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">L</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">L</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">E</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">N</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">G</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">E</p>
+                        </div>
+                        <div class="mx-1">
+                            <p class="fs-3 square border border-3 border-dark">S</p>
+                        </div>
                     </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">H</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">A</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">L</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">L</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">E</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">N</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">G</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">E</p>
-                    </div>
-                    <div class="mx-1">
-                        <p class="fs-3 square border border-3 border-dark">S</p>
-                    </div>
-                </div>
-                <span class="mt-4 border-bottom border-2 border-dark col-md-12 col-11"></span>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="row col-12 fw-bold">
-                <div class="col-6 col-md-3">
-                    <span>Challenge</span>
-                </div>
-                <div class="col-3 d-none d-md-block">
-                    <span>Category</span>
-                </div>
-                <div class="col-6 col-md-3">
-                    <span>Difficulty</span>
-                </div>
-                <div class="col-3 d-none d-md-block">
-                    <span>Date</span>
+                    <span class="mt-4 border-bottom border-2 border-dark col-md-12 col-11"></span>
                 </div>
             </div>
-            <div class="col-12 border border-2"></div>
-            {% for item in objectlist %}
-            <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
-                <div class="row col-12 text-dark">
-                    <div class="col">
-                        <span>{{ item.title }}</span>
-                    </div>
-                    <div class="col d-none d-md-block">
-                        <span>{{ item.name }}</span>
-                    </div>
-                    <div class="col">
-                        <span>
-                            {% for i in 1..3 %}
-                            {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
-                            <i class="{{ starClass }}"></i>
-                            {% endfor %}
-                        </span>
-                    </div>
-                    <div class="col d-none d-md-block">
-                        <span>{{ item.date }}</span>
-                    </div>
-
-                </div>
-            </a>
-            {% endfor %}
             <hr>
+            <div class="row">
+                <div class="row col-12 fw-bold">
+                    <div class="col-6 col-md-3">
+                        <span>Challenge</span>
+                    </div>
+                    <div class="col-3 d-none d-md-block">
+                        <span>Category</span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <span>Difficulty</span>
+                    </div>
+                    <div class="col-3 d-none d-md-block">
+                        <span>Date</span>
+                    </div>
+                </div>
+                <div class="col-12 border border-2"></div>
+                {% for item in objectlist %}
+                <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
+                    <div class="row col-12 text-dark">
+                        <div class="col">
+                            <span>{{ item.title }}</span>
+                        </div>
+                        <div class="col d-none d-md-block">
+                            <span>{{ item.name }}</span>
+                        </div>
+                        <div class="col">
+                            <span>
+                                {% for i in 1..3 %}
+                                {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                                <i class="{{ starClass }}"></i>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        <div class="col d-none d-md-block">
+                            <span>{{ item.date }}</span>
+                        </div>
+
+                    </div>
+                </a>
+                {% endfor %}
+                <hr>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
