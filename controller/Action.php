@@ -423,4 +423,57 @@ class Action
             // ! Mostrar 404
         }
     }
+
+    function dailygame()
+    {
+        require("model/Challenge.php");
+        require("model/Attempts.php");
+        $usersession = UserSession::getUserSession();
+
+        $challen = new Challenge();
+        
+        $chl = $challen->getChallengeBycategorydate(4, date('Y-m-d'));
+        while(!$chl){//if there is not challenge of the day
+           
+            $curl = curl_init();
+            
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://random-word-api.herokuapp.com/word?number=1",
+                CURLOPT_RETURNTRANSFER => true,));
+            $response = json_decode(curl_exec($curl));
+            //die($response[0]);
+            
+            if(!$challen->existsolution($response[0])){//If doesnt exist the word as a solution
+                $challen->setchalenges(null,"Word of the Day - ".date('y-m-d'), $response[0],null, 5, 4,$usersession->getSessionValue("iduser"), 3);
+                $chl = 1; // DO NOT TOUCH
+            }
+            
+    
+        }
+        //send ig_challenge
+        $idchallenge= $challen->getlastChallengeId(date('Y-m-d'));
+        
+
+        if ( is_numeric($idchallenge['idchallenge'])) {
+      
+
+            $chl = $challen->getChallengeById($idchallenge['idchallenge']);
+            $attempt = new Attempts();
+
+            $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
+            $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
+
+            if ($chl) {
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
+            } else {
+                // ! No Existe el reto (404)
+            }
+        } else {
+            // ! Mostrar 404
+         
+        }
+
+        
+    }
 }
+
