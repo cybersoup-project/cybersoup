@@ -56,4 +56,10 @@ class Challenge extends Connection
     public function getPoints() {
         return $this->db->query("SELECT `max_attempts`, `difficulty`, `attempt` FROM `winners`, `challenge` WHERE `winners`.`user_id`=`challenge`.`user_id` and `winners`.`user_id`=6", PDO::FETCH_ASSOC)->fetch();
     }
+    public function getNumChallengeValidate(){
+        return $this->db-> query("SELECT count(*) FROM `challenge` where `verified`=1 ", PDO::FETCH_ASSOC)->fetch();
+    }
+    public function getNumChallengeNotValidate(){
+        return $this->db-> query("SELECT count(*) FROM `challenge` where `verified`=0 ", PDO::FETCH_ASSOC)->fetch();
+    }
 }

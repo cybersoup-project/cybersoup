@@ -7,7 +7,7 @@
             <!--FILA-->
             <div class="row d-flex justify-content-center mt-5 mb-5 ">
                 <!-- CONTENEDOR-->
-                <div class="d-flex justify-content-center ">
+                <div class="d-flex ms-2 ms-md-none justify-content-center ">
                     <!--COLUMNAS-->
                     <div class="me-3 ">
                         <p class="fs-3 square border border-3 border-dark">C</p>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="col">
                         <span>
-                            {% for i in 1..5 %}
+                            {% for i in 1..3 %}
                             {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
                             <i class="{{ starClass }}"></i>
                             {% endfor %}
