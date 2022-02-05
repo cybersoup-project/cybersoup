@@ -466,9 +466,10 @@ class Action
 
             $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
             $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
+            //setcookie("id", $idchallenge); // si le pongo esto explota el servidor .. no se por que
 
             if ($chl) {
-                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
+               echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
             } else {
                 // ! No Existe el reto (404)
             }

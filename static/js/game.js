@@ -1,4 +1,3 @@
-
 // https://animate.style/
 const animateCSS = (element, animation, prefix = 'animate__') =>
     // We create a Promise and return it
@@ -29,9 +28,14 @@ heartfn = () => {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const chlid = urlParams.get('id')
+    //var lasCookies = document.cookie;
+    //alert(lasCookies);
 
-    xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + chlid);
+    if (urlParams.get('id'))
+        xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + urlParams.get('id'));
+    else
+        alert("ups");
+    //enviamos por post? en una cookie?
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -153,6 +157,15 @@ function coloreame(campos, respuesta) {
     }
 }
 
+function resetme() {
+    let campos = document.getElementsByName("campo");
+    for (let index = 0; index < campos.length; index++) {
+        campos[index].style.backgroundColor = "gray";
+        campos[index].style.setProperty('border-color', '#6c757d', 'important');
+        campos[index].innerHTML = "";
+    }
+
+}
 // on keyboard keypress
 function onKeyPress(button) {
     let campos = document.getElementsByName("campo");
