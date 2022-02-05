@@ -33,9 +33,11 @@ heartfn = () => {
 
     if (urlParams.get('id'))
         xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + urlParams.get('id'));
-    else
-        alert("ups");
-    //enviamos por post? en una cookie?
+    else {
+        var idch = document.getElementById('idchall').innerHTML;
+        xhr.open("GET", "?action=getHealth&id=" + idch);
+    }
+
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
