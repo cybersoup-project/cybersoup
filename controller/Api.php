@@ -185,4 +185,29 @@ class Api {
         $respuesta = array("wins" => $wins['count(*)'], "fails" => $fails['count(*)']);
         echo json_encode($respuesta);
     }
+
+    public function showattempts(){
+        require("model/Attempts.php");
+        require("model/Challenge.php");
+        require_once("model/Usuario.php");
+
+
+        $usersession = UserSession::getUserSession();
+
+        $valores = array(
+            "idchallenge" => $_GET['id'] ?? "",//aqui puede dar problemas lo del dailyword
+            "iduser" => $usersession->getSessionValue("iduser")
+        );
+
+        $att = new Attempts();
+        $chl = new Challenge();
+
+        $challenge = $chl->getChallengeById(18);
+        $attempts = $att->getUserAttemptsAtChallenge(1,18);
+
+
+        header("Content-Type: application/json; charset=UTF-8");
+        $respuesta = array("challenge" => $challenge['solution'], "attempts" => array(($respuesta)));//LOS INTENTOS NO VAN
+        echo json_encode($respuesta); 
+    }
 }
