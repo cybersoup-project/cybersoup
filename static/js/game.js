@@ -28,8 +28,7 @@ heartfn = () => {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    //var lasCookies = document.cookie;
-    //alert(lasCookies);
+
 
     if (urlParams.get('id'))
         xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + urlParams.get('id'));
@@ -185,9 +184,15 @@ function onKeyPress(button) {
 
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const chlid = urlParams.get('id')
+        //const chlid = urlParams.get('id')
+        //xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
 
-        xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
+        if (urlParams.get('id'))
+            xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + urlParams.get('id'));
+        else {
+            var idch = document.getElementById('idchall').innerHTML;
+            xhr.open("GET", "?action=checkWord&palabra=" + palabra + "&id=" + idch);
+        }
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
