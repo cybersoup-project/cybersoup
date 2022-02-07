@@ -198,6 +198,10 @@ class Api {
             "idchallenge" => $_GET['id'] ?? "",//aqui puede dar problemas lo del dailyword
             "iduser" => $usersession->getSessionValue("iduser")
         );
+        $respuesta = array(
+            "status" => "",
+            "word" => array()
+        );
 
         $att = new Attempts();
         $chl = new Challenge();
@@ -205,9 +209,28 @@ class Api {
         $challenge = $chl->getChallengeById($valores['idchallenge']);
         $attempts = $att->getUserAttemptsAtChallenge($valores['iduser'],$valores['idchallenge']);
         $catt = count($attempts);
+//valores para la funcion coloreame
+        $intento = mb_str_split($valores['palabra']);
+        $sol = mb_str_split($attempts['solution']);
+        for ($i = 0; $i < count($intento); $i += 1) {
+            // Si la letra está en la solución
+            if (in_array($intento[$i], $sol)) {
+                // se comprueba si está en la misma posición
+                if ($intento[$i] == $sol[$i]) {
+                    $respuesta['word'][] = "ok";
+                } else {
+                    // no está en la misma posición
+                    $respuesta['word'][] = "exists";
+                }
+            } else {
+                // no existe la letra en la posición
+                $respuesta['word'][] = "null";
+            }
+        }
+        $respuesta['status'] = "incomplete";
 
         header("Content-Type: application/json; charset=UTF-8");
-        $respuesta = array("sol" => $challenge['solution'], "attempts" => $attempts,"contatt"=>$catt);
+        $respuesta = array("sol" => $challenge['solution'], "attempts" => $attempts,"contatt"=>$catt,'respuesta'=>$respuesta);
         echo json_encode($respuesta); 
 
        

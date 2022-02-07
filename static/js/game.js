@@ -161,7 +161,7 @@ function coloreame(campos, respuesta) {
 function resetme() {
     let campos = document.getElementsByName("campo");
     for (let index = 0; index < campos.length; index++) {
-        campos[index].style.backgroundColor = "gray";
+        campos[index].style.backgroundColor = "ligthgray";
         campos[index].style.setProperty('border-color', '#6c757d', 'important');
         campos[index].innerHTML = "";
     }
@@ -276,7 +276,7 @@ function showattempts() {
 
 
 
-    //console.log(palabra);
+    console.log(resp);
     var letras = Array.from(resp['sol']).length;
     var letr = letras;
     // Buble infernal.. cuidado con tocarlo
@@ -288,14 +288,8 @@ function showattempts() {
             camposattempts[index].textContent = palabra[index - ((i * letr))];
             //console.log(index);
         }
-
+        coloreame(camposattempts, resp['respuesta']);
     }
-
-
-    coloreame(camposattempts, sol);
-
-
-
 
     xhr.send();
 
