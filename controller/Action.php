@@ -419,7 +419,7 @@ class Action
             $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
 
             if ($chl) {
-                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "idchl" => $_GET['id']));
             } else {
                 // ! No Existe el reto (404)
             }
@@ -468,7 +468,7 @@ class Action
             $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
 
             if ($chl) {
-                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "idchl" => $idchallenge['idchallenge']));
             } else {
                 // ! No Existe el reto (404)
             }

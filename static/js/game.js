@@ -27,9 +27,8 @@ heartfn = () => {
 
     let xhr = new XMLHttpRequest();
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const chlid = urlParams.get('id')
+    const chlid = document.getElementById("idchl").value;
+    
 
     xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + chlid);
 
@@ -168,9 +167,8 @@ function onKeyPress(button) {
             palabra = palabra + campos[index].textContent;
         }
 
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const chlid = urlParams.get('id')
+        const chlid = document.getElementById("idchl").value;
+        //const chlid = urlParams.get('id')
 
         xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
 

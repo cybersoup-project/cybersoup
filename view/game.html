@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg">
                         <i class="bi bi-bar-chart"></i>
-                        {% for i in 1..5 %}
+                        {% for i in 1..3 %}
                         {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
                         <i class="{{ starClass }}"></i>
                         {% endfor %}
@@ -116,4 +116,5 @@
 
     </div>
 </div>
+<input type="hidden" name="idhcl" id="idchl" value="{{ idchl }}">
 {% endblock %}
