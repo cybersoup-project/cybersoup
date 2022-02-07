@@ -51,7 +51,7 @@
 		Look like you're lost
 		</h3>
 		
-		<p>You should not do this...</p>
+		<p>ypu not should do this, try to log in or make contact with the administrator...</p>
 		
 		<a href="../index.php" class="link_404">Go to Home</a>
 	</div>
