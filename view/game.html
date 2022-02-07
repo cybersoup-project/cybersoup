@@ -94,8 +94,6 @@
                     <p>{{ challenge.text }}</p>
                     {% endif %}
                 </div>
-                <div id="attempts" class="text-center">
-                </div>
                 <div class="d-flex justify-content-center my-5">
                     <!--WORD FIELDS-->
                     {% for i in 1..length %}
@@ -117,7 +115,7 @@
 
                 <!-- Button trigger modal -->
 
-                <button type="button" id='attempts' onClick="showattempts()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#attemptsmodal">
+                <button type="button" id="attempts" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#attemptsmodal">
                       Attempts
                 </button>
             </div>

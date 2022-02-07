@@ -225,3 +225,10 @@ function onKeyPress(button) {
 }
 
 window.onload = heartfn;
+
+
+// modal functions
+
+let showmodal = document.getElementById("attempts");
+let attemptsrender = document.getElementById("attemptsrender");
+
