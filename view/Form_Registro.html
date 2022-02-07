@@ -1,12 +1,10 @@
-{% extends "base.html" %}
-
-{% block script %}
+{% extends "base.html" %} {% block script %}
 
 <script>
     let username = document.getElementById("usernameinput");
     let feedback = document.getElementById("usernamefeedback");
 
-    username.addEventListener('input', function (evt) {
+    username.addEventListener('input', function(evt) {
         if (evt.target.value.length > 3) {
             /* console.log(evt.target.value); */
             let xhr = new XMLHttpRequest();
@@ -37,9 +35,7 @@
     });
 </script>
 
-{% endblock %}
-
-{% block main %}
+{% endblock %} {% block main %}
 <div class="container-xl py-4">
     <div class="container-fluid ">
 
@@ -82,16 +78,13 @@
         <div class="col-6">
             <img class="img-fluid d-none d-md-block" src="static/vector-people.png">
         </div>
-        <form class="col-12 col-md-6 needs-validation pt-5" id="form" ACTION="" NAME="inserta" METHOD="POST"
-            ENCTYPE="multipart/form-data">
+        <form class="col-12 col-md-6 needs-validation pt-5" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
             <div class="row">
                 {% if errores['Full Name'] %}
                 <div class="col-12">
                     {% for error in errores['Full Name'] %}
                     <p class="text-danger my-0">{{ error }}</p>
-                    {% endfor %}
-
-                    {% for error in errores.Username %}
+                    {% endfor %} {% for error in errores.Username %}
                     <p class="text-danger my-0">{{ error }}</p>
                     {% endfor %}
                 </div>
@@ -115,8 +108,7 @@
                     <!-- <input type="text" class="form-control" id="validationCustomUsername" name="username"
                         aria-describedby="inputGroupPrepend" placeholder="Juanito123" required> -->
                     <div class="form-floating mb-3">
-                        <input type="text" id="usernameinput" class="form-control" name="username"
-                            placeholder="Juanito123" required>
+                        <input type="text" id="usernameinput" class="form-control" name="username" placeholder="Juanito123" required>
                         <label for="floatingInput">Username</label>
                     </div>
                     <!-- <div class="invalid-feedback">
@@ -155,8 +147,7 @@
                     Passwords do not match.
                 </div> -->
                     <div class="form-floating mb-3">
-                        <input type="password" placeholder="Repeat Password" class="form-control" name="repeat_password"
-                            required>
+                        <input type="password" placeholder="Repeat Password" class="form-control" name="repeat_password" required>
                         <label for="floatingInput">Repeat Password</label>
                     </div>
                 </div>
@@ -177,7 +168,7 @@
                     Enter a valid email address
                 </div> -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="email" placeholder="Juan@algo.es">
+                        <input type="text" class="form-control" name="email" placeholder="Juan@algo.es" required>
                         <label for="floatingInput">Email</label>
                     </div>
                 </div>
@@ -192,8 +183,7 @@
 
                 <div class="col-12">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="checked" id="invalidCheck" name="tos"
-                            required>
+                        <input class="form-check-input" type="checkbox" value="checked" id="invalidCheck" name="tos" required>
                         <label class="form-check-label" for="invalidCheck">
                             Accept the terms of use.
                         </label>
