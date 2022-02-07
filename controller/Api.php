@@ -197,21 +197,22 @@ class Api
         require("model/Challenge.php");
         require_once("model/Usuario.php");
 
-
         $usersession = UserSession::getUserSession();
         $userid = $usersession->getSessionValue("iduser");
 
-        if ($userid == 0) {
+        $valores = array(
+            "idchallenge" => $_GET['id'] ?? 0, //aqui puede dar problemas lo del dailyword
+            "iduser" => $userid
+        );
+
+        if ($userid == 0 || $valores['idchallenge'] == 0) {
             die("{\"status\":\"not logged in\"}");
         }
 
-        $valores = array(
-            "idchallenge" => $_GET['id'] ?? "", //aqui puede dar problemas lo del dailyword
-            "iduser" => $userid
-        );
         $respuesta = array(
             "status" => "ok",
-            "word" => array()
+            "word" => array(),
+            "past" => array()
         );
 
         $att = new Attempts();
@@ -221,26 +222,32 @@ class Api
         $attempts = $att->getUserAttemptsAtChallenge($valores['iduser'], $valores['idchallenge']);
         $catt = count($attempts);
         //valores para la funcion coloreame
-        $intento = mb_str_split($valores['palabra']);
-        $sol = mb_str_split($attempts['solution']);
-        for ($i = 0; $i < count($intento); $i += 1) {
-            // Si la letra está en la solución
-            if (in_array($intento[$i], $sol)) {
-                // se comprueba si está en la misma posición
-                if ($intento[$i] == $sol[$i]) {
-                    $respuesta['word'][$i][] = "ok";
+        //die(print_r($challenge));
+        $sol = mb_str_split(mb_strtoupper($challenge['solution']));
+
+        foreach ($attempts as $key => $value) {
+            $arr = array();
+            $intento = mb_str_split(mb_strtoupper($value['solution']));
+            foreach ($intento as $i => $letra) {
+                if(in_array($letra, $sol)) {
+                    if($letra == $sol[$i]) {
+                        $arr[] = "ok";
+                    } else {
+                        $arr[] = "exists";
+                    }
                 } else {
-                    // no está en la misma posición
-                    $respuesta['word'][$i][] = "exists";
+                    $arr[] = "null";
                 }
-            } else {
-                // no existe la letra en la posición
-                $respuesta['word'][$i][] = "null";
-            }
+            };
+
+            $respuesta['word'][] = $arr;
+            $respuesta['past'][] = $intento;
         }
+        
+        //die(print_r($valores));
 
         header("Content-Type: application/json; charset=UTF-8");
-        $respuesta = array("sol" => $challenge['solution'], "attempts" => $attempts, "contatt" => $catt, 'respuesta' => $respuesta);
+        //$respuesta = array("attempts" => $attempts, "contatt" => $catt, 'respuesta' => $respuesta);
         echo json_encode($respuesta);
     }
 }
