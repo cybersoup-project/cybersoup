@@ -28,7 +28,7 @@ heartfn = () => {
     let xhr = new XMLHttpRequest();
 
     //const chlid = document.getElementById("idchl").value;
-    
+
 
     xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + chlid);
 
@@ -148,7 +148,7 @@ function coloreame(campos, respuesta, confetti) {
         }
     }
 
-    if(confetti) {
+    if (confetti) {
         if (respuesta.status == "success") {
             confettifn(respuesta);
         }
@@ -236,8 +236,8 @@ showmodal.addEventListener("click", () => {
     let xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
-        if(this.status == 200 && this.readyState == 4){
-            attemptsrender.innerHTML  = "";
+        if (this.status == 200 && this.readyState == 4) {
+            attemptsrender.innerHTML = "";
             let res = JSON.parse(this.responseText);
             let past = res.past;
             let words = res.word;
@@ -254,14 +254,14 @@ showmodal.addEventListener("click", () => {
         </div>`;
                     div.innerHTML += template;
                 }
-                
+
                 attemptsrender.appendChild(div);
                 coloreame(document.getElementsByName("resolved_" + i), words[i], false);
             }
         }
     }
 
-    xhr.open("GET", "?action=showAttempts&id="+chlid)
+    xhr.open("GET", "?action=showAttempts&id=" + chlid)
 
     xhr.send();
 })
@@ -274,6 +274,8 @@ reset.addEventListener("click", () => {
     let campos = document.getElementsByName("campo");
     for (let i = 0; i < campos.length; i++) {
         campos[i].textContent = "";
-        
+        campos[i].style.backgroundColor = "#F8F9FA";
+        campos[i].style.setProperty('border-color', '#0c0');
+
     }
 })
