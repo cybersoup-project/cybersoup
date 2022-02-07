@@ -2,9 +2,11 @@
 
 // TODO meter los intentos en la base de datos
 
-class Api {
+class Api
+{
 
-    public function checkWord() {
+    public function checkWord()
+    {
         header("Content-Type: application/json; charset=UTF-8");
         require_once("model/Challenge.php");
         require_once("model/Attempts.php");
@@ -51,11 +53,11 @@ class Api {
             if ($valores['palabralen'] === $valores['solutionlen']) {
 
                 if ((!$winner) && (!$loser)) { // * not winner, not loser
-                    
+
                     $countattempts = $attempt->getUserAttemptsAtChallenge($userid, $valores['id']);
                     if ($chlrow['max_attempts'] > count($countattempts)) { // * still has attempts left
 
-                        
+
                         if ($valores['palabra'] === $valores['solution']) { // * word is equal = win
 
                             $respuesta['status'] = "success";
@@ -98,7 +100,7 @@ class Api {
                     }
                     $chl->updateChallengesPlay($chlrow['times_played'] + 1, $valores['id']);
                 } else {
-                    if($winner) {
+                    if ($winner) {
                         $respuesta['status'] = "success";
                     }
                     // * user is already a winner or a loser
@@ -112,7 +114,8 @@ class Api {
         echo json_encode($respuesta);
     }
 
-    public function userExists() {
+    public function userExists()
+    {
         require("model/Usuario.php");
 
         $valores = array(
@@ -133,7 +136,8 @@ class Api {
         echo json_encode($respuesta);
     }
 
-    public function getHealth() {
+    public function getHealth()
+    {
         require("model/Attempts.php");
         require("model/Challenge.php");
 
@@ -167,7 +171,8 @@ class Api {
         echo json_encode($respuesta);
     }
 
-    public function getStats() {
+    public function getStats()
+    {
         require_once("model/Attempts.php");
         require_once("model/Usuario.php");
 
@@ -183,6 +188,66 @@ class Api {
 
         header("Content-Type: application/json; charset=UTF-8");
         $respuesta = array("wins" => $wins['count(*)'], "fails" => $fails['count(*)']);
+        echo json_encode($respuesta);
+    }
+
+    public function showAttempts()
+    {
+        require("model/Attempts.php");
+        require("model/Challenge.php");
+        require_once("model/Usuario.php");
+
+        $usersession = UserSession::getUserSession();
+        $userid = $usersession->getSessionValue("iduser");
+
+        $valores = array(
+            "idchallenge" => $_GET['id'] ?? 0, //aqui puede dar problemas lo del dailyword
+            "iduser" => $userid
+        );
+
+        if ($userid == 0 || $valores['idchallenge'] == 0) {
+            die("{\"status\":\"not logged in\"}");
+        }
+
+        $respuesta = array(
+            "status" => "ok",
+            "word" => array(),
+            "past" => array()
+        );
+
+        $att = new Attempts();
+        $chl = new Challenge();
+
+        $challenge = $chl->getChallengeById($valores['idchallenge']);
+        $attempts = $att->getUserAttemptsAtChallenge($valores['iduser'], $valores['idchallenge']);
+        $catt = count($attempts);
+        //valores para la funcion coloreame
+        //die(print_r($challenge));
+        $sol = mb_str_split(mb_strtoupper($challenge['solution']));
+
+        foreach ($attempts as $key => $value) {
+            $arr = array();
+            $intento = mb_str_split(mb_strtoupper($value['solution']));
+            foreach ($intento as $i => $letra) {
+                if(in_array($letra, $sol)) {
+                    if($letra == $sol[$i]) {
+                        $arr[] = "ok";
+                    } else {
+                        $arr[] = "exists";
+                    }
+                } else {
+                    $arr[] = "null";
+                }
+            };
+
+            $respuesta['word'][] = $arr;
+            $respuesta['past'][] = $intento;
+        }
+        
+        //die(print_r($valores));
+
+        header("Content-Type: application/json; charset=UTF-8");
+        //$respuesta = array("attempts" => $attempts, "contatt" => $catt, 'respuesta' => $respuesta);
         echo json_encode($respuesta);
     }
 }

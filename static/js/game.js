@@ -1,4 +1,4 @@
-
+const chlid = document.getElementById("idchl").value;
 // https://animate.style/
 const animateCSS = (element, animation, prefix = 'animate__') =>
     // We create a Promise and return it
@@ -27,9 +27,8 @@ heartfn = () => {
 
     let xhr = new XMLHttpRequest();
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const chlid = urlParams.get('id')
+    //const chlid = document.getElementById("idchl").value;
+    
 
     xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + chlid);
 
@@ -130,9 +129,10 @@ function confettifn(respuesta) {
 }
 
 // color the fields according to the answer.
-function coloreame(campos, respuesta) {
+function coloreame(campos, respuesta, confetti) {
+    console.log(respuesta);
     for (let index = 0; index < campos.length; index++) {
-        switch (respuesta.word[index]) {
+        switch (respuesta[index]) {
             case ("ok" || respuesta.status == "success"):
                 campos[index].style.backgroundColor = "#0f0";
                 campos[index].style.setProperty('border-color', '#0c0', 'important');
@@ -148,8 +148,10 @@ function coloreame(campos, respuesta) {
         }
     }
 
-    if (respuesta.status == "success") {
-        confettifn(respuesta);
+    if(confetti) {
+        if (respuesta.status == "success") {
+            confettifn(respuesta);
+        }
     }
 }
 
@@ -168,9 +170,8 @@ function onKeyPress(button) {
             palabra = palabra + campos[index].textContent;
         }
 
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const chlid = urlParams.get('id')
+        //const chlid = document.getElementById("idchl").value;
+        //const chlid = urlParams.get('id')
 
         xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
 
@@ -188,7 +189,7 @@ function onKeyPress(button) {
                     })
                 } else {
                     // else, color the fields or/and show modals
-                    coloreame(campos, res);
+                    coloreame(campos, res.word, true);
                 }
             }
         }
@@ -225,3 +226,54 @@ function onKeyPress(button) {
 }
 
 window.onload = heartfn;
+
+// -------------------- modal functions
+
+let showmodal = document.getElementById("attempts");
+let attemptsrender = document.getElementById("attemptsrender");
+
+showmodal.addEventListener("click", () => {
+    let xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if(this.status == 200 && this.readyState == 4){
+            attemptsrender.innerHTML  = "";
+            let res = JSON.parse(this.responseText);
+            let past = res.past;
+            let words = res.word;
+
+            console.log(past);
+            console.log(words);
+
+            for (let i = 0; i < past.length; i++) {
+                let div = document.createElement("div");
+                div.classList = "d-flex justify-content-center my-2";
+                for (let j = 0; j < words[i].length; j++) {
+                    let template = `<div class="mx-1">
+            <p class="fs-3 square border border-3 border-secondary" name="resolved_${i}">${past[i][j]}</p>
+        </div>`;
+                    div.innerHTML += template;
+                }
+                
+                attemptsrender.appendChild(div);
+                coloreame(document.getElementsByName("resolved_" + i), words[i], false);
+            }
+        }
+    }
+
+    xhr.open("GET", "?action=showAttempts&id="+chlid)
+
+    xhr.send();
+})
+
+// -------------------- reset button
+
+let reset = document.getElementById("reset");
+
+reset.addEventListener("click", () => {
+    let campos = document.getElementsByName("campo");
+    for (let i = 0; i < campos.length; i++) {
+        campos[i].textContent = "";
+        
+    }
+})
