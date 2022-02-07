@@ -104,16 +104,55 @@
                     </div>
                     {% endfor %}
                 </div>
+
                 <span class="fw-bold">Your health: </span>
                 <div id="health" class="mb-3">
                     <div class="spinner-border" role="status">
                         <span class="sr-only"></span>
                     </div>
                 </div>
+                <button type="button" class="btn btn-success" onClick="resetme()">
+                    Try again
+                </button>
+
+                <!-- Button trigger modal -->
+
+                <button type="button" id='attempts' onClick="showattempts()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#attemptsmodal">
+                      Attempts
+                </button>
             </div>
             <div class="simple-keyboard"></div>
         </div>
 
+    </div>
+</div>
+<div class="modal fade" id="attemptsmodal" tabindex="-1" aria-labelledby="attemptsmodalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="attemptsmodalLabel">Previous attempts {{ length }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div id="attemptsrender">
+
+            </div>
+
+            <!-- {% for i in 1..contatt %}
+            <div class="modal-body d-flex justify-content-center my-5">
+                {% for i in 1..length %}
+                <div class="mx-1">
+                    <p class="fs-3 square border border-3 border-secondary" name="campoattempts"></p>
+                </div>
+                {% endfor %}
+                <hr>
+            </div>
+            {% endfor %} -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 <input type="hidden" name="idhcl" id="idchl" value="{{ idchl }}">

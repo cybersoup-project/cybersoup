@@ -129,7 +129,7 @@ function confettifn(respuesta) {
 }
 
 // color the fields according to the answer.
-function coloreame(campos, respuesta) {
+function coloreame(campos, respuesta, confetti = true) {
     for (let index = 0; index < campos.length; index++) {
         switch (respuesta.word[index]) {
             case ("ok" || respuesta.status == "success"):
@@ -147,8 +147,10 @@ function coloreame(campos, respuesta) {
         }
     }
 
-    if (respuesta.status == "success") {
-        confettifn(respuesta);
+    if(confetti) {
+        if (respuesta.status == "success") {
+            confettifn(respuesta);
+        }
     }
 }
 
