@@ -417,9 +417,11 @@ class Action
 
             $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
             $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
+            $attempts = $attempt->getUserAttemptsAtChallenge($usersession->getSessionValue("iduser"),$_GET['id']);
+            $contatt = count($attempts);
 
             if ($chl) {
-                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
+                echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "contatt" => $contatt ));
             } else {
                 // ! No Existe el reto (404)
             }
@@ -445,7 +447,7 @@ class Action
                 CURLOPT_URL => "https://random-word-api.herokuapp.com/word?number=1",
                 CURLOPT_RETURNTRANSFER => true,));
             $response = json_decode(curl_exec($curl));
-            //die($response[0]);
+            
             
             if(!$challen->existsolution($response[0])){//If doesnt exist the word as a solution
                 $challen->setchalenges(null,"Word of the Day - ".date('y-m-d'), $response[0],null, 5, 4,$usersession->getSessionValue("iduser"), 3);
@@ -466,10 +468,12 @@ class Action
 
             $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
             $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $idchallenge['idchallenge']);
-            //setcookie("id", $idchallenge); // si le pongo esto explota el servidor .. no se por que
+            $attempts = $att->getUserAttemptsAtChallenge($valores['iduser'],$valores['idchallenge']);
+            $countatt = count($attempts);
+
 
             if ($chl) {
-               echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser));
+               echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser,"contatt" => $countatt));
             } else {
                 // ! No Existe el reto (404)
             }

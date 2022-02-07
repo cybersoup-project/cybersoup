@@ -172,6 +172,7 @@ function onKeyPress(button) {
     let campos = document.getElementsByName("campo");
     let palabra = "";
 
+
     if (button == "{ent}" && campos[campos.length - 1].textContent != "") {
         // if all the fields are fullfilled
         let xhr = new XMLHttpRequest();
@@ -208,6 +209,8 @@ function onKeyPress(button) {
                     })
                 } else {
                     // else, color the fields or/and show modals
+                    //console.log(campos);
+                    //console.log(res);
                     coloreame(campos, res);
                 }
             }
@@ -242,6 +245,61 @@ function onKeyPress(button) {
         }
     }
     console.log("Button pressed", button);
+}
+
+function showattempts() {
+
+    let xhr = new XMLHttpRequest();
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.get('id'))
+        xhr.open("GET", "?action=showattempts&id=" + urlParams.get('id'));
+    else {
+        var idch = document.getElementById('idchall').innerHTML;
+        xhr.open("GET", "?action=showattempts&id=" + idch);
+    };
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            resp = JSON.parse(xhr.responseText);
+        }
+    }
+    xhr.send()
+    console.log(resp); //has aqui funciona
+    console.log(resp['sol'])
+    console.log(resp['attempts'][0]['solution']);
+    var sol = resp['sol'];
+
+    let camposattempts = document.getElementsByName("campoattempts");
+
+
+
+    //console.log(palabra);
+    var letras = Array.from(resp['sol']).length;
+    var letr = letras;
+    // Buble infernal.. cuidado con tocarlo
+    for (let i = 0; i < resp['attempts'].length; i++) {
+        palabra = Array.from(resp['attempts'][i]['solution']);
+        //console.log(i);
+        //console.log("aki");
+        for (let index = i * letras; index < letr + (i * letr); index++) {
+            camposattempts[index].textContent = palabra[index - ((i * letr))];
+            //console.log(index);
+        }
+
+    }
+
+
+    coloreame(camposattempts, sol);
+
+
+
+
+    xhr.send();
+
+
 }
 
 window.onload = heartfn;

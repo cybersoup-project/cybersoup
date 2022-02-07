@@ -1,5 +1,5 @@
 // color the fields according to the answer.
-function coloreame(campos, respuesta) {
+function coloreameatt(campos, respuesta) {
     for (let index = 0; index < campos.length; index++) {
         switch (respuesta.word[index]) {
             case ("ok" || respuesta.status == "success"):
@@ -37,58 +37,58 @@ function showattempts() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             respuesta = JSON.parse(xhr.responseText);
-            //data.datasets[0].data = [respuesta.wins, respuesta.fails];
+
         }
     }
     xhr.send()
-    console.log(respuesta); //los intentos no se muestran bien 
+    console.log(respuesta); //has aqui funciona
+    console.log(respuesta[0]['solution']);
 
-    /*
 
-        let campos = document.getElementsByName("campo");
-        let palabra = "";
+    let campos = document.getElementsByName("campo");
+    let palabra = "";
 
-        if (button == "{ent}" && campos[campos.length - 1].textContent != "") {
-            // if all the fields are fullfilled
-            let xhr = new XMLHttpRequest();
 
-            palabra = "";
+    // if all the fields are fullfilled
+    let xhr = new XMLHttpRequest();
 
-            for (let index = 0; index < campos.length; index++) {
-                palabra = palabra + campos[index].textContent;
+    palabra = "";
+
+    for (let index = 0; index < campos.length; index++) {
+        palabra = palabra + campos[index].textContent;
+    }
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+
+    if (urlParams.get('id'))
+        xhr.open("GET", "?action=checkWord&palabra=" + palabra + "&id=" + urlParams.get('id'));
+    else {
+        var idch = document.getElementById('idchall').innerHTML;
+        xhr.open("GET", "?action=checkWord&palabra=" + palabra + "&id=" + idch);
+    }
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            res = JSON.parse(xhr.responseText);
+            if (res.status == "not logged in") {
+                // if the user is not logged in, show a message.
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You must be logged in to do that!',
+                    footer: 'Please&nbsp;<a href="index.php?action=login">log in</a>&nbsp;or&nbsp;<a href="index.php?action=register">register</a>'
+                })
+            } else {
+                // else, color the fields or/and show modals
+                coloreame(campos, res);
             }
-
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-
-
-            if (urlParams.get('id'))
-                xhr.open("GET", "?action=checkWord&palabra=" + palabra + "&id=" + urlParams.get('id'));
-            else {
-                var idch = document.getElementById('idchall').innerHTML;
-                xhr.open("GET", "?action=checkWord&palabra=" + palabra + "&id=" + idch);
-            }
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.responseText);
-                    res = JSON.parse(xhr.responseText);
-                    if (res.status == "not logged in") {
-                        // if the user is not logged in, show a message.
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'You must be logged in to do that!',
-                            footer: 'Please&nbsp;<a href="index.php?action=login">log in</a>&nbsp;or&nbsp;<a href="index.php?action=register">register</a>'
-                        })
-                    } else {
-                        // else, color the fields or/and show modals
-                        coloreame(campos, res);
-                    }
-                }
-            }
-
-            xhr.send();
         }
-     */
+    }
+
+    xhr.send();
+
+
 }

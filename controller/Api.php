@@ -202,12 +202,14 @@ class Api {
         $att = new Attempts();
         $chl = new Challenge();
 
-        $challenge = $chl->getChallengeById(18);
-        $attempts = $att->getUserAttemptsAtChallenge(1,18);
-
+        $challenge = $chl->getChallengeById($valores['idchallenge']);
+        $attempts = $att->getUserAttemptsAtChallenge($valores['iduser'],$valores['idchallenge']);
+        $catt = count($attempts);
 
         header("Content-Type: application/json; charset=UTF-8");
-        $respuesta = array("challenge" => $challenge['solution'], "attempts" => array(($respuesta)));//LOS INTENTOS NO VAN
+        $respuesta = array("sol" => $challenge['solution'], "attempts" => $attempts,"contatt"=>$catt);
         echo json_encode($respuesta); 
+
+       
     }
 }
