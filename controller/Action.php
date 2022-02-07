@@ -433,7 +433,7 @@ class Action
         require("model/Challenge.php");
         require("model/Attempts.php");
         $usersession = UserSession::getUserSession();
-        if($usersession) header('location: view/403.php');
+        if(!($usersession->isLoggedIn())) header('location: view/403.php');
         $challen = new Challenge();
         
         $chl = $challen->getChallengeBycategorydate(4, date('Y-m-d'));
