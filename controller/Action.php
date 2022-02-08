@@ -448,7 +448,7 @@ class Action
             //die($response[0]);
             
             if(!$challen->existsolution($response[0])){//If doesnt exist the word as a solution
-                $challen->setchalenges(null,"Word of the Day - ".date('y-m-d'), $response[0],null, 5, 4,$usersession->getSessionValue("iduser"), 3);
+                $challen->setchalenges(null,"Word of the Day - ".date('y-m-d'), $response[0],null, 5, 4,1, 3);
                 $chl = 1; // DO NOT TOUCH
             }
             
