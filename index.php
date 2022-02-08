@@ -8,17 +8,17 @@ $map = array(
     'index' => array('controller' => 'Action', 'action' => 'index', 'rol' => 0),
     'login' => array('controller' => 'Action', 'action' => 'login', 'rol' => 0),
     'register' => array('controller' => 'Action', 'action' => 'register', 'rol' => 0),
-    'logout' => array('controller' => 'Action', 'action' => 'logout', 'rol' => 0),
-    'challengerList' => array('controller' => 'Action', 'action' => 'challengerList','rol' => 0),
-    'newChallenger' => array('controller' => 'Action', 'action' => 'newChallenger','rol' => 0),
+    'logout' => array('controller' => 'Action', 'action' => 'logout', 'rol' => 1),
+    'challengerList' => array('controller' => 'Action', 'action' => 'challengerList','rol' => 0), // !
+    'newChallenger' => array('controller' => 'Action', 'action' => 'newChallenger','rol' => 1),
     'play' => array('controller' => 'Action', 'action' => 'play','rol' => 0),
-    'adminView' => array('controller' => 'Action', 'action' => 'adminView','rol' => 0),
-    'editChallenger' => array('controller' => 'Action', 'action' => 'editChallenger','rol' => 0),
+    'adminView' => array('controller' => 'Action', 'action' => 'adminView','rol' => 2),
+    'editChallenger' => array('controller' => 'Action', 'action' => 'editChallenger','rol' => 2), // ?
     'profile' => array('controller' => 'Action', 'action' => 'profile', 'rol' => 0),
-    'listChallengers' => array('controller' => 'Action', 'action' => 'listChallengers','rol' => 0),
+    'listChallengers' => array('controller' => 'Action', 'action' => 'listChallengers','rol' => 0), // !
     'create' => array('controller' => 'Action', 'action' => 'create','rol' => 1),
-    'edit' => array('controller' => 'Action', 'action' => 'edit','rol' => 0),
-    'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0),
+    'edit' => array('controller' => 'Action', 'action' => 'edit','rol' => 0), // ?
+    'validateChallenge' => array('controller' => 'Action', 'action' => 'validateChallenge','rol' => 0), // ?
     'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0),
     'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0),
     'dailygame' => array('controller' => 'Action', 'action' => 'dailygame','rol' => 0),
@@ -27,7 +27,7 @@ $map = array(
     'getHealth' => array('controller' => 'Api', 'action' => 'getHealth','rol' => 0),
     'getStats' => array('controller' => 'Api', 'action' => 'getStats','rol' => 0),
     'showAttempts' => array('controller' => 'Api', 'action' => 'showAttempts','rol' => 0),
-    'deleteChallenge' => array('controller' => 'Api', 'action' => 'deleteChallenge','rol' => 0)
+    'deleteChallenge' => array('controller' => 'Api', 'action' => 'deleteChallenge','rol' => 0) // --- hacer
 );
 // Parseo de la ruta
 if (isset($_GET['action'])) {

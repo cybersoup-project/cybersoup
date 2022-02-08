@@ -102,7 +102,7 @@ function confettifn(respuesta) {
         return Math.random() * (max - min) + min;
     }
 
-    if (respuesta.word.length != 0) {
+    if (respuesta.length != 0) {
         Swal.fire({
             icon: 'success',
             title: 'Congratulations!',
@@ -129,7 +129,7 @@ function confettifn(respuesta) {
 }
 
 // color the fields according to the answer.
-function coloreame(campos, respuesta, confetti) {
+function coloreame(campos, respuesta, status, confetti) {
     console.log(respuesta);
     for (let index = 0; index < campos.length; index++) {
         switch (respuesta[index]) {
@@ -149,7 +149,7 @@ function coloreame(campos, respuesta, confetti) {
     }
 
     if (confetti) {
-        if (respuesta.status == "success") {
+        if (status == "success") {
             confettifn(respuesta);
         }
     }
@@ -189,7 +189,7 @@ function onKeyPress(button) {
                     })
                 } else {
                     // else, color the fields or/and show modals
-                    coloreame(campos, res.word, true);
+                    coloreame(campos, res.word, res.status, true);
                 }
             }
         }
@@ -256,7 +256,7 @@ showmodal.addEventListener("click", () => {
                 }
 
                 attemptsrender.appendChild(div);
-                coloreame(document.getElementsByName("resolved_" + i), words[i], false);
+                coloreame(document.getElementsByName("resolved_" + i), words[i], null, false);
             }
         }
     }

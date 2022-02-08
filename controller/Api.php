@@ -182,6 +182,10 @@ class Api
             "iduser" => $usersession->getSessionValue("iduser")
         );
 
+        if ($valores['iduser'] == 0) {
+            die("{\"status\":\"not logged in\"}");
+        }
+
         $attempts = new Attempts();
         $wins = $attempts->getUserWins($valores['iduser']);
         $fails = $attempts->getUserFails($valores['iduser']);
