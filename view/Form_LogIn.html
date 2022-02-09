@@ -34,8 +34,22 @@
         </div>
     </div>
     <div class=" row d-flex justify-content-center mt-5 mb-5">
-        <form method="POST" class="col-md-6 col-11 ">
-            <div class="form-group mb-3">
+        <form method="POST" class="col-md-6 col-12">
+            <div class="col-12">
+                <div class="form-floating mb-3">
+                    <input type="text" placeholder="Username" class="form-control" name="user" required>
+                    <label for="floatingInput">Username</label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-floating mb-3">
+                    <input type="password" placeholder="Password" class="form-control" name="pw" required>
+                    <label for="floatingInput">Password</label>
+                </div>
+            </div>
+
+            <!-- <div class="form-group mb-3">
                 <label for="emailusername">Username</label>
                 <input type="text" class="form-control" id="emailusername" name="user" aria-describedby="emailHelp"
                     placeholder="Enter email or username">
@@ -43,10 +57,10 @@
             <div class="form-group mb-3">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="pw" id="password" placeholder="Password">
-            </div>
+            </div> -->
             <div class="d-flex flex-column justify-content-center mt-5">
                 <button type="submit" class="btn btn-dark ms-2">
-                    login
+                    Login
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                         class="bi bi-arrow-return-left" viewbox="0 0 16 16">
                         <path fill-rule="evenodd"

@@ -60,6 +60,30 @@
                     </div>
                 </div>
                 <div class="col-12 border border-2"></div>
+                {% if wotd %}
+                <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 wotd">
+                    <div class="row col-12 text-dark">
+                        <div class="col">
+                            <span>{{ wotd.title }}</span>
+                        </div>
+                        <div class="col d-none d-md-block">
+                            <span>Word Of The Day</span>
+                        </div>
+                        <div class="col">
+                            <span>
+                                {% for i in 1..3 %}
+                                {% set starClass = (wotd.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                                <i class="{{ starClass }}"></i>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        <div class="col d-none d-md-block">
+                            <span class="timeago">{{ wotd.date }}</span>
+                        </div>
+
+                    </div>
+                </a>
+                {% endif %}
                 {% for item in objectlist %}
                 <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                     <div class="row col-12 text-dark">
@@ -78,7 +102,7 @@
                             </span>
                         </div>
                         <div class="col d-none d-md-block">
-                            <span>{{ item.date }}</span>
+                            <span class="timeago">{{ item.date }}</span>
                         </div>
 
                     </div>

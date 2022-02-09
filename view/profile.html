@@ -4,7 +4,7 @@
         {% for mensaje in mensajes %} {{ mensaje }} {% endfor %}
         <div class="row">
             <!--FILA-->
-            <div class="row justify-content-center mt-5 mb-5 ">
+            <div class="row justify-content-center mt-5 mb-5">
                 <!-- CONTENEDOR-->
                 <div class="d-flex ms-4 ms-md-none justify-content-center ">
                     <!--COLUMNAS-->
@@ -35,21 +35,20 @@
         </div>
         <div class="bg-light">
             <div class="container">
-                <div class="row">
-                    <div class="col-4 offset-2">
+                <div class="row justify-content-evenly align-items-center">
+                    <div class="col-4">
                         <h1 class=" py-3 ps-3">{{ userdata.username }}</h1>
                         <h2 class=" py-3 ps-3">#--{{ miRanking }}--#</h2>
                         <button type="button" class="btn btn-outline-success border border-success m-3"
                             onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
+                        {% if usersession.isAdministrator() %}
                         <button type="button" class="btn btn-outline-success border border-success m-3"
                             onClick="location.href='?action=adminView'">AdminView</button>
+                        {% endif %}
                     </div>
-                    <div class="col-4 d-none d-sm-block text-end">
+                    <div class="col-4 d-none d-sm-block text-end" style="width: 300px; height: 300px;">
                         <canvas id="chart"></canvas>
-
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -83,7 +82,7 @@
                                 </div>
                             </div>
                             {% for item in objectlist %}
-                            <a href="#" class="text-decoration-none p-3 hover-gray">
+                            <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                                 <div class="row col-12 text-dark">
                                     <div class="col">
                                         <span>{{ item.title }}</span>
@@ -129,7 +128,7 @@
                             </div>
                             <div class="col-12 border border-2"></div>
                             {% for item in objectlists %}
-                            <a href="#" class="text-decoration-none p-3 hover-gray">
+                            <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                                 <div class="row justify-content-left col-12 text-dark">
                                     <div class="col">
                                         <span>{{ item.title }}</span>

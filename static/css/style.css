@@ -36,6 +36,15 @@
     margin: 0 5px;
 }
 
+.wotd {
+    background-color: #ffe66d;
+}
+
+.wotd:hover {
+    background-color: #e6d063;
+}
+
+
 @media screen and (max-width: 576px) {
     .container {
         padding: 0 !important;

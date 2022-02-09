@@ -37,7 +37,7 @@ class Challenge extends Connection
     }
 
     public function getAllChallenges() {
-        return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` ORDER BY `idchallenge` DESC", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` AND `category`.`idcategory` != 4 ORDER BY `idchallenge` DESC", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getLast10Challenges() {
@@ -49,10 +49,10 @@ class Challenge extends Connection
     }
 
     public function getMyChallenges($user_id) {
-        return $this->db->query("SELECT name, difficulty, title FROM challenge JOIN winners ON winners.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE winners.user_id = $user_id", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT idchallenge, name, difficulty, title FROM challenge JOIN winners ON winners.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE winners.user_id = $user_id", PDO::FETCH_ASSOC)->fetchAll();
     }
     public function getMyChallengesLose($user_id) {
-        return $this->db->query("SELECT name, difficulty, title FROM challenge JOIN losers ON losers.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE losers.user_id = $user_id; ", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT idchallenge, name, difficulty, title FROM challenge JOIN losers ON losers.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE losers.user_id = $user_id; ", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getNotValidChallenges() {
@@ -66,7 +66,6 @@ class Challenge extends Connection
     public function getPoints() {
         return $this->db->query("SELECT `max_attempts`, `difficulty`, `attempt` FROM `winners`, `challenge` WHERE `winners`.`user_id`=`challenge`.`user_id` and `winners`.`user_id`=6", PDO::FETCH_ASSOC)->fetch();
     }
-
 
     public function getChallengeBycategorydate($id,$date) {
         return $this->db->query("SELECT `idchallenge` FROM `challenge` WHERE date(date)='$date' AND `category_id`=$id", PDO::FETCH_ASSOC)->fetch();
