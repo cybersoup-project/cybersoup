@@ -34,44 +34,57 @@ class Action
         /* Si la petición es POST, significa que es un intento de login. */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require("model/Usuario.php");
-            require("utils/validation.php");
+            require("utils/classValidar.php");
             $usuario = new Usuario();
+            $valid = new Validacion();
             $valores = array(
                 "user" => $_POST['user'] ?? '',
                 "pw" => $_POST['pw']  ?? ''
             );
-
+            $regla = array(
+                array(
+                    'name' => 'user',
+                    'regla' => 'minmax'
+                )
+            );
+            $validaciones = $valid->rules($regla, $valores)->mensaje ?? array();
             /* Busco en la base de datos a ver si hay un usuario existente */
-            $r = $usuario->getUserByUsername($valores['user']);
+            if (count($validaciones) === 0) {
+                $r = $usuario->getUserByUsername($valores['user']);
+                if ($r) {
+                    /* Si existe el usuario, compruebo la contraseña */
+                    if (password_verify($valores['pw'], $r['password'])) {
+                        /* require("utils/UserSession.php");  */
+                        $usersession = UserSession::getUserSession();
+                        $usersession->addSessionValue("iduser", $r['iduser']);
+                        $usersession->addSessionValue("username", $r['username']);
+                        $usersession->addSessionValue("rol", $r['role']);
+                        $mensajes = array("Has iniciado sesión.");
 
-            if ($r) {
-                /* Si existe el usuario, compruebo la contraseña */
-                if (password_verify($valores['pw'], $r['password'])) {
-                    /* require("utils/UserSession.php");  */
-                    $usersession = UserSession::getUserSession();
-                    $usersession->addSessionValue("iduser", $r['iduser']);
-                    $usersession->addSessionValue("username", $r['username']);
-                    $usersession->addSessionValue("rol", $r['role']);
-                    $mensajes = array("Has iniciado sesión.");
-
-                    /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
-                    /* echo $this->twig->render('profile.html', array('mensajes' => $mensajes)); */
-                    header('location: ?action=profile');
+                        /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
+                        /* echo $this->twig->render('profile.html', array('mensajes' => $mensajes)); */
+                        header('location: ?action=profile');
+                    } else {
+                        /* Contraseña errónea */
+                        $errores[] = "El usuario y/o la contraseña no son válidos.";
+                        echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
+                    }
                 } else {
-                    /* Contraseña errónea */
+                    // Usuario no válido (no existe en la base de datos). Le pongo el error e incluyo la view del login.
                     $errores[] = "El usuario y/o la contraseña no son válidos.";
                     echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
                 }
             } else {
-                // Usuario no válido (no existe en la base de datos). Le pongo el error e incluyo la view del login.
                 $errores[] = "El usuario y/o la contraseña no son válidos.";
                 echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
             }
-        } else {
-            /* Muestro el formulario de registro */
-            echo $this->twig->render('Form_LogIn.html');
-        }
+        }else {
+                /* Muestro el formulario de registro */
+                echo $this->twig->render('Form_LogIn.html');
+            }
+        
     }
+
 
     public function register()
     {
@@ -176,17 +189,18 @@ class Action
         session_destroy();
         header("Location: index.php");
     }
-    function profile() {
+    function profile()
+    {
         //datos del usuario
         require_once("model/Usuario.php");
         $usersession = UserSession::getUserSession();
-        $us= new Usuario();
-        $datos= $us->getUserById($usersession->getSessionValue("iduser"));
+        $us = new Usuario();
+        $datos = $us->getUserById($usersession->getSessionValue("iduser"));
         //Valor del Ranking
         $ranking = new Usuario();
-        $role=$ranking-> role($usersession->getSessionValue("iduser"));
+        $role = $ranking->role($usersession->getSessionValue("iduser"));
         $rankings = $ranking->getRanking();
-        $miRanking=array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
+        $miRanking = array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
 
         if (!$usersession->getSessionValue("iduser")) {
             header("Location: ?action=register");
@@ -197,8 +211,7 @@ class Action
         $challenge = new Challenge();
         $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
         $challengesl = $challenge->getMyChallengesLose($usersession->getSessionValue("iduser"));
-        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" =>$challengesl,"userdata"=>$datos,'miRanking'=>$miRanking+1, "rol"=>$role));
-        
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" => $challengesl, "userdata" => $datos, 'miRanking' => $miRanking + 1, "rol" => $role));
     }
 
     function adminView()
@@ -209,15 +222,15 @@ class Action
         $user = new Usuario();
         $users = $user->getUserById(UserSession::getUserSession()->getSessionValue("iduser"));
         $name = $user->getUserById(UserSession::getUserSession()->getSessionValue("iduser"));
-        
+
         $challenge = new Challenge();
         $notValidC = $challenge->getNotValidChallenges();
         $last10ValidC = $challenge->getLast10ChallengesVerified();
-        $numValid= $challenge->getNumChallengeValidate();
-        $numNotValid= $challenge->getNumChallengeNotValidate();
+        $numValid = $challenge->getNumChallengeValidate();
+        $numNotValid = $challenge->getNumChallengeNotValidate();
         $numValid = $numValid ? $numValid["count(*)"] : 0;
         $numNotValid = $numNotValid ? $numNotValid["count(*)"] : 0;
-        echo $this->twig->render('admin_view.html', array("objectlist" => $notValidC, "objectlists" => $last10ValidC, "user" => $users, "name"=>$name, "valid" => $numValid, "NotValid" => $numNotValid));
+        echo $this->twig->render('admin_view.html', array("objectlist" => $notValidC, "objectlists" => $last10ValidC, "user" => $users, "name" => $name, "valid" => $numValid, "NotValid" => $numNotValid));
     }
     function ranking()
     {
@@ -310,14 +323,14 @@ class Action
                 if (isset($img)) {
                     if (count($img->errores) == 0) {
                         $img->upload();
-                        $challenge->setchalenges($valores['helptext'],$valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'] ,$usersession->getSessionValue("iduser"));
+                        $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
                         echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                     } else {
                         // ! Hacer errores!!
                         echo $this->twig->render('Form_crearChallenge.html', array("errores" => "Hubo errores"));
                     }
                 } else {
-                    $challenge->setchalenges($valores['helptext'],$valores['title'], $valores['solution'], null, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
+                    $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
                     echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
                 }
             } else {
@@ -327,7 +340,8 @@ class Action
         } else echo $this->twig->render('Form_crearChallenge.html');
     }
 
-    function edit() {
+    function edit()
+    {
         require("model/Challenge.php");
         require("model/Category.php");
         require("utils/classValidar.php");
@@ -381,22 +395,19 @@ class Action
                     if (count($img->errores) == 0) {
                         $img->upload();
                         $challenge->updateChallenges($valores['helptext'], $valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
-                        header ("Location: index.php?action=adminView");
+                        header("Location: index.php?action=adminView");
                     }
                 } else {
                     $challenge->updateChallenges($valores['helptext'], $valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
-                    header ("Location: index.php?action=adminView");
+                    header("Location: index.php?action=adminView");
                 }
-            }
-            else
-            {
+            } else {
                 echo $this->twig->render('Form_editChallenge.html', array("errores" => "Hubo errores"));
             }
-            
         } else if ($values = $challenge->getChallengeById($idChallenge)) {
-                $category = $category->getCategoryNameById($values['category_id']);
+            $category = $category->getCategoryNameById($values['category_id']);
 
-                echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
+            echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
         }
     }
 
@@ -436,31 +447,30 @@ class Action
         $usersession = UserSession::getUserSession();
         //if(!($usersession->isLoggedIn())) header('location: view/403.php');
         $challen = new Challenge();
-        
+
         $chl = $challen->getChallengeBycategorydate(4, date('Y-m-d'));
-        while(!$chl){//if there is not challenge of the day
-           
+        while (!$chl) { //if there is not challenge of the day
+
             $curl = curl_init();
-            
+
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://random-word-api.herokuapp.com/word?number=1",
-                CURLOPT_RETURNTRANSFER => true,));
+                CURLOPT_RETURNTRANSFER => true,
+            ));
             $response = json_decode(curl_exec($curl));
             //die($response[0]);
-            
-            if(!$challen->existsolution($response[0])){//If doesnt exist the word as a solution
-                $challen->setchalenges(null,"Word of the Day - ".date('y-m-d'), $response[0],null, 5, 4,1, 3);
+
+            if (!$challen->existsolution($response[0])) { //If doesnt exist the word as a solution
+                $challen->setchalenges(null, "Word of the Day - " . date('y-m-d'), $response[0], null, 5, 4, 1, 3);
                 $chl = 1; // DO NOT TOUCH
             }
-            
-    
         }
         //send ig_challenge
-        $idchallenge= $challen->getlastChallengeId(date('Y-m-d'));
-        
+        $idchallenge = $challen->getlastChallengeId(date('Y-m-d'));
 
-        if ( is_numeric($idchallenge['idchallenge'])) {
-      
+
+        if (is_numeric($idchallenge['idchallenge'])) {
+
 
             $chl = $challen->getChallengeById($idchallenge['idchallenge']);
             $attempt = new Attempts();
@@ -475,10 +485,7 @@ class Action
             }
         } else {
             // ! Mostrar 404
-         
-        }
 
-        
+        }
     }
 }
-
