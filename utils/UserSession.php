@@ -28,6 +28,11 @@ class UserSession
         return !($_SESSION['iduser'] === 0);
     }
 
+    public function isAdministrator()
+    {
+        return ($_SESSION['rol'] >= 2);
+    }
+
     public function getUsername()
     {
         return $_SESSION['username'];

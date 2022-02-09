@@ -74,11 +74,11 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-6">
-            <img class="img-fluid d-none d-md-block" src="static/vector-people.png">
+    <div class="row align-items-center">
+        <div class="col-6 d-none d-md-block">
+            <img class="img-fluid" src="static/vector-people.png">
         </div>
-        <form class="col-12 col-md-6 needs-validation pt-5" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
+        <form class="col-12 col-md-6 needs-validation" id="form" ACTION="" NAME="inserta" METHOD="POST" ENCTYPE="multipart/form-data">
             <div class="row">
                 {% if errores['Full Name'] %}
                 <div class="col-12">
@@ -192,20 +192,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-primary" NAME="submit" type="submit">Register</button>
+                <div class="col-12 mt-3">
+                    <button class="btn btn-primary w-100 fw-bold" NAME="submit" type="submit">Register</button>
                 </div>
             </div>
         </form>
-        <div>
-            <!--                     <?php
-            //CODIGO PHP ****************************************************************************************
-                            foreach($errores as $error){
-                                echo "<p class='text-danger'>".$error."</p>";
-                            }
-            //CODIGO PHP ****************************************************************************************
-                        ?> -->
-        </div>
     </div>
 </div>
 {% endblock %}

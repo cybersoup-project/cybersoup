@@ -251,6 +251,7 @@ class Action
         $numNotValid = $numNotValid ? $numNotValid["count(*)"] : 0;
         echo $this->twig->render('admin_view.html', array("objectlist" => $notValidC, "objectlists" => $last10ValidC, "user" => $users, "name" => $name, "valid" => $numValid, "NotValid" => $numNotValid));
     }
+
     function ranking()
     {
         require("model/Usuario.php");
@@ -267,7 +268,9 @@ class Action
         require("model/Challenge.php");
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
-        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges));
+        $wotdid = $challenge->getChallengeBycategorydate(4, date('Y-m-d'));
+        $wotd = $challenge->getChallengeById($wotdid['idchallenge']);
+        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges, "wotd" => $wotd));
     }
 
     function create()
