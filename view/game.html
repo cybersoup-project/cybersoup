@@ -5,9 +5,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <script src="static/js/game.js"></script>
-{% endblock %}
-
-{% block main %}
+{% endblock %} {% block main %}
 <div class="container-xl py-4">
     <div id="gamecontainer">
         <div class="d-flex justify-content-center">
@@ -52,11 +50,8 @@
                         <i class="bi bi-person-check-fill"></i> {{ challenge.times_success }} Times Succedeed
                     </div>
                     <div class="col-12 col-md-6 col-lg">
-                        <i class="bi bi-bar-chart"></i>
-                        {% for i in 1..3 %}
-                        {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
-                        <i class="{{ starClass }}"></i>
-                        {% endfor %}
+                        <i class="bi bi-bar-chart"></i> {% for i in 1..3 %} {% set starClass = (challenge.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
+                        <i class="{{ starClass }}"></i> {% endfor %}
                     </div>
                     <div class="col-12 col-md-6 col-lg">
                         <i class="bi bi-calendar-date"></i> {{ challenge.date }}
@@ -69,14 +64,12 @@
                     <span class="fs-3 fw-bold">We have a winner!</span> <span> You have already won at this
                         challenge.</span>
                 </div>
-                {% endif %}
-                {% if loser %}
+                {% endif %} {% if loser %}
                 <div class="p-4 bg-danger text-white mb-3">
                     <span class="fs-3 fw-bold">Sorry!</span> <span> You have used all the attempts you had at this
                         challenge!</span>
                 </div>
-                {% endif %}
-                {% if not usersession.isLoggedIn() %}
+                {% endif %} {% if not usersession.isLoggedIn() %}
                 <div class="p-3 bg-warning mb-3">
                     <span class="fs-3 fw-bold">Sorry!</span> <span> You must be <a href="index.php?action=login">logged
                             in</a> to play.</span>
@@ -84,13 +77,10 @@
                 {% endif %}
             </div>
             <div class="p-1 p-md-4">
-                <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill"
-                        style="color: #800080"></i> {% endif %}</h2>
+                <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill" style="color: #800080"></i> {% endif %}</h2>
                 <div class="challengeimage">
                     {% if challenge.image %}
-                    <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}">
-                    {% endif %}
-                    {% if challenge.text %}
+                    <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}"> {% endif %} {% if challenge.text %}
                     <p>{{ challenge.text }}</p>
                     {% endif %}
                 </div>
@@ -129,7 +119,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="attemptsmodalLabel">Previous attempts {{ length }}</h5>
+                <h5 class="modal-title" id="attemptsmodalLabel">Previous attempts</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -142,5 +132,4 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="idhcl" id="idchl" value="{{ idchl }}">
-{% endblock %}
+<input type="hidden" name="idhcl" id="idchl" value="{{ idchl }}"> {% endblock %}
