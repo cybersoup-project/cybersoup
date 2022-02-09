@@ -23,7 +23,7 @@ class Action
     public function index()
     {
         /* Si la acción es index, lo incluyo */
-        echo $this->twig->render('index.html', array('nombre' => 'george'));
+        echo $this->twig->render('index.html');
         //include("view/index.php");
     }
 
