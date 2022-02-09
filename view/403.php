@@ -12,16 +12,15 @@
 
 .four_zero_four_bg{
  
- background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+ background: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif) no-repeat;
     height: 400px;
-    background-position: center;
+	background-position: center;
  }
  
  
  .four_zero_four_bg h1{
  font-size:80px;
  }
- 
   .four_zero_four_bg h3{
 			 font-size:80px;
 			 }
@@ -51,9 +50,9 @@
 		Look like you're lost
 		</h3>
 		
-		<p>ypu not should do this, try to log in or make contact with the administrator...</p>
+		<p>You not should do this, try to log in or make contact with the administrator...</p>
 		
-		<a href="../index.php" class="link_404">Go to Home</a>
+		<a href="index.php" class="link_404">Go to Home</a>
 	</div>
 		</div>
 		</div>

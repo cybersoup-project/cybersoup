@@ -159,6 +159,6 @@ a{
     <div class="text">
         <h1>404 Error</h1>  
       <h2>Couldn't launch :(</h2>
-         <h3>Page Not Found - lets take you <a href="../index.php">Go to Index</a></h3> 
+         <h3>Page Not Found - lets take you <a href="index.php">Go to Index</a></h3> 
     </div>
 </body>

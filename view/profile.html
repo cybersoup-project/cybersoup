@@ -39,9 +39,10 @@
                     <div class="col-4 offset-2">
                         <h1 class=" py-3 ps-3">{{ userdata.username }}</h1>
                         <h2 class=" py-3 ps-3">#--{{ miRanking }}--#</h2>
+                        <p id="p" class="d-none">{{ rol.role }}</p>
                         <button type="button" class="btn btn-outline-success border border-success m-3"
                             onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
-                        <button type="button" class="btn btn-outline-success border border-success m-3"
+                        <button type="button" class="btn btn-outline-success border border-success m-3" id="admin" 
                             onClick="location.href='?action=adminView'">AdminView</button>
                     </div>
                     <div class="col-4 d-none d-sm-block text-end">
@@ -205,5 +206,16 @@
         document.getElementById('chart'),
         config
     );
+
+    window.onload=function (){
+        var admin=document.getElementById('admin');
+        var p=document.getElementById('p');
+        if( p.innerHTML !=2){
+            admin.setAttribute("disabled",true);
+        }else{
+            admin.removeAttribute("disabled");
+        }
+    };
+
 </script>
 {% endblock %}

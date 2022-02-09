@@ -184,6 +184,7 @@ class Action
         $datos= $us->getUserById($usersession->getSessionValue("iduser"));
         //Valor del Ranking
         $ranking = new Usuario();
+        $role=$ranking-> role($usersession->getSessionValue("iduser"));
         $rankings = $ranking->getRanking();
         $miRanking=array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
 
@@ -196,7 +197,7 @@ class Action
         $challenge = new Challenge();
         $challenges = $challenge->getMyChallenges($usersession->getSessionValue("iduser"));
         $challengesl = $challenge->getMyChallengesLose($usersession->getSessionValue("iduser"));
-        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" =>$challengesl,"userdata"=>$datos,'miRanking'=>$miRanking+1));
+        echo $this->twig->render('profile.html', array("objectlist" => $challenges, "objectlists" =>$challengesl,"userdata"=>$datos,'miRanking'=>$miRanking+1, "rol"=>$role));
         
     }
 
