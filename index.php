@@ -22,6 +22,7 @@ $map = array(
     'ranking' => array('controller' => 'Action', 'action' => 'ranking','rol' => 0),
     'game' => array('controller' => 'Action', 'action' => 'game','rol' => 0),
     'dailygame' => array('controller' => 'Action', 'action' => 'dailygame','rol' => 0),
+    'verifyEmail' => array('controller' => 'Action', 'action' => 'verifyEmail','rol' => 0),
     'checkWord' => array('controller' => 'Api', 'action' => 'checkWord','rol' => 0),
     'userExists' => array('controller' => 'Api', 'action' => 'userExists','rol' => 0),
     'getHealth' => array('controller' => 'Api', 'action' => 'getHealth','rol' => 0),

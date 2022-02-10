@@ -15,5 +15,3 @@ class Category extends Connection {
         return $this->db->query("SELECT * FROM `category` WHERE `idcategory` = '$id'", PDO::FETCH_ASSOC)->fetch();
     }
 }
-
-?>

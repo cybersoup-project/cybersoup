@@ -17,33 +17,27 @@ class sendMail
     private $replyto;
     private $replytoname;
     private $subject;
-    private $variables;
-    private $templatename;
-    private $twig;
 
-    public function __construct($to, $from, $fromname, $replyto, $replytoname, $subject, $templatename, $twig, array $variables = array())
+    public function __construct($to, $from, $fromname, $replyto, $replytoname, $subject, $html)
     {
-        $this->templatename = $templatename;
         $this->replytoname = $replytoname;
-        $this->variables = $variables;
         $this->fromname = $fromname;
         $this->replyto = $replyto;
         $this->subject = $subject;
         $this->from = $from;
         $this->to = $to;
 
-        require("Config.php");
-
         $this->mail = new PHPMailer();
+        $config = Config::getConfigObject();
 
         //Server settings
         $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $this->mail->isSMTP();                                            //Send using SMTP
-        $this->mail->Host       = 'smtp.example.com';                     //Set the SMTP server to send through
+        $this->mail->Host       = $config->getEnvValue("SMTP_HOST");      //Set the SMTP server to send through
         $this->mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $this->mail->Username   = 'user@example.com';                     //SMTP username
-        $this->mail->Password   = 'secret';                               //SMTP password
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $this->mail->Username   = $config->getEnvValue("SMTP_USERNAME");  //SMTP username
+        $this->mail->Password   = $config->getEnvValue("SMTP_PASSWORD");  //SMTP password
+        //$this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $this->mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
@@ -54,7 +48,7 @@ class sendMail
         //Content
         $this->mail->isHTML(true);                                  //Set email format to HTML
         $this->mail->Subject = $this->subject;
-        $this->mail->Body    = $this->twig->render('mail/'.$this->templatename, $this->variables);
+        $this->mail->Body    = $html;
         //$this->mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     }
 

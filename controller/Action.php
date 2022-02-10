@@ -163,17 +163,36 @@ class Action
 
                 $rol = 1; // Rol a 1 (Usuario registrado)
                 $activo = 0; // Hace falta validar la cuenta por email;
+                $fromemail = "registration@cybersoup.tk";
+                $fromname = "Cybersoup Registration";
+                $replyto = "noreply@cybersoup.tk";
+                $replytoname = "noreply";
+                $subject = "New Cybersoup Registration";
+                $template = "verification.html";
+                $html = $this->twig->render("mail/" . $template, array());
 
                 $user->setUsuario($valores['Username'], getHash($valores['Password']), $valores['Full Name'], $valores['Email'], $activo, $rol);
 
+                $userid = $user->getUserId($valores['Username']);
+
                 $usersession->addSessionValue("username", $valores['Username']);
-                $usersession->addSessionValue("iduser", $user->getUserId($valores['Username']));
+                $usersession->addSessionValue("iduser", $userid);
                 $usersession->addSessionValue("rol", $rol);
+
+                require("model/Verification.php");
+                require("utils/sendMail.php");
+
+                $verification = new Verification();
+
+                $verification->setVerification(bin2hex(random_bytes(16)), $userid);
+
+                $mail = new sendMail($valores['Email'], $fromemail, $fromname, $replyto, $replytoname, $subject, $html);
+                $mail->send();
 
                 $mensaje = array("Tu usuario ha sido registrado.");
                 //echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
                 //header("Location: index.php");
-                header('location: ?action=profile');
+                //header('location: ?action=profile');
             } else {
                 echo $this->twig->render('Form_Registro.html', array('errores' => $validaciones));
             }
