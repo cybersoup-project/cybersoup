@@ -169,7 +169,6 @@ class Action
                 $replytoname = "noreply";
                 $subject = "New Cybersoup Registration";
                 $template = "verification.html";
-                $html = $this->twig->render("mail/" . $template, array());
 
                 $user->setUsuario($valores['Username'], getHash($valores['Password']), $valores['Full Name'], $valores['Email'], $activo, $rol);
 
@@ -184,7 +183,13 @@ class Action
 
                 $verification = new Verification();
 
-                $verification->setVerification(bin2hex(random_bytes(16)), $userid);
+                $token = bin2hex(random_bytes(16));
+
+                $verification->setVerification($token, $userid);
+
+                $config = Config::getConfigObject();
+
+                $html = $this->twig->render("mail/" . $template, array("token" => $token, "base_url" => $config->getEnvValue("BASE_URL")));
 
                 $mail = new sendMail($valores['Email'], $fromemail, $fromname, $replyto, $replytoname, $subject, $html);
                 $mail->send();
@@ -507,6 +512,16 @@ class Action
         } else {
             // ! Mostrar 404
 
+        }
+    }
+
+    function verifyEmail() {
+        require("Config.php");
+        $config = Config::getConfigObject();
+        if(isset($_GET['token']) && mb_strlen($_GET['token'] == $config->getEnvValue("TOKEN_LENGTH"))) {
+            echo "bien";
+        } else {
+            echo "mal";
         }
     }
 }
