@@ -3,9 +3,6 @@
 {% block main %}
 <div class="container-xl py-4">
     <div class="container-fluid">
-        {% for error in errores %}
-        {{ error }}
-        {% endfor %}
         <!--FILA-->
         <div class="row d-flex justify-content-center mt-5 mb-5 ">
             <!-- CONTENEDOR-->
@@ -35,6 +32,13 @@
     </div>
     <div class=" row d-flex justify-content-center mt-5 mb-5">
         <form method="POST" class="col-md-6 col-12">
+            {% if errores %}
+            <div class="text-center p-3 bg-danger text-white mb-2 rounded">
+                {% for error in errores %}
+                    <p class="mb-0">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
             <div class="col-12">
                 <div class="form-floating mb-3">
                     <input type="text" placeholder="Username" class="form-control" name="user" required>
