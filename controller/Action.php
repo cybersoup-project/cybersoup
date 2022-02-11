@@ -267,9 +267,12 @@ class Action
         $usersession = UserSession::getUserSession();
         $ranking = new Usuario();
         $rankings = $ranking->getRanking();
-        $miRanking = array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
+        $topTen = $ranking->getRankingTopTen();
+        //$miRanking = array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
+        $miRanking = $ranking->getUserRanking(($usersession->getSessionValue("iduser")));
+         //die(var_dump($miRanking)); 
         $rankingMio = $ranking->getMyRanking($usersession->getSessionValue("iduser"));
-        echo $this->twig->render('ranking.html', array("objectlist" => $rankings, "objectlists" => $rankingMio, 'miRanking' => $miRanking + 1));
+        echo $this->twig->render('ranking.html', array("objectlist" => $topTen, "objectlists" => $rankingMio, 'miRanking' => $miRanking));
     }
 
     function listChallengers()
@@ -496,9 +499,11 @@ class Action
                 echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "idchl" => $_GET['id']));
             } else {
                 // ! No Existe el reto (404)
+               echo $this->twig->render('404.html');
             }
         } else {
             // ! Mostrar 404
+            echo $this->twig->render('404.html');
         }
     }
 
@@ -543,9 +548,11 @@ class Action
                 echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "idchl" => $idchallenge['idchallenge']));
             } else {
                 // ! No Existe el reto (404)
+                echo $this->twig->render('404.html');
             }
         } else {
             // ! Mostrar 404
+            echo $this->twig->render('404.html');
 
         }
     }

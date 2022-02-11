@@ -40,7 +40,7 @@ if (isset($_GET['action'])) {
 
         // https://www.php.net/manual/es/function.http-response-code.php
         http_response_code(404);
-        include("view/404.php");
+        include("view/404.html");
         exit;
     }
 } else {
@@ -70,9 +70,9 @@ if (method_exists($controlador['controller'], $controlador['action'])) {
     } else {
         // Sino, 403 (forbidden)
         http_response_code(403);
-        include("view/403.php");
+        include("view/403.html");
     }
 } else {
     http_response_code(404);
-    include("view/404.php");
+    include("view/404.html");
 }

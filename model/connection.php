@@ -11,7 +11,8 @@ class Connection {
             $this->db->exec("set names utf8");
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(Exception $e) {
-            header("Location: 500.php");
+            include("view/500.html");
+            die();
         }
     }
 }
