@@ -13,11 +13,19 @@ class Action
     public $loader;
     public $twig;
 
+    public function error_handler($e) {
+        echo $this->twig->render("500.html");
+        /* echo "Excepción no capturada: " , $e->getMessage(), "\n"; */
+    }
+
     public function __construct()
     {
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
         $this->twig->addGlobal('usersession', UserSession::getUserSession());
+        set_exception_handler(function($e) {
+            $this->error_handler($e);
+        });
     }
 
     public function index()
