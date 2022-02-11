@@ -22,9 +22,8 @@ class Action
 
     public function index()
     {
-        /* Si la acción es index, lo incluyo */
+        /* Simply show the index page */
         echo $this->twig->render('index.html');
-        //include("view/index.php");
     }
 
     public function login()
@@ -52,37 +51,41 @@ class Action
             if (count($validaciones) === 0) {
                 $r = $usuario->getUserByUsername($valores['user']);
                 if ($r) {
-                    /* Si existe el usuario, compruebo la contraseña */
-                    if (password_verify($valores['pw'], $r['password'])) {
-                        /* require("utils/UserSession.php");  */
-                        $usersession = UserSession::getUserSession();
-                        $usersession->addSessionValue("iduser", $r['iduser']);
-                        $usersession->addSessionValue("username", $r['username']);
-                        $usersession->addSessionValue("rol", $r['role']);
-                        $mensajes = array("Has iniciado sesión.");
+                    /* Si existe el usuario, compruebo si está verificado y luego la contraseña */
+                    if ($r['active']) {
+                        if (password_verify($valores['pw'], $r['password'])) {
+                            /* require("utils/UserSession.php");  */
+                            $usersession = UserSession::getUserSession();
+                            $usersession->addSessionValue("iduser", $r['iduser']);
+                            $usersession->addSessionValue("username", $r['username']);
+                            $usersession->addSessionValue("rol", $r['role']);
+                            $mensajes = array("Has iniciado sesión.");
 
-                        /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
-                        /* echo $this->twig->render('profile.html', array('mensajes' => $mensajes)); */
-                        header('location: ?action=profile');
+                            /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
+                            /* echo $this->twig->render('profile.html', array('mensajes' => $mensajes)); */
+                            header('location: ?action=profile');
+                        } else {
+                            /* Contraseña errónea */
+                            $errores[] = "Sorry, the password and/or username isn't right. If you forgot your password, click the \"forgot password?\" button down below.";
+                            echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
+                        }
                     } else {
-                        /* Contraseña errónea */
-                        $errores[] = "El usuario y/o la contraseña no son válidos.";
+                        $errores[] = "This user isn't verified. Please check your inbox and spam folder and follow the verification instructions.";
                         echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
                     }
                 } else {
                     // Usuario no válido (no existe en la base de datos). Le pongo el error e incluyo la view del login.
-                    $errores[] = "El usuario y/o la contraseña no son válidos.";
+                    $errores[] = "Sorry, the password and/or username isn't right. If you forgot your password, click the \"forgot password?\" button down below.";
                     echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
                 }
             } else {
-                $errores[] = "El usuario y/o la contraseña no son válidos.";
+                $errores[] = "Sorry, the password and/or username isn't right. If you forgot your password, click the \"forgot password?\" button down below.";
                 echo $this->twig->render('Form_LogIn.html', array('errores' => $errores));
             }
-        }else {
-                /* Muestro el formulario de registro */
-                echo $this->twig->render('Form_LogIn.html');
-            }
-        
+        } else {
+            /* Muestro el formulario de registro */
+            echo $this->twig->render('Form_LogIn.html');
+        }
     }
 
 
@@ -174,30 +177,31 @@ class Action
 
                 $userid = $user->getUserId($valores['Username']);
 
-                $usersession->addSessionValue("username", $valores['Username']);
+                /* $usersession->addSessionValue("username", $valores['Username']);
                 $usersession->addSessionValue("iduser", $userid);
-                $usersession->addSessionValue("rol", $rol);
+                $usersession->addSessionValue("rol", $rol); */
 
                 require("model/Verification.php");
                 require("utils/sendMail.php");
 
                 $verification = new Verification();
 
-                $token = bin2hex(random_bytes(16));
+                $config = Config::getConfigObject();
+
+                $token = bin2hex(random_bytes($config->getEnvValue("TOKEN_LENGTH")));
 
                 $verification->setVerification($token, $userid);
-
-                $config = Config::getConfigObject();
 
                 $html = $this->twig->render("mail/" . $template, array("token" => $token, "base_url" => $config->getEnvValue("BASE_URL")));
 
                 $mail = new sendMail($valores['Email'], $fromemail, $fromname, $replyto, $replytoname, $subject, $html);
                 $mail->send();
 
-                $mensaje = array("Tu usuario ha sido registrado.");
+                //$mensaje = array("Tu usuario ha sido registrado.");
                 //echo $this->twig->render('profile.html', array('mensajes' => $mensaje));
                 //header("Location: index.php");
                 //header('location: ?action=profile');
+                echo $this->twig->render('emailawaitingverification.html', array());
             } else {
                 echo $this->twig->render('Form_Registro.html', array('errores' => $validaciones));
             }
@@ -274,7 +278,7 @@ class Action
         $challenge = new Challenge();
         $challenges = $challenge->getAllChallenges();
         $wotdid = $challenge->getChallengeBycategorydate(4, date('Y-m-d'));
-        $wotd = $challenge->getChallengeById($wotdid['idchallenge']);
+        $wotd = $wotdid ? $challenge->getChallengeById($wotdid['idchallenge']) : false;
         echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges, "wotd" => $wotd));
     }
 
@@ -515,13 +519,28 @@ class Action
         }
     }
 
-    function verifyEmail() {
+    function verifyEmail()
+    {
         require("Config.php");
         $config = Config::getConfigObject();
-        if(isset($_GET['token']) && mb_strlen($_GET['token'] == $config->getEnvValue("TOKEN_LENGTH"))) {
-            echo "bien";
+        if ((isset($_GET['token'])) && ((mb_strlen($_GET['token']) / 2) == $config->getEnvValue("TOKEN_LENGTH"))) {
+            require("model/Verification.php");
+            $verification = new Verification();
+            $v = $verification->getVerifiedUser($_GET['token']);
+            $userid = $v ? $v['user_id'] : 0;
+            //var_dump($userid);
+            if ($userid > 0) {
+                require("model/Usuario.php");
+                $user = new Usuario();
+                $user->setValidateUserById($userid);
+                $verification->deleteVerification($userid);
+                echo $this->twig->render('emailverified.html');
+            } else {
+                // unknown token
+                header("Location: index.php?action=index");
+            }
         } else {
-            echo "mal";
+            header("Location: index.php?action=index");
         }
     }
 }

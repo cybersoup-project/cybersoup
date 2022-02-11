@@ -46,13 +46,13 @@
             <hr>
             <div class="row">
                 <div class="row col-12 fw-bold">
-                    <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-5">
                         <span>Challenge</span>
                     </div>
-                    <div class="col-3 d-none d-md-block">
+                    <div class="col-2 d-none d-md-block">
                         <span>Category</span>
                     </div>
-                    <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-2">
                         <span>Difficulty</span>
                     </div>
                     <div class="col-3 d-none d-md-block">
@@ -63,13 +63,13 @@
                 {% if wotd %}
                 <a href="?action=dailygame" class="text-decoration-none p-3 wotd">
                     <div class="row col-12 text-dark">
-                        <div class="col">
+                        <div class="col-5">
                             <span>{{ wotd.title }}</span>
                         </div>
-                        <div class="col d-none d-md-block">
+                        <div class="col-2 d-none d-md-block">
                             <span>Word Of The Day</span>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <span>
                                 {% for i in 1..3 %}
                                 {% set starClass = (wotd.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
@@ -77,23 +77,29 @@
                                 {% endfor %}
                             </span>
                         </div>
-                        <div class="col d-none d-md-block">
+                        <div class="col-3 d-none d-md-block">
                             <span class="timeago">{{ wotd.date }}</span>
                         </div>
 
+                    </div>
+                </a>
+                {% else %}
+                <a href="?action=dailygame" class="text-decoration-none p-3 wotd">
+                    <div class="row col-12 text-dark">
+                        <span class="fw-bold"><i class="bi bi-patch-question"></i> The word of the day hasn't been discovered yet... Be the first one!</span>
                     </div>
                 </a>
                 {% endif %}
                 {% for item in objectlist %}
                 <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                     <div class="row col-12 text-dark">
-                        <div class="col">
+                        <div class="col-6 col-md-5">
                             <span>{{ item.title }}</span>
                         </div>
-                        <div class="col d-none d-md-block">
+                        <div class="col-2 d-none d-md-block">
                             <span>{{ item.name }}</span>
                         </div>
-                        <div class="col">
+                        <div class="col-6 col-md-2">
                             <span>
                                 {% for i in 1..3 %}
                                 {% set starClass = (item.difficulty >= i ? "bi bi-star-fill" : "bi bi-star") %}
@@ -101,7 +107,7 @@
                                 {% endfor %}
                             </span>
                         </div>
-                        <div class="col d-none d-md-block">
+                        <div class="col-3 d-none d-md-block">
                             <span class="timeago">{{ item.date }}</span>
                         </div>
 

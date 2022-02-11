@@ -31,7 +31,8 @@ class sendMail
         $config = Config::getConfigObject();
 
         //Server settings
-        $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        //$this->mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
         $this->mail->isSMTP();                                            //Send using SMTP
         $this->mail->Host       = $config->getEnvValue("SMTP_HOST");      //Set the SMTP server to send through
         $this->mail->SMTPAuth   = true;                                   //Enable SMTP authentication
