@@ -276,10 +276,41 @@ class Action
     {
         require("model/Challenge.php");
         $challenge = new Challenge();
-        $challenges = $challenge->getAllChallenges();
+
+        $limit = 10;
+
+        if(isset($_GET['page']) && is_numeric($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+
+        $total = $challenge->getTotalChallengesCount();
+
+        //die(var_dump($total));
+
+        if($total) {
+            //die(print_r($total));
+            $total = $total['count(*)'] / $limit;
+            /* $total = $total['count(*)']; */
+            $nbPages = floor($total) + 1;
+            //die($nbPages);
+        } else {
+            //die("total error");
+        }
+
+        $start = ($page-1) * $limit;
+        $end = $start + $limit;
+
+        /*
+        nbPages -> number of pages
+        currentPage (int): current pages
+        */
+
+        $challenges = $challenge->getPageChallenges($start, $end);
         $wotdid = $challenge->getChallengeBycategorydate(4, date('Y-m-d'));
         $wotd = $wotdid ? $challenge->getChallengeById($wotdid['idchallenge']) : false;
-        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges, "wotd" => $wotd));
+        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges, "wotd" => $wotd, "nbPages" => $nbPages, "currentPage" => $page));
     }
 
     function create()
