@@ -397,14 +397,14 @@ class Action
                     if (count($img->errores) == 0) {
                         $img->upload();
                         $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
-                        echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                        header('location: ?action=profile');
                     } else {
                         // ! Hacer errores!!
                         echo $this->twig->render('Form_crearChallenge.html', array("errores" => "Hubo errores"));
                     }
                 } else {
                     $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
-                    echo $this->twig->render('profile.html', array("mensajes" => "Your challenge was submitted succesfully."));
+                    header('location: ?action=profile');
                 }
             } else {
                 // ! Hacer errores!!
