@@ -16,12 +16,12 @@ class Challenge extends Connection
         $this->db->prepare($sql)->execute([$text, $title, $image, $atempts, $solution, $verified, $trusted, $times_played, $times_success, $difficulty, $date, $category_id, $user_id]);
     }
 
-    public function updateChallenges($text, $title, $image, $max_attempts, $solution, $difficulty, $idChallenge)
+    public function updateChallenges($title, $image, $max_attempts, $solution, $difficulty, $idChallenge, $text=NULL)
     {
         $verified = true;
 
-        $sql = "UPDATE challenge SET text=?, title=?, image=?, max_attempts=?, solution=?, verified=?, difficulty=?  WHERE idchallenge=?";
-        $this->db->prepare($sql)->execute(array($text, $title, $image, $max_attempts, $solution, $verified, $difficulty, $idChallenge));
+        $sql = "UPDATE `challenge` SET `title`=?, `text`=?, `image`=?, `max_attempts`=?, `solution`=?, `verified`=?, `difficulty`=?  WHERE `idchallenge`=?";
+        $this->db->prepare($sql)->execute(array( $title,$text, $image, $max_attempts, $solution, $verified, $difficulty, $idChallenge));
     }
     
     public function updateChallengesPlay($times_played, $idchallenge)
