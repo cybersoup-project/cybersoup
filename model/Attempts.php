@@ -40,4 +40,5 @@ class Attempts extends Connection {
     public function getUserFails($userid) {
         return $this->db->query("SELECT count(*) FROM `losers` WHERE `user_id` = $userid; ", PDO::FETCH_ASSOC)->fetch();
     }
+
 }

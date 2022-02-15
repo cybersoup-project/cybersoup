@@ -316,11 +316,13 @@ class Action
         nbPages -> number of pages
         currentPage (int): current pages
         */
-
+        $validChallenge=$challenge->getValidChallenge();
+       /*  print_r($validChallenge);
+        die(); */
         $challenges = $challenge->getPageChallenges($start, $end);
         $wotdid = $challenge->getChallengeBycategorydate(4, date('Y-m-d'));
         $wotd = $wotdid ? $challenge->getChallengeById($wotdid['idchallenge']) : false;
-        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges, "wotd" => $wotd, "nbPages" => $nbPages, "currentPage" => $page));
+        echo $this->twig->render('ChallengesList.html', array("objectlist" => $challenges, "wotd" => $wotd, "nbPages" => $nbPages, "currentPage" => $page, "valid"=>$validChallenge));
     }
 
     function create()
@@ -482,12 +484,12 @@ class Action
             echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
         }
     }
-
+/* 
     function validateChallenge()
     {
         echo $this->twig->render('Form_validarChallenge.html');
     }
-
+ */
     function game()
     {
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -501,7 +503,7 @@ class Action
 
             $winner = $attempt->isUserWinnerAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
             $loser = $attempt->isUserLoserAtChallenge($usersession->getSessionValue("iduser"), $_GET['id']);
-
+            /* $score = ; */
             if ($chl) {
                 echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "idchl" => $_GET['id']));
             } else {

@@ -55,7 +55,9 @@ class Challenge extends Connection
     public function getChallengeById($id) {
         return $this->db->query("SELECT * FROM `challenge` WHERE `idchallenge` = $id", PDO::FETCH_ASSOC)->fetch();
     }
-
+    public function getValidChallenge() {
+        return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 1", PDO::FETCH_ASSOC)->fetchAll();
+    }
     public function getMyChallenges($user_id) {
         return $this->db->query("SELECT idchallenge, name, difficulty, title FROM challenge JOIN winners ON winners.challenge_id = challenge.idchallenge JOIN category ON category.idcategory = challenge.category_id WHERE winners.user_id = $user_id", PDO::FETCH_ASSOC)->fetchAll();
     }
@@ -94,4 +96,13 @@ class Challenge extends Connection
         return $this->db-> query("SELECT count(*) FROM `challenge` where `verified`=0 ", PDO::FETCH_ASSOC)->fetch();
 
     }
+    public function getImg($id){
+        return $this->db-> query("SELECT `image` FROM `challenge` where `idchallenge`=$id ", PDO::FETCH_ASSOC)->fetch();
+    }
+    public function getwinAttempts($id,$idchallenge){
+        return $this->db-> query("SELECT `max_attempts`, `difficulty`, `attempt` FROM `winners`, `challenge` 
+        WHERE `winners`.`user_id`=`challenge`.`user_id` and `winners`.`user_id`=$id AND `idchallenge`=$idchallenge 
+        ORDER BY `attempt` DESC LIMIT 1; ", PDO::FETCH_ASSOC)->fetch();
+    }
+    
 }
