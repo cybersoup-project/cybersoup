@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-
-{% block main %}
+{% extends "base.html" %} {% block main %}
 <div class="container-xl py-4">
     <div class="container-fluid">
         <!--FILA-->
@@ -35,20 +33,20 @@
             {% if errores %}
             <div class="text-center p-3 bg-danger text-white mb-2 rounded">
                 {% for error in errores %}
-                    <p class="mb-0">{{ error }}</p>
+                <p class="mb-0">{{ error }}</p>
                 {% endfor %}
             </div>
             {% endif %}
             <div class="col-12">
                 <div class="form-floating mb-3">
-                    <input type="text" placeholder="Username" class="form-control" name="user" required>
+                    <input type="text" placeholder="Username" class="form-control" name="user" pattern="^[a-zA-Z0-9]{4,24}$" required>
                     <label for="floatingInput">Username</label>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="form-floating mb-3">
-                    <input type="password" placeholder="Password" class="form-control" name="pw" required>
+                    <input type="password" placeholder="Password" class="form-control" name="pw" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,64}$" required>
                     <label for="floatingInput">Password</label>
                 </div>
             </div>
