@@ -468,13 +468,14 @@ class Action
 
             if (count($validaciones) == 0) {
 
+                //si tiene imagen
                 if (isset($img) && $category['name'] == "images") {
                     if (count($img->errores) == 0) {
                         $img->upload();
                         $challenge->updateChallenges($valores['helptext'], $valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
                         header("Location: index.php?action=adminView");
                     }
-                } else {
+                } else {//si no tiene imagen
                     $challenge->updateChallenges($valores['helptext'], $valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
                     header("Location: index.php?action=adminView");
                 }
@@ -483,6 +484,9 @@ class Action
             }
         } else if ($values = $challenge->getChallengeById($idChallenge)) {
             $category = $category->getCategoryNameById($values['category_id']);
+
+            if ($values['image'] == "" || $values['image'] == NULL)
+                $values['image'] = 'create.PNG';
 
             echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
         }
