@@ -16,7 +16,7 @@ class Action
     public function error_handler($e)
     {
         echo $this->twig->render("500.html");
-        echo "Excepción no capturada: " , $e->getMessage(), "\n";
+        /*echo "Excepción no capturada: " , $e->getMessage(), "\n";*/
     }
 
     public function __construct()
