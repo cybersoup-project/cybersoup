@@ -193,6 +193,14 @@
                 <img src="static/create.png" class="d-md-block d-none" width="400px" height="500px">
             </div>
 
+            {% if errores %}
+            <div class="text-center p-3 bg-danger text-white mb-2 rounded">
+                {% for error in errores %}
+                    <p class="mb-0">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <!-- FORM -->
             <div class="col-12 col-md-7 d-flex justify-content-center mt-5 mb-5 fs-5 pt-5">
                 <form class="row g-3 need-validation w-md-50 w-75" id="form" ACTION="" NAME="inserta" METHOD="POST"

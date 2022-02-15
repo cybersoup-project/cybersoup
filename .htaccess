@@ -1,0 +1,7 @@
+#Options +FollowSymLinks
+RewriteEngine on
+#RewriteRule ^action/(.*)/id/(.*) /index.php?action=$1&id=$2
+#RewriteRule ^action/(.*)/id/(.*)/ /index.php?action=$1&id=$2
+RewriteRule ^challenges$ /index.php?action=listChallengers
+RewriteRule ^game/(.*)$ /index.php?action=game&id=$1
+Options -Indexes

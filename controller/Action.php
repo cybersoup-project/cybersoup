@@ -20,9 +20,12 @@ class Action
 
     public function __construct()
     {
+        require("Config.php");
+        $config = Config::getConfigObject();
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
         $this->twig->addGlobal('usersession', UserSession::getUserSession());
+        $this->twig->addGlobal('BASE_URL', $config->getEnvValue("BASE_URL"));
         set_exception_handler(function($e) {
             $this->error_handler($e);
         });
@@ -175,7 +178,7 @@ class Action
 
                 $rol = 1; // Rol a 1 (Usuario registrado)
                 $activo = 0; // Hace falta validar la cuenta por email;
-                $replyto = "info@" . $config->getEnvValue("DOMAIN");
+                $fromemail = "info@" . $config->getEnvValue("DOMAIN");
                 $fromname = "Cybersoup Registration";
                 $replyto = "noreply@" . $config->getEnvValue("DOMAIN");
                 $replytoname = "noreply";
@@ -399,7 +402,7 @@ class Action
                         header('location: ?action=profile');
                     } else {
                         // ! Hacer errores!!
-                        echo $this->twig->render('Form_crearChallenge.html', array("errores" => "Hubo errores"));
+                        echo $this->twig->render('Form_crearChallenge.html', array("errores" => $img->errores));
                     }
                 } else {
                     $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));

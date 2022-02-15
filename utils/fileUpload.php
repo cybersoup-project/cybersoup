@@ -16,7 +16,7 @@ class FileUpload
     public $filename;
     public $extension;
 
-    public function __construct($tagname, $uploadpath, array $validExtensions = ['jpg','png'], $max_file_size = 5000000) // 5MB máximo
+    public function __construct($tagname, $uploadpath, array $validExtensions = ['jpg','png', 'jpeg', 'svg', 'webp'], $max_file_size = 5000000) // 5MB máximo
     {
         $this->tagname = $tagname;
         $this->uploadpath = $uploadpath;
