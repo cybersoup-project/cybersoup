@@ -52,6 +52,13 @@ class Usuario extends Connection
      $this->db->query("SET @row_num=0;");
     return $this->db->query(" SELECT * FROM(SELECT(@row_num:=@row_num + 1) AS num,  `iduser`, `username`, `score` FROM `user`  ORDER BY `user`.`score`  DESC) as tb WHERE tb.`iduser`=$user_id;",PDO::FETCH_ASSOC)->fetch();
    }
+   public function getScore($user_id){
+    return $this->db->query("SELECT `score` FROM `user` WHERE `iduser`=$user_id",PDO::FETCH_ASSOC)->fetch();
+   }
+   public function setScore($user_id,$newScore){
+    $sql = "UPDATE user SET score=$newScore WHERE iduser=?";
+    $this->db->prepare($sql)->execute([$user_id]);
+   }
 }
 
 
