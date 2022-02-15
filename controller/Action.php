@@ -176,7 +176,7 @@ class Action
                 $activo = 0; // Hace falta validar la cuenta por email;
                 $fromemail = "registration@cybersoup.tk";
                 $fromname = "Cybersoup Registration";
-                $replyto = "noreply@cybersoup.tk";
+                $replyto = "info@" . $config->getEnvValue("DOMAIN");
                 $replytoname = "noreply";
                 $subject = "New Cybersoup Registration";
                 $template = "verification.html";

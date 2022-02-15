@@ -39,7 +39,7 @@ class sendMail
         $this->mail->Username   = $config->getEnvValue("SMTP_USERNAME");  //SMTP username
         $this->mail->Password   = $config->getEnvValue("SMTP_PASSWORD");  //SMTP password
         //$this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $this->mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $this->mail->Port       = $config->getEnvValue("SMTP_PORT");;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
         $this->mail->setFrom($this->from, $this->fromname);
