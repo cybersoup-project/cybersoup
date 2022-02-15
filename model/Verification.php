@@ -6,10 +6,10 @@ require_once("model/connection.php");
 class Verification extends Connection
 {
 
-    public function setVerification($token, $userid)
+    public function setVerification($token, $userid, $tipo = 0)
     {
-        $sql = "INSERT INTO verification (token, user_id) VALUES (?,?)";
-        $this->db->prepare($sql)->execute([$token, $userid]);
+        $sql = "INSERT INTO verification (token, user_id, tipo) VALUES (?,?,?)";
+        $this->db->prepare($sql)->execute([$token, $userid, $tipo]);
     }
 
     public function getVerifiedUser($token)
