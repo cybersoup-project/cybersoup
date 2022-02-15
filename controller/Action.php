@@ -16,7 +16,7 @@ class Action
     public function error_handler($e)
     {
         echo $this->twig->render("500.html");
-        /*echo "Excepción no capturada: " , $e->getMessage(), "\n";*/
+        echo "Excepción no capturada: " , $e->getMessage(), "\n";
     }
 
     public function __construct()
@@ -26,12 +26,8 @@ class Action
         $this->loader = new FilesystemLoader('view/');
         $this->twig = new Environment($this->loader);
         $this->twig->addGlobal('usersession', UserSession::getUserSession());
-<<<<<<< HEAD
         $this->twig->addGlobal('BASE_URL', $config->getEnvValue("BASE_URL"));
         set_exception_handler(function($e) {
-=======
-        set_exception_handler(function ($e) {
->>>>>>> 967ea7f (forgot password (creacion de la funcion ))
             $this->error_handler($e);
         });
     }
@@ -604,7 +600,7 @@ class Action
 
     function recoverPassword()
     {
-        require("config.php");
+        require_once("Config.php");
         require("model/Usuario.php");
         require("model/Verification.php");
         require("utils/classValidar.php");
@@ -627,8 +623,6 @@ class Action
             //si no hay errores
             if (count($validaciones) === 0) {
                 $userid = $user->getUserByEmail($valores['email']);
-
-                print_r($userid);
 
                 $fromemail = "info@" . $config->getEnvValue("DOMAIN");
                 $fromemail= "";
@@ -657,26 +651,4 @@ class Action
             echo $this->twig->render('form_recoverPassword.html');
         }
     }
-
-    /*if ((isset($_GET['token'])) && ((mb_strlen($_GET['token']) / 2) == $config->getEnvValue("TOKEN_LENGTH")) && $_GET['type'] == 1) {
-                    
-                    require("model/Verification.php");
-                    require("utils/sendMail.php");
-
-                    $fromname = "Cybersoup Registration";
-                    $replyto = "noreply@" . $config->getEnvValue("DOMAIN");
-                    $replytoname = "noreply";
-                    $subject = "New Cybersoup Registration";
-                    $template = "recoverPassword.html";
-
-                    $verification = new Verification();
-
-                    //$token = bin2hex(random_bytes($config->getEnvValue("TOKEN_LENGTH")));
-                    //$verification->setVerification($token, $userid, '0');
-
-                    //$html = $this->twig->render("mail/" . $template, array("token" => $token, "base_url" => $config->getEnvValue("BASE_URL")));
-
-                    //$mail = new sendMail($valores['Email'], $fromemail, $fromname, $replyto, $replytoname, $subject, $html);
-                    //$mail->send();
-                }*/
 }
