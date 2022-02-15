@@ -175,9 +175,9 @@ class Action
 
                 $rol = 1; // Rol a 1 (Usuario registrado)
                 $activo = 0; // Hace falta validar la cuenta por email;
-                $fromemail = "registration@cybersoup.tk";
-                $fromname = "Cybersoup Registration";
                 $replyto = "info@" . $config->getEnvValue("DOMAIN");
+                $fromname = "Cybersoup Registration";
+                $replyto = "noreply@" . $config->getEnvValue("DOMAIN");
                 $replytoname = "noreply";
                 $subject = "New Cybersoup Registration";
                 $template = "verification.html";
