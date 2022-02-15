@@ -97,7 +97,7 @@
                     Please enter your name.
                 </div> -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="full_name" placeholder="Juan" required>
+                        <input type="text" class="form-control" name="full_name" pattern="^[a-zA-Z0-9 ]{4,24}$" placeholder="Juan" required>
                         <label for="floatingInput">Full Name</label>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <!-- <input type="text" class="form-control" id="validationCustomUsername" name="username"
                         aria-describedby="inputGroupPrepend" placeholder="Juanito123" required> -->
                     <div class="form-floating mb-3">
-                        <input type="text" id="usernameinput" class="form-control" name="username" placeholder="Juanito123" required>
+                        <input type="text" id="usernameinput" class="form-control" name="username" pattern="^[a-zA-Z0-9]{4,24}$" placeholder="Juanito123" required>
                         <label for="floatingInput">Username</label>
                     </div>
                     <!-- <div class="invalid-feedback">
@@ -135,7 +135,7 @@
                     Passwords do not match.
                 </div> -->
                     <div class="form-floating mb-3">
-                        <input type="password" placeholder="Password" class="form-control" name="password" required>
+                        <input type="password" placeholder="Password" class="form-control" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,64}$" required>
                         <label for="floatingInput">Password</label>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                     Passwords do not match.
                 </div> -->
                     <div class="form-floating mb-3">
-                        <input type="password" placeholder="Repeat Password" class="form-control" name="repeat_password" required>
+                        <input type="password" placeholder="Repeat Password" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,64}$" name="repeat_password" required>
                         <label for="floatingInput">Repeat Password</label>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                     Enter a valid email address
                 </div> -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="email" placeholder="Juan@algo.es" required>
+                        <input type="text" class="form-control" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Juan@algo.es" required>
                         <label for="floatingInput">Email</label>
                     </div>
                 </div>

@@ -10,6 +10,7 @@ class Api
         header("Content-Type: application/json; charset=UTF-8");
         require_once("model/Challenge.php");
         require_once("model/Attempts.php");
+        require_once("model/Usuario.php");
 
         $usersession = UserSession::getUserSession();
         $userid = $usersession->getSessionValue("iduser");
@@ -70,10 +71,19 @@ class Api
                             // $attempt->setAttempt($userid, $valores['id'], $valores['palabra']);
                             // We don't store the win as an attempt but we add one to the attempt count
                             // in the winner table.
-
+                            $usr= new Usuario();
                             $chl->updateChallengesPlay($chlrow['times_played'] + 1, $valores['id']);
                             $chl->updateChallengesWins($chlrow['times_success'] + 1, $valores['id']);
                             $attempt->setWinner(count($countattempts) + 1, $userid, $valores['id']);
+                            $oldScore=$usr->getScore($userid);
+                            $winScore=$chl->getwinAttempts($userid,$valores['id']);
+                            /* die(print_r($oldScore)); */
+                            /* $newScore=$oldScore['score']+($winScore['difficulty']/($winScore['max_attempts']*200))/$winScore['attempt']; */
+                            $newScore = $winScore['difficulty'] / $winScore['max_attempts'] * 200;
+                            $newScore = $newScore / $winScore['attempt'];
+                            $newScore = $newScore + $oldScore['score'];
+                            /* die(var_dump($newScore)); */
+                            $usr->setScore($userid,$newScore);
                         } else { // * word is not equal, set attempt and response.
                             $intento = mb_str_split($valores['palabra']);
                             $sol = mb_str_split($valores['solution']);
