@@ -171,6 +171,7 @@ class Action
             if (count($validaciones) === 0) {
                 /* Registrar usuario */
                 $usersession = UserSession::getUserSession();
+                $config = Config::getConfigObject();
 
                 $rol = 1; // Rol a 1 (Usuario registrado)
                 $activo = 0; // Hace falta validar la cuenta por email;
@@ -193,8 +194,6 @@ class Action
                 require("utils/sendMail.php");
 
                 $verification = new Verification();
-
-                $config = Config::getConfigObject();
 
                 $token = bin2hex(random_bytes($config->getEnvValue("TOKEN_LENGTH")));
 
