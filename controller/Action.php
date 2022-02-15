@@ -13,9 +13,10 @@ class Action
     public $loader;
     public $twig;
 
-    public function error_handler($e) {
+    public function error_handler($e)
+    {
         echo $this->twig->render("500.html");
-        /* echo "Excepción no capturada: " , $e->getMessage(), "\n"; */
+        echo "Excepción no capturada: " , $e->getMessage(), "\n";
     }
 
     public function __construct()
@@ -200,7 +201,7 @@ class Action
 
                 $token = bin2hex(random_bytes($config->getEnvValue("TOKEN_LENGTH")));
 
-                $verification->setVerification($token, $userid);
+                $verification->setVerification($token, $userid, '0');
 
                 $html = $this->twig->render("mail/" . $template, array("token" => $token, "base_url" => $config->getEnvValue("BASE_URL")));
 
@@ -280,7 +281,7 @@ class Action
         $topTen = $ranking->getRankingTopTen();
         //$miRanking = array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
         $miRanking = $ranking->getUserRanking(($usersession->getSessionValue("iduser")));
-         //die(var_dump($miRanking)); 
+        //die(var_dump($miRanking)); 
         $rankingMio = $ranking->getMyRanking($usersession->getSessionValue("iduser"));
         echo $this->twig->render('ranking.html', array("objectlist" => $topTen, "objectlists" => $rankingMio, 'miRanking' => $miRanking));
     }
@@ -292,7 +293,7 @@ class Action
 
         $limit = 10;
 
-        if(isset($_GET['page']) && is_numeric($_GET['page'])) {
+        if (isset($_GET['page']) && is_numeric($_GET['page'])) {
             $page = $_GET['page'];
         } else {
             $page = 1;
@@ -302,7 +303,7 @@ class Action
 
         //die(var_dump($total));
 
-        if($total) {
+        if ($total) {
             //die(print_r($total));
             $total = $total['count(*)'] / $limit;
             /* $total = $total['count(*)']; */
@@ -312,7 +313,7 @@ class Action
             //die("total error");
         }
 
-        $start = ($page-1) * $limit;
+        $start = ($page - 1) * $limit;
         $end = $start + $limit;
 
         /*
@@ -468,14 +469,15 @@ class Action
 
             if (count($validaciones) == 0) {
 
+                //si tiene imagen
                 if (isset($img) && $category['name'] == "images") {
                     if (count($img->errores) == 0) {
                         $img->upload();
-                        $challenge->updateChallenges($valores['helptext'], $valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
+                        $challenge->updateChallenges($valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge, $valores['helptext']);
                         header("Location: index.php?action=adminView");
                     }
-                } else {
-                    $challenge->updateChallenges($valores['helptext'], $valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge);
+                } else { //si no tiene imagen
+                    $challenge->updateChallenges($valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge, $valores['helptext']);
                     header("Location: index.php?action=adminView");
                 }
             } else {
@@ -483,6 +485,9 @@ class Action
             }
         } else if ($values = $challenge->getChallengeById($idChallenge)) {
             $category = $category->getCategoryNameById($values['category_id']);
+
+            if ($values['image'] == "" || $values['image'] == NULL)
+                $values['image'] = 'create.PNG';
 
             echo $this->twig->render('Form_editChallenge.html', array('valuesForm' => $values, 'category' => $category));
         }
@@ -511,7 +516,7 @@ class Action
                 echo $this->twig->render('game.html', array("challenge" => $chl, "length" => mb_strlen($chl['solution']), "winner" => $winner, "loser" => $loser, "idchl" => $_GET['id']));
             } else {
                 // ! No Existe el reto (404)
-               echo $this->twig->render('404.html');
+                echo $this->twig->render('404.html');
             }
         } else {
             // ! Mostrar 404
@@ -565,7 +570,6 @@ class Action
         } else {
             // ! Mostrar 404
             echo $this->twig->render('404.html');
-
         }
     }
 
@@ -591,6 +595,60 @@ class Action
             }
         } else {
             header("Location: index.php?action=index");
+        }
+    }
+
+    function recoverPassword()
+    {
+        require_once("Config.php");
+        require("model/Usuario.php");
+        require("model/Verification.php");
+        require("utils/classValidar.php");
+        require("utils/sendMail.php");
+
+        $config = Config::getConfigObject();
+
+        //una vez ingresado email...
+        if (isset($_POST['email'])) {
+
+            $user = new Usuario();
+            $validation = new Validacion();
+
+            //validacion
+            $valores = array("email" => $_POST['email']  ?? '');
+            $regla = array(array('name' => 'email', 'regla' => 'email'));
+
+            $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
+            
+            //si no hay errores
+            if (count($validaciones) === 0) {
+                $userid = $user->getUserByEmail($valores['email']);
+
+                $fromemail = "info@" . $config->getEnvValue("DOMAIN");
+                $fromemail= "";
+                $fromname = "Cybersoup Registration";
+                $replyto = "noreply@" . $config->getEnvValue("DOMAIN");
+                $replytoname = "noreply";
+                $subject = "New Cybersoup Registration";
+                $template = "recoverPassword.html";
+
+                $verification = new Verification();
+                $token = bin2hex(random_bytes($config->getEnvValue("TOKEN_LENGTH")));
+                $verification->setVerification($token, $userid['iduser'], 1);
+
+                $html = $this->twig->render("mail/" . $template, array("token" => $token, "base_url" => $config->getEnvValue("BASE_URL")));
+
+                $mail = new sendMail($valores['email'], $fromemail, $fromname, $replyto, $replytoname, $subject, $html);
+                $mail->send();
+
+                echo $this->twig->render('passwordawaitingverification.html');
+            }
+            else
+            {
+                echo "error";
+            }
+        } else {
+            echo $this->twig->render('form_recoverPassword.html');
         }
     }
 }

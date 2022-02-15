@@ -182,8 +182,14 @@
 
         <div class="row">
             <!-- IMAGEN-->
+            <!--
+                {% if usersession.isAdministrator() %}
+                        <button type="button" class="btn btn-outline-success border border-success m-3"
+                            onClick="location.href='?action=adminView'">AdminView</button>
+                        {% endif %}
+            -->
             <div class="col-5 d-flex m-auto justify-content-center">
-                <img src="static/create.PNG" class="d-md-block d-none" width="400px" height="500px">
+                <img src='static/{{ valuesForm.image }}' class="d-md-block d-none" width="400px" height="500px">
             </div>
 
             <!-- FORM -->
@@ -193,7 +199,7 @@
 
 
                     <!-- RadioButton-->
-                    <div class="d-flex">
+                    <div class="d-flex flex-wrap">
                         <div class="form-check form-check-inline">
 
                             <input id="wordsRadio" class="form-check-input" type="radio" name="categoria" value="words"
