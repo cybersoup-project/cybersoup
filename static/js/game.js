@@ -61,11 +61,12 @@ heartfn = () => {
 // show the keyboard
 const Keyboard = window.SimpleKeyboard.default;
 
-let keyboard = new Keyboard({
-    /* onChange: input => onChange(input), */
+let options = {
     onKeyPress: button => onKeyPress(button),
     mergeDisplay: true,
     layoutName: "default",
+    physicalKeyboardHighlight: true,
+    physicalKeyboardHighlightPress: true,
     layout: {
         default: [
             "Q W E R T Y U I O P {backspace}",
@@ -88,13 +89,24 @@ let keyboard = new Keyboard({
         "{metaleft}": "cmd ⌘",
         "{metaright}": "cmd ⌘",
         "{abc}": "ABC"
-    }
+    },
+  };
+
+let keyboard = new Keyboard({
+    ...options
 });
 
-/* function onChange(input) {
-    document.querySelector(".input").value = input;
-    console.log("Input changed", input);
-} */
+/* Not the best fix to make lowercase work, but the clock is ticking */
+let lowercasekeyboard = new Keyboard('.simple-keyboard-lowercase' , {
+    ...options,
+    layout: {
+        default: [
+            "q w e r t y u i o p",
+            "a s d f g h j k l",
+            "z x c v b n m"
+        ]
+    }
+});
 
 // triggered on win
 function confettifn(respuesta) {
@@ -217,7 +229,7 @@ function onKeyPress(button) {
             /* console.log(typeof button); */
 
             if (campos[i].textContent.length == 0) {
-                campos[i].textContent = button;
+                campos[i].textContent = button.toUpperCase();
                 break;
             }
         }
