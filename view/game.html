@@ -71,7 +71,7 @@
                 </div>
                 {% endif %} {% if not usersession.isLoggedIn() %}
                 <div class="p-3 bg-warning mb-3">
-                    <span class="fs-3 fw-bold">Sorry!</span> <span> You must be <a href="index.php?action=login">logged
+                    <span class="fs-3 fw-bold">Sorry!</span> <span> You must be <a href="{{ BASE_URL }}login">logged
                             in</a> to play.</span>
                 </div>
                 {% endif %}

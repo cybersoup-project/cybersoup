@@ -28,9 +28,9 @@ heartfn = () => {
     let xhr = new XMLHttpRequest();
 
     //const chlid = document.getElementById("idchl").value;
+    /* window.location.hostname + window.location.pathname + */
 
-
-    xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getHealth&id=" + chlid);
+    xhr.open("GET",  window.location.protocol + "//" + window.location.host + "?action=getHealth&id=" + chlid);
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -185,7 +185,7 @@ function onKeyPress(button) {
         //const chlid = document.getElementById("idchl").value;
         //const chlid = urlParams.get('id')
 
-        xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
+        xhr.open("GET", window.location.protocol + "//" + window.location.host + "?action=checkWord&palabra=" + palabra + "&id=" + chlid);
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -273,7 +273,7 @@ showmodal.addEventListener("click", () => {
         }
     }
 
-    xhr.open("GET", "?action=showAttempts&id=" + chlid)
+    xhr.open("GET", window.location.protocol + "//" + window.location.host + "?action=showAttempts&id=" + chlid)
 
     xhr.send();
 })

@@ -31,21 +31,21 @@
                             <a class="nav-link active" aria-current="page" href="{{ BASE_URL }}challenges">Challenges</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?action=ranking">Ranking</a>
+                            <a class="nav-link active" aria-current="page" href="{{ BASE_URL }}ranking">Ranking</a>
                         </li>
                         {% if usersession.isLoggedIn() %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?action=profile">Profile</a>
+                            <a class="nav-link active" aria-current="page" href="{{ BASE_URL }}profile">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?action=logout">Logout</a>
+                            <a class="nav-link active" aria-current="page" href="{{ BASE_URL }}logout">Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?action=register">Registration</a>
+                            <a class="nav-link active" aria-current="page" href="{{ BASE_URL }}register">Registration</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?action=login">Log In</a>
+                            <a class="nav-link active" aria-current="page" href="{{ BASE_URL }}login">Log In</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -60,7 +60,7 @@
             <div class="col-6 mt-2 d-none d-md-block">
                 <div class="row">
                     <div class="col-4">
-                        <img src="{{ BASE_URL }}static/logo.png" class="img-fluid" width="500" height="500">
+                        <img src="{{ BASE_URL }}static/staticimg/logo.png" class="img-fluid" width="500" height="500">
                     </div>
                     <p class="col-6">Cyber Soup fue creado en 2022 en el centro IES-Abastos por y para el entretenimiento de los usuarios. Juego dedicado a la adivinanza de palabras mediante pistas textuales o visuales.
                     </p>

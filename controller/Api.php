@@ -4,6 +4,17 @@
 
 class Api
 {
+    public function error_handler($e)
+    {
+        echo "Excepción no capturada: " , $e->getMessage(), "\n";
+    }
+
+    public function __construct()
+    {
+        set_exception_handler(function($e) {
+            $this->error_handler($e);
+        });
+    }
 
     public function checkWord()
     {
@@ -80,7 +91,12 @@ class Api
                             /* die(print_r($oldScore)); */
                             /* $newScore=$oldScore['score']+($winScore['difficulty']/($winScore['max_attempts']*200))/$winScore['attempt']; */
                             $newScore = $winScore['difficulty'] / $winScore['max_attempts'] * 200;
+
+                            /* var_dump($winScore);
+                            die(); */
+
                             $newScore = $newScore / $winScore['attempt'];
+                            
                             $newScore = $newScore + $oldScore['score'];
                             /* die(var_dump($newScore)); */
                             $usr->setScore($userid,$newScore);

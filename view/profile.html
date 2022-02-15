@@ -41,10 +41,10 @@
                         <h2 class=" py-3 ps-3">#--{{ miRanking }}--#</h2>
                         <p id="p" class="d-none">{{ rol.role }}</p>
                         <button type="button" class="btn btn-outline-success border border-success m-3"
-                            onClick="location.href='?action=create'">CREATE YOUR CHALLENGE</button>
+                            onClick="location.href='/create'">CREATE YOUR CHALLENGE</button>
                         {% if usersession.isAdministrator() %}
                         <button type="button" class="btn btn-outline-success border border-success m-3"
-                            onClick="location.href='?action=adminView'">AdminView</button>
+                            onClick="location.href='/admin'">AdminView</button>
                         {% endif %}
                     </div>
                     <div class="col-4 d-none d-sm-block text-end" style="width: 300px; height: 300px;">
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             {% for item in objectlist %}
-                            <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
+                            <a href="{{ BASE_URL }}game/{{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                                 <div class="row col-12 text-dark">
                                     <div class="col">
                                         <span>{{ item.title }}</span>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="col-12 border border-2"></div>
                             {% for item in objectlists %}
-                            <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
+                            <a href="{{ BASE_URL }}game/{{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                                 <div class="row justify-content-left col-12 text-dark">
                                     <div class="col">
                                         <span>{{ item.title }}</span>
@@ -191,7 +191,7 @@
     };
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", /* window.location.hostname + window.location.pathname + */ "?action=getStats", false);
+    xhr.open("GET", window.location.protocol + "//" + window.location.host + "?action=getStats", false);
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {

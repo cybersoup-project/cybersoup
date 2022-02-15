@@ -100,9 +100,10 @@ class Challenge extends Connection
         return $this->db-> query("SELECT `image` FROM `challenge` where `idchallenge`=$id ", PDO::FETCH_ASSOC)->fetch();
     }
     public function getwinAttempts($id,$idchallenge){
-        return $this->db-> query("SELECT `max_attempts`, `difficulty`, `attempt` FROM `winners`, `challenge` 
+        /* return $this->db-> query("SELECT `max_attempts`, `difficulty`, `attempt` FROM `winners`, `challenge` 
         WHERE `winners`.`user_id`=`challenge`.`user_id` and `winners`.`user_id`=$id AND `idchallenge`=$idchallenge 
-        ORDER BY `attempt` DESC LIMIT 1; ", PDO::FETCH_ASSOC)->fetch();
+        ORDER BY `attempt` DESC LIMIT 1; ", PDO::FETCH_ASSOC)->fetch(); */
+        return $this->db-> query("SELECT `max_attempts`, `difficulty`, `attempt` FROM `winners`, `challenge` WHERE `winners`.`user_id`=$id AND `idchallenge`=$idchallenge ORDER BY `attempt` DESC LIMIT 1", PDO::FETCH_ASSOC)->fetch();
     }
     
 }

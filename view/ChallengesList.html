@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-12 border border-2"></div>
                 {% if wotd %}
-                <a href="?action=dailygame" class="text-decoration-none p-3 wotd">
+                <a href="{{ BASE_URL }}dailygame" class="text-decoration-none p-3 wotd">
                     <div class="row col-12 text-dark">
                         <div class="col-5">
                             <span>{{ wotd.title }}</span>
@@ -124,7 +124,7 @@
                     </div>
                 </a>
                 {% else %}
-                <a href="?action=dailygame" class="text-decoration-none p-3 wotd">
+                <a href="{{ BASE_URL }}dailygame" class="text-decoration-none p-3 wotd">
                     <div class="row col-12 text-dark">
                         <span class="fw-bold"><i class="bi bi-patch-question"></i> The word of the day hasn't been
                             discovered yet... Be the first one!</span>
@@ -132,7 +132,7 @@
                 </a>
                 {% endif %}
                 {% for item in valid %}
-                <a href="?action=game&id={{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
+                <a href="{{ BASE_URL }}game/{{ item.idchallenge }}" class="text-decoration-none p-3 hover-gray">
                     <div class="row col-12 text-dark">
                         <div class="col-6 col-md-5">
                             <span>{{ item.title }}</span>

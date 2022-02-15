@@ -16,7 +16,7 @@ class Action
     public function error_handler($e)
     {
         echo $this->twig->render("500.html");
-        echo "Excepción no capturada: " , $e->getMessage(), "\n";
+        /* echo "Excepción no capturada: " , $e->getMessage(), "\n"; */
     }
 
     public function __construct()
@@ -75,7 +75,7 @@ class Action
 
                             /* Si la contraseña es correcta, se inicia sesión y se muestran artículos. */
                             /* echo $this->twig->render('profile.html', array('mensajes' => $mensajes)); */
-                            header('location: ?action=profile');
+                            header('Location: /profile');
                         } else {
                             /* Contraseña errónea */
                             $errores[] = "Sorry, the password and/or username isn't right. If you forgot your password, click the \"forgot password?\" button down below.";
@@ -242,7 +242,7 @@ class Action
         $miRanking = array_search(($usersession->getSessionValue("iduser")), array_column($rankings, 'iduser'));
 
         if (!$usersession->getSessionValue("iduser")) {
-            header("Location: ?action=register");
+            header("Location: /register");
         }
 
         require("model/Challenge.php");
@@ -402,14 +402,14 @@ class Action
                     if (count($img->errores) == 0) {
                         $img->upload();
                         $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], $img->filename, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
-                        header('location: ?action=profile');
+                        header('Location: /profile');
                     } else {
                         // ! Hacer errores!!
                         echo $this->twig->render('Form_crearChallenge.html', array("errores" => $img->errores));
                     }
                 } else {
                     $challenge->setchalenges($valores['helptext'], $valores['title'], $valores['solution'], null, $valores['atempts'], $cat->getCategoryIdByName($radio)['idcategory'], $usersession->getSessionValue("iduser"));
-                    header('location: ?action=profile');
+                    header('Location: /profile');
                 }
             } else {
                 // ! Hacer errores!!
@@ -474,11 +474,11 @@ class Action
                     if (count($img->errores) == 0) {
                         $img->upload();
                         $challenge->updateChallenges($valores['title'], $img->filename, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge, $valores['helptext']);
-                        header("Location: index.php?action=adminView");
+                        header("Location: /admin");
                     }
                 } else { //si no tiene imagen
                     $challenge->updateChallenges($valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge, $valores['helptext']);
-                    header("Location: index.php?action=adminView");
+                    header("Location: /admin");
                 }
             } else {
                 echo $this->twig->render('Form_editChallenge.html', array("errores" => "Hubo errores"));
@@ -575,12 +575,15 @@ class Action
 
     function verifyEmail()
     {
-        require("Config.php");
+        /* require("Config.php"); */
         $config = Config::getConfigObject();
+        /* die(); */
         if ((isset($_GET['token'])) && ((mb_strlen($_GET['token']) / 2) == $config->getEnvValue("TOKEN_LENGTH"))) {
             require("model/Verification.php");
             $verification = new Verification();
+            /* die(); */
             $v = $verification->getVerifiedUser($_GET['token']);
+            
             $userid = $v ? $v['user_id'] : 0;
             //var_dump($userid);
             if ($userid > 0) {
@@ -591,10 +594,10 @@ class Action
                 echo $this->twig->render('emailverified.html');
             } else {
                 // unknown token
-                header("Location: index.php?action=index");
+                header("Location: index.php");
             }
         } else {
-            header("Location: index.php?action=index");
+            header("Location: index.php");
         }
     }
 

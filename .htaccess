@@ -2,6 +2,19 @@
 RewriteEngine on
 #RewriteRule ^action/(.*)/id/(.*) /index.php?action=$1&id=$2
 #RewriteRule ^action/(.*)/id/(.*)/ /index.php?action=$1&id=$2
+
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://cybersoup.es/$1 [R,L]
+
 RewriteRule ^challenges$ /index.php?action=listChallengers
 RewriteRule ^game/(.*)$ /index.php?action=game&id=$1
+RewriteRule ^dailygame$ /index.php?action=dailygame
+RewriteRule ^ranking$ /index.php?action=ranking
+RewriteRule ^profile$ /index.php?action=profile
+RewriteRule ^logout$ /index.php?action=logout
+RewriteRule ^register$ /index.php?action=register
+RewriteRule ^login$ /index.php?action=login
+RewriteRule ^admin$ /index.php?action=adminView
+RewriteRule ^create$ /index.php?action=create
+RewriteRule ^edit/(.*)$ /index.php?action=edit&idChallenge=$1
 Options -Indexes
