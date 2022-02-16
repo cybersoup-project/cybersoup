@@ -41,7 +41,7 @@ class Challenge extends Connection
     }
 
     public function getPageChallenges($start, $end) {
-        return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` AND `category`.`idcategory` != 4 ORDER BY `idchallenge` DESC LIMIT $start, $end", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` AND `category`.`idcategory` != 4 AND `verified` = 1 ORDER BY `idchallenge` DESC LIMIT $start, $end", PDO::FETCH_ASSOC)->fetchAll();
     }
 
     public function getTotalChallengesCount() {

@@ -55,7 +55,7 @@
                     <ul class="pagination justify-content-center">
                         {% if currentPage != 1 %}
                         <li class="page-item">
-                            <a class="page-link" href="index.php?action=listChallengers&page=1">First</a>
+                            <a class="page-link" href="{{ BASE_URL }}challenges/1">First</a>
                         </li>
                         {% endif %}
                         {% for i in 1..nbPages %}
@@ -68,13 +68,13 @@
                             (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
                             {% else %}
                             <li {% if currentPage==loop.index %} class="page-item active" {% endif %}>
-                                <a class="page-link" href="index.php?action=listChallengers&page={{ loop.index }}">{{ loop.index }}</a>
+                                <a class="page-link" href="{{ BASE_URL }}challenges/{{ loop.index }}">{{ loop.index }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             {% if currentPage != nbPages %}
                             <li class="page-item">
-                                <a class="page-link" href="index.php?action=listChallengers&page={{ nbPages }}">Last</a>
+                                <a class="page-link" href="{{ BASE_URL }}challenges/{{ nbPages }}">Last</a>
                             </li>
                             {% endif %}
                     </ul>
@@ -166,7 +166,7 @@
                     <ul class="pagination justify-content-center">
                         {% if currentPage != 1 %}
                         <li class="page-item">
-                            <a class="page-link" href="index.php?action=listChallengers&page=1">First</a>
+                            <a class="page-link" href="{{ BASE_URL }}challenges/1">First</a>
                         </li>
                         {% endif %}
                         {% for i in 1..nbPages %}
@@ -179,13 +179,13 @@
                             (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
                             {% else %}
                             <li {% if currentPage==loop.index %} class="page-item active" {% endif %}>
-                                <a class="page-link" href="index.php?action=listChallengers&page={{ loop.index }}">{{ loop.index }}</a>
+                                <a class="page-link" href="{{ BASE_URL }}challenges/{{ loop.index }}">{{ loop.index }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             {% if currentPage != nbPages %}
                             <li class="page-item">
-                                <a class="page-link" href="index.php?action=listChallengers&page={{ nbPages }}">Last</a>
+                                <a class="page-link" href="{{ BASE_URL }}challenges/{{ nbPages }}">Last</a>
                             </li>
                             {% endif %}
                     </ul>

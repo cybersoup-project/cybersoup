@@ -320,7 +320,8 @@ class Action
         nbPages -> number of pages
         currentPage (int): current pages
         */
-        $validChallenge=$challenge->getValidChallenge();
+        //$validChallenge=$challenge->getValidChallenge();
+        $validChallenge=$challenge->getPageChallenges($start, $end);
        /*  print_r($validChallenge);
         die(); */
         $challenges = $challenge->getPageChallenges($start, $end);
