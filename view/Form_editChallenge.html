@@ -189,7 +189,7 @@
                         {% endif %}
             -->
             <div class="col-5 d-flex m-auto justify-content-center">
-                <img src='static/{{ valuesForm.image }}' class="d-md-block d-none" width="400px" height="500px">
+                <img src='{{ BASE_URL }}static/img/{{ valuesForm.image }}' class="d-md-block d-none" width="400px" height="500px">
             </div>
 
             <!-- FORM -->
@@ -252,7 +252,7 @@
                     <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                     <div>
                         <label for="helptext" class="form-label">Help text</label>
-                        <textarea id="riddleInput" class="form-control border border-dark" name="title"
+                        <textarea id="riddleInput" class="form-control border border-dark" name="helptext"
                             placeholder="insert here the challenge title"> {{ valuesForm.text }}</textarea>
 
                         <div class="valid-feedback">

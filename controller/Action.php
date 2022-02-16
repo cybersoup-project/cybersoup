@@ -426,10 +426,10 @@ class Action
 
         $challenge = new Challenge();
         $category = new Category();
-        $idChallenge = $_GET['idChallenge'];
-
+        $idChallenge = $_GET['idChallenge'] ?? 0;
         //MUESTRA DATOS
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $values = $challenge->getChallengeById($idChallenge);
             $errores = array();
             $valores = array(
                 "title" => $_POST['title'] ?? '',
@@ -467,7 +467,7 @@ class Action
 
             $validaciones = $validation->rules($regla, $valores)->mensaje ?? array();
 
-            if (count($validaciones) == 0) {
+            if ((count($validaciones) == 0) && ($values)) {
 
                 //si tiene imagen
                 if (isset($img) && $category['name'] == "images") {
@@ -477,7 +477,7 @@ class Action
                         header("Location: /admin");
                     }
                 } else { //si no tiene imagen
-                    $challenge->updateChallenges($valores['title'], null, $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge, $valores['helptext']);
+                    $challenge->updateChallenges($valores['title'], $values['image'], $valores['atempts'], $valores['solution'], $valores['radio'], $idChallenge, $valores['helptext']);
                     header("Location: /admin");
                 }
             } else {

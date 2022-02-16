@@ -80,7 +80,7 @@
                 <h2>{{ challenge.title }} {% if challenge.trusted %} <i class="bi bi-patch-check-fill" style="color: #800080"></i> {% endif %}</h2>
                 <div class="challengeimage">
                     {% if challenge.image %}
-                    <img src="static/img/{{ challenge.image }}" alt="{{ challenge.title }}"> {% endif %} {% if challenge.text %}
+                    <img src="{{ BASE_URL }}static/img/{{ challenge.image }}" alt="{{ challenge.title }}"> {% endif %} {% if challenge.text %}
                     <p>{{ challenge.text }}</p>
                     {% endif %}
                 </div>

@@ -141,7 +141,7 @@ class Validacion {
     }
 
     protected function _tit($campo, $valor) {
-        if (preg_match("/^[a-zA-Z0-9 ]{4,64}$/", $valor)) {
+        if (preg_match("/^[a-zA-Z0-9\.\-,+ñ+ç?! ]{4,64}$/", $valor)) {
             return true;
         }
         $this->mensaje[$campo][] = "El campo $campo debe tener entre 4 y 64 carácteres.";
@@ -157,7 +157,7 @@ class Validacion {
     }
 
     protected function _helpText($campo, $valor) {
-        if (preg_match("/^[a-zA-Z0-9 ]{0,128}$/", $valor)) {
+        if (preg_match("/^[a-zA-Z0-9\.\-,+ñ+ç?! ]{0,128}$/", $valor)) {
             return true;
         }
         $this->mensaje[$campo][] = "El campo $campo debe tener entre menos de 128 carácteres.";

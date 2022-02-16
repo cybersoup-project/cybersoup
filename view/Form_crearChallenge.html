@@ -208,7 +208,7 @@
                     <!-- INPUT TITLE -->
                     <div>
                         <label for="title" class="form-label">Title</label>
-                        <input id="title" type="text" class="form-control border border-dark" name="title" pattern="^[a-zA-z ]{4,64}$" placeholder="insert here the challenge title" required>
+                        <input id="title" type="text" class="form-control border border-dark" name="title" pattern="^[a-zA-Z0-9\.\-,+ñ+ç?! ]{4,64}$" placeholder="insert here the challenge title" required>
                         <div class="valid-feedback">
                             may be okay
                         </div>
@@ -218,7 +218,7 @@
                     <!-- INPUT SOLUTION -->
                     <div>
                         <label for="solution" class="form-label">Solution</label>
-                        <input id="solution" type="text" class="form-control border border-dark" name="solution" pattern="^[a-zA-z]{4,32}$" placeholder="insert here the challenge solution (one word)" required>
+                        <input id="solution" type="text" class="form-control border border-dark" name="solution" pattern="^[a-zA-Z]{4,32}$" placeholder="insert here the challenge solution (one word)" required>
                         <div class="valid-feedback">
                             may be okay
                         </div>
@@ -245,7 +245,7 @@
                     <!-- En el caso de que sea el juego VEO VEO o Acertijo-->
                     <div>
                         <label for="helptext" class="form-label">Help text</label>
-                        <textarea id="riddleInput" class="form-control border border-dark" name="helptext" pattern="^[a-zA-Z0-9 ]{0,128}$" placeholder="insert here the challenge title" disabled></textarea>
+                        <textarea id="riddleInput" class="form-control border border-dark" name="helptext" pattern="^[a-zA-Z0-9\.\-,+ñ+ç?! ]{4,128}$" placeholder="insert here the challenge title" disabled></textarea>
 
                         <div class="valid-feedback">
                             may be okay
