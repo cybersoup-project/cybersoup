@@ -56,7 +56,7 @@ class Challenge extends Connection
         return $this->db->query("SELECT * FROM `challenge` WHERE `idchallenge` = $id", PDO::FETCH_ASSOC)->fetch();
     }
     public function getValidChallenge() {
-        return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` AND `verified` = 1 AND `category`.`idcategory` != 4", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->db->query("SELECT * FROM `challenge` , `category` WHERE `challenge`.`category_id`=`category`.`idcategory` AND `verified` = 1 AND `category`.`idcategory` != 4 ORDER BY `idchallenge` DESC", PDO::FETCH_ASSOC)->fetchAll();
         /* return $this->db->query("SELECT * FROM `challenge` WHERE `verified` = 1", PDO::FETCH_ASSOC)->fetchAll(); */
     }
     public function getMyChallenges($user_id) {

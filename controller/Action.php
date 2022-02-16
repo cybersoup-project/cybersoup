@@ -372,24 +372,23 @@ class Action
             /* print_r($validaciones); */
 
             if (count($validaciones) == 0) {
-
                 switch ($valores['radio']) {
                     case 'riddles':
                         $image = null;
-                        $radio = 'riddles';
+                        $radio = 'Riddle';
                         break;
                     case 'images':
                         require("utils/fileUpload.php");
                         $img = new FileUpload("image", "static/img/");
                         $imagen = $img->check();
-                        $radio = 'images';
+                        $radio = 'Image';
                         break;
                     case 'words':
                         $image = null;
-                        $radio = 'words';
+                        $radio = 'Word';
                         break;
                     default:
-                        $radio = 'words'; //si hay algun cmbio entramos en words
+                        $radio = 'Word'; //si hay algun cmbio entramos en words
                         $image = null;
                         break;
                 }
@@ -397,7 +396,6 @@ class Action
                 $usersession = UserSession::getUserSession();
                 require('model/Category.php');
                 $cat = new Category();
-
                 if (isset($img)) {
                     if (count($img->errores) == 0) {
                         $img->upload();
